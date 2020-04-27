@@ -26,7 +26,7 @@ class DataManager: ObservableObject{
 	
 	private let keychain = Keychain(service: Bundle.main.bundleIdentifier ?? "com.zabala.inventory")
 	init() {
-		//reset()
+		reset()
 	}
 	
 	@Published var _isLoggedIn : Bool = false
@@ -186,6 +186,7 @@ class DataManager: ObservableObject{
 		newBin.id = UUID()
 		newBin.createDate = Date()
 		newBin.name = name
+		newBin.level = 0
 		if let notes = notes, !notes.isEmpty {
 			/* notes is not blank */
 			newBin.notes = notes
