@@ -86,6 +86,8 @@ class DataManager: ObservableObject{
 	}
 	
 	func findUserWith(email: String) -> ITUser? {
+		// TODO: Handle email checks with . and + characters
+	
 		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ITUser")
 		fetchRequest.predicate = NSPredicate(format: "email == %@", email.lowercased())
 		do {
