@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,15 @@
 		90D57A6A24536D3E00B600BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90D57A6924536D3E00B600BA /* Assets.xcassets */; };
 		90D57A6D24536D3E00B600BA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90D57A6C24536D3E00B600BA /* Preview Assets.xcassets */; };
 		90D57A7024536D3E00B600BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90D57A6E24536D3E00B600BA /* LaunchScreen.storyboard */; };
+		90E77CE22453866500A3C7FF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77CE12453866500A3C7FF /* LoginView.swift */; };
+		90E77CE424538B4300A3C7FF /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77CE324538B4300A3C7FF /* Palette.swift */; };
+		90E77CE82453C38900A3C7FF /* KeyboardGuardian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77CE72453C38900A3C7FF /* KeyboardGuardian.swift */; };
+		90E77D162455D0BB00A3C7FF /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D152455D0BB00A3C7FF /* DataManager.swift */; };
+		90E77D192456010700A3C7FF /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 90E77D182456010700A3C7FF /* KeychainAccess */; };
+		90E77D222456134800A3C7FF /* CreateUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D212456134800A3C7FF /* CreateUserView.swift */; };
+		90E77D272456171700A3C7FF /* CoreDataEntities in Resources */ = {isa = PBXBuildFile; fileRef = 90E77D262456171700A3C7FF /* CoreDataEntities */; };
+		90E77D3124561B4B00A3C7FF /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D3024561B4B00A3C7FF /* Helper.swift */; };
+		90E77D342456577400A3C7FF /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 90E77D332456577400A3C7FF /* CryptoSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +35,13 @@
 		90D57A6C24536D3E00B600BA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		90D57A6F24536D3E00B600BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		90D57A7124536D3E00B600BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		90E77CE12453866500A3C7FF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		90E77CE324538B4300A3C7FF /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
+		90E77CE72453C38900A3C7FF /* KeyboardGuardian.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardGuardian.swift; sourceTree = "<group>"; };
+		90E77D152455D0BB00A3C7FF /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		90E77D212456134800A3C7FF /* CreateUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserView.swift; sourceTree = "<group>"; };
+		90E77D262456171700A3C7FF /* CoreDataEntities */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CoreDataEntities; sourceTree = "<group>"; };
+		90E77D3024561B4B00A3C7FF /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +49,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90E77D192456010700A3C7FF /* KeychainAccess in Frameworks */,
+				90E77D342456577400A3C7FF /* CryptoSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,9 +76,16 @@
 		90D57A5F24536D3C00B600BA /* InventoryTracker */ = {
 			isa = PBXGroup;
 			children = (
+				90E77D262456171700A3C7FF /* CoreDataEntities */,
+				90E77D152455D0BB00A3C7FF /* DataManager.swift */,
 				90D57A6024536D3C00B600BA /* AppDelegate.swift */,
 				90D57A6224536D3C00B600BA /* SceneDelegate.swift */,
+				90E77CE72453C38900A3C7FF /* KeyboardGuardian.swift */,
+				90E77CE324538B4300A3C7FF /* Palette.swift */,
 				90D57A6724536D3C00B600BA /* ContentView.swift */,
+				90E77CE12453866500A3C7FF /* LoginView.swift */,
+				90E77D212456134800A3C7FF /* CreateUserView.swift */,
+				90E77D3024561B4B00A3C7FF /* Helper.swift */,
 				90D57A6924536D3E00B600BA /* Assets.xcassets */,
 				90D57A6E24536D3E00B600BA /* LaunchScreen.storyboard */,
 				90D57A7124536D3E00B600BA /* Info.plist */,
@@ -94,6 +119,10 @@
 			dependencies = (
 			);
 			name = InventoryTracker;
+			packageProductDependencies = (
+				90E77D182456010700A3C7FF /* KeychainAccess */,
+				90E77D332456577400A3C7FF /* CryptoSwift */,
+			);
 			productName = InventoryTracker;
 			productReference = 90D57A5D24536D3C00B600BA /* InventoryTracker.app */;
 			productType = "com.apple.product-type.application";
@@ -122,6 +151,10 @@
 				Base,
 			);
 			mainGroup = 90D57A5424536D3C00B600BA;
+			packageReferences = (
+				90E77D172456010700A3C7FF /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				90E77D322456577400A3C7FF /* XCRemoteSwiftPackageReference "CryptoSwift" */,
+			);
 			productRefGroup = 90D57A5E24536D3C00B600BA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -136,6 +169,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90E77D272456171700A3C7FF /* CoreDataEntities in Resources */,
 				90D57A7024536D3E00B600BA /* LaunchScreen.storyboard in Resources */,
 				90D57A6D24536D3E00B600BA /* Preview Assets.xcassets in Resources */,
 				90D57A6A24536D3E00B600BA /* Assets.xcassets in Resources */,
@@ -149,9 +183,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90E77D3124561B4B00A3C7FF /* Helper.swift in Sources */,
+				90E77CE22453866500A3C7FF /* LoginView.swift in Sources */,
+				90E77D222456134800A3C7FF /* CreateUserView.swift in Sources */,
 				90D57A6624536D3C00B600BA /* InventoryTracker.xcdatamodeld in Sources */,
 				90D57A6124536D3C00B600BA /* AppDelegate.swift in Sources */,
+				90E77CE424538B4300A3C7FF /* Palette.swift in Sources */,
+				90E77CE82453C38900A3C7FF /* KeyboardGuardian.swift in Sources */,
 				90D57A6824536D3C00B600BA /* ContentView.swift in Sources */,
+				90E77D162455D0BB00A3C7FF /* DataManager.swift in Sources */,
 				90D57A6324536D3C00B600BA /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,6 +386,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		90E77D172456010700A3C7FF /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.1.0;
+			};
+		};
+		90E77D322456577400A3C7FF /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		90E77D182456010700A3C7FF /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 90E77D172456010700A3C7FF /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		90E77D332456577400A3C7FF /* CryptoSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 90E77D322456577400A3C7FF /* XCRemoteSwiftPackageReference "CryptoSwift" */;
+			productName = CryptoSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		90D57A6424536D3C00B600BA /* InventoryTracker.xcdatamodeld */ = {
