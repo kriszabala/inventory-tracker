@@ -28,19 +28,19 @@ extension ITBin {
 
 }
 
-// MARK: Generated accessors for subBin
+// MARK: Generated accessors for subBins
 extension ITBin {
 
-    @objc(addSubBinObject:)
+    @objc(addSubBinsObject:)
     @NSManaged public func addToSubBins(_ value: ITBin)
 
-    @objc(removeSubBinObject:)
+    @objc(removeSubBinsObject:)
     @NSManaged public func removeFromSubBins(_ value: ITBin)
 
-    @objc(addSubBin:)
+    @objc(addSubBins:)
     @NSManaged public func addToSubBins(_ values: NSSet)
 
-    @objc(removeSubBin:)
+    @objc(removeSubBins:)
     @NSManaged public func removeFromSubBins(_ values: NSSet)
 
 }

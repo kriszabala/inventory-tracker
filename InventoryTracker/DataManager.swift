@@ -226,7 +226,7 @@ class DataManager: ObservableObject{
 		}
 		if let parentBin = parentBin {
 			newBin.parentBin = parentBin
-			//parentBin.addToSubBins(newBin)
+			parentBin.addToSubBins(newBin)
 		}
 		saveContext()
 		print("Bin with name \(name) and level \(level) created succesfully")
