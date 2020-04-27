@@ -44,7 +44,7 @@ struct CreateBinView: View {
 							level = 0
 						}
 						
-						let createStatus = self.dataManager.createBin(name: self.name, level: level, notes: self.notes)
+						let createStatus = self.dataManager.createBin(name: self.name, level: level, notes: self.notes, parentBin: self.parentBin)
 						if (createStatus == .createSuccess){
 							self.presentationMode.wrappedValue.dismiss()
 						}

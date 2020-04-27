@@ -23,8 +23,13 @@ struct BinsView: View {
 	}
 	
 	init(level: Int16, bin:ITBin?){
-		self.init(level: 	level)
+		self.level = level
 		self.bin = bin
+		if let bin = bin{
+			_bins = FetchRequest<ITBin>(fetchRequest:ITBin.getSubBinsForParent(parentBin: bin))
+		}else{
+			_bins = FetchRequest<ITBin>(fetchRequest:ITBin.getBinsForLevel(level: level))
+		}
 	}
 	
 	var body: some View {

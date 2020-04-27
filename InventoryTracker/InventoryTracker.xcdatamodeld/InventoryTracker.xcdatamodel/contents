@@ -7,8 +7,8 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
         <relationship name="createUser" maxCount="1" deletionRule="Nullify" destinationEntity="ITUser" inverseName="bins" inverseEntity="ITUser"/>
-        <relationship name="parentBin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ITBin" inverseName="subBin" inverseEntity="ITBin"/>
-        <relationship name="subBin" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITBin" inverseName="parentBin" inverseEntity="ITBin"/>
+        <relationship name="parentBin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ITBin" inverseName="subBins" inverseEntity="ITBin"/>
+        <relationship name="subBins" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITBin" inverseName="parentBin" inverseEntity="ITBin"/>
     </entity>
     <entity name="ITUser" representedClassName="ITUser" syncable="YES">
         <attribute name="createDate" attributeType="Date" usesScalarValueType="NO"/>

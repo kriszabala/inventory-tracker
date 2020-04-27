@@ -24,7 +24,7 @@ extension ITBin {
     @NSManaged public var level: Int16
     @NSManaged public var createUser: ITUser?
     @NSManaged public var parentBin: ITBin?
-    @NSManaged public var subBin: NSSet?
+    @NSManaged public var subBins: NSSet?
 
 }
 
@@ -32,15 +32,15 @@ extension ITBin {
 extension ITBin {
 
     @objc(addSubBinObject:)
-    @NSManaged public func addToSubBin(_ value: ITBin)
+    @NSManaged public func addToSubBins(_ value: ITBin)
 
     @objc(removeSubBinObject:)
-    @NSManaged public func removeFromSubBin(_ value: ITBin)
+    @NSManaged public func removeFromSubBins(_ value: ITBin)
 
     @objc(addSubBin:)
-    @NSManaged public func addToSubBin(_ values: NSSet)
+    @NSManaged public func addToSubBins(_ values: NSSet)
 
     @objc(removeSubBin:)
-    @NSManaged public func removeFromSubBin(_ values: NSSet)
+    @NSManaged public func removeFromSubBins(_ values: NSSet)
 
 }

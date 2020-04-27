@@ -205,7 +205,7 @@ class DataManager: ObservableObject{
 		return nil
 	}
 	
-	func createBin(name: String, level:Int16, notes: String? ) -> CreateStatus{
+	func createBin(name: String, level:Int16, notes: String?, parentBin: ITBin?) -> CreateStatus{
 		if findBinWith(name: name, level: level) != nil{
 			print("Bin with name \(name) and level \(level) already exists")
 			return .createFailedAlreadyExists
@@ -223,6 +223,10 @@ class DataManager: ObservableObject{
 		if let currentUser = currentUser {
 			newBin.createUser = currentUser
 			currentUser.addToBins(newBin)
+		}
+		if let parentBin = parentBin {
+			newBin.parentBin = parentBin
+			//parentBin.addToSubBins(newBin)
 		}
 		saveContext()
 		print("Bin with name \(name) and level \(level) created succesfully")

@@ -17,5 +17,12 @@ extension ITBin: Identifiable {
 		request.sortDescriptors = [NSSortDescriptor(keyPath: \ITBin.name, ascending: true)]
 		return request
 	}
+	
+	static func getSubBinsForParent(parentBin: ITBin) -> NSFetchRequest<ITBin> {
+		let request: NSFetchRequest<ITBin> = ITBin.fetchRequest()
+		request.predicate = NSPredicate(format: "parentBin == %@", parentBin)
+		request.sortDescriptors = [NSSortDescriptor(keyPath: \ITBin.name, ascending: true)]
+		return request
+	}
 }
 
