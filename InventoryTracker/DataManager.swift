@@ -6,10 +6,20 @@
 //  Copyright © 2020 Zabala. All rights reserved.
 //
 
-import Foundation
 import CoreData
 import CryptoSwift
 import KeychainAccess
+import SwiftUI
+
+struct SystemServices: ViewModifier {
+	static var dataManager = DataManager()
+	
+	func body(content: Content) -> some View {
+		content
+			// services
+			.environmentObject(Self.dataManager)
+	}
+}
 
 class DataManager: ObservableObject{
 	let pwHashSalt = "Jg*<B9@UW6Kde+1OxaSxbf3m#&8W-Kf7"
