@@ -17,7 +17,7 @@ struct ContentView: View {
 			
 			TabView {
 				NavigationView{
-					BinsView(level: 0).navigationBarTitle("Home")
+					BinsView().navigationBarTitle("Home")
 				}
 				.tabItem {
 					Image(systemName: "1.square.fill")

@@ -11,24 +11,23 @@ import SwiftUI
 struct BinsView: View {
 	@EnvironmentObject private var dataManager: DataManager
 	@State private var showCreateBinsSheet = false
-	var level: Int16
 	var bin: ITBin?
 	
-	@FetchRequest(fetchRequest: ITBin.fetchRequest())
+	@FetchRequest(entity: ITBin.entity(),
+								sortDescriptors: [NSSortDescriptor(keyPath: \ITBin.name, ascending: true)],
+								predicate: NSPredicate(format: "level == %d", 0))
+	
+	//@FetchRequest(fetchRequest: ITBin.fetchRequest())
 	var bins: FetchedResults<ITBin>
 	
-	init(level: Int16){
-		self.level = level
-		_bins = FetchRequest<ITBin>(fetchRequest:ITBin.getBinsForLevel(level: level))
+	init() {
+		self.init(bin: nil)
 	}
 	
-	init(level: Int16, bin:ITBin?){
-		self.level = level
+	init(bin:ITBin?){
 		self.bin = bin
 		if let bin = bin{
 			_bins = FetchRequest<ITBin>(fetchRequest:ITBin.getSubBinsForParent(parentBin: bin))
-		}else{
-			_bins = FetchRequest<ITBin>(fetchRequest:ITBin.getBinsForLevel(level: level))
 		}
 	}
 	
@@ -45,7 +44,7 @@ struct BinsView: View {
 							}
 						}
 						Spacer()
-						NavigationLink("", destination: BinsView(level: bin.level+1, bin: bin).navigationBarTitle(Text("\(bin.name ?? "")")))
+						NavigationLink("", destination: BinsView(bin: bin).navigationBarTitle(Text("\(bin.name ?? "")")))
 					}
 				}
 				.onDelete { indexSet in
@@ -68,7 +67,7 @@ struct BinsView: View {
 
 struct BinView_Previews: PreviewProvider {
 	static var previews: some View {
-		BinsView(level: 0).modifier(SystemServices())
+		BinsView().modifier(SystemServices())
 	}
 }
 
