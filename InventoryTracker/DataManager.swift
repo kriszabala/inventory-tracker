@@ -12,6 +12,8 @@ import CryptoSwift
 import KeychainAccess
 
 class DataManager: ObservableObject{
+	let pwHashSalt = "Jg*<B9@UW6Kde+1OxaSxbf3m#&8W-Kf7"
+
 	private let keychain = Keychain(service: Bundle.main.bundleIdentifier ?? "com.zabala.inventory")
 	init() {
 		//reset()
@@ -118,8 +120,7 @@ class DataManager: ObservableObject{
 	}
 	
 	func passwordHashFrom(email: String, password: String) -> String {
-		let salt = "Jg*<B9@UW6Kde+1OxaSxbf3m#&8W-Kf7"
-		return "\(password).\(email).\(salt)".sha256()
+		return "\(password).\(email).\(pwHashSalt)".sha256()
 	}
 	
 }
