@@ -10,7 +10,7 @@ import SwiftUI
 
 struct CreateUserView: View {
 	@EnvironmentObject var dataManager: DataManager
-
+	
 	@Environment (\.presentationMode) var presentationMode
 	
 	@State var email: String = "kris.zabala@gmail.com"
@@ -22,7 +22,7 @@ struct CreateUserView: View {
 	@State var showingPasswordInvalid: Bool = false
 	@State var showingFirstNameInvalid: Bool = false
 	@State var showingLastNameInvalid: Bool = false
-
+	
 	var body: some View {
 		KeyboardGuardian{
 			ZStack{
@@ -73,6 +73,13 @@ struct CreateUserView: View {
 					{
 						CreateUserButtonContent()
 					}
+					
+					Button(action: {
+						self.presentationMode.wrappedValue.dismiss()
+					})
+					{
+						CreateUserCancelButtonContent()
+					}
 				}
 			}
 			.padding()
@@ -92,7 +99,7 @@ struct CreateUserView: View {
 	}
 	
 	private func isInputValid() -> Bool {
-			return !(showingEmailInvalid || showingFirstNameInvalid || showingLastNameInvalid || showingPasswordInvalid)
+		return !(showingEmailInvalid || showingFirstNameInvalid || showingLastNameInvalid || showingPasswordInvalid)
 	}
 	
 }
@@ -114,7 +121,20 @@ struct CreateUserButtonContent : View {
 			.background(Color.green)
 			.cornerRadius(15.0)
 			.padding(.top, 20)
-			
+		
+	}
+}
+
+struct CreateUserCancelButtonContent : View {
+	var body: some View {
+		return Text("CANCEL")
+			.font(.headline)
+			.foregroundColor(.white)
+			.frame(width: 220, height: 60)
+			.background(Color.green)
+			.cornerRadius(15.0)
+			.padding(.top, 20)
+		
 	}
 }
 
