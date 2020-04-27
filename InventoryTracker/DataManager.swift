@@ -182,6 +182,7 @@ class DataManager: ObservableObject{
 		}
 		if let currentUser = currentUser {
 			newLocation.createUser = currentUser
+			currentUser.addToLocations(newLocation)
 		}
 		saveContext()
 		return .createSuccess;

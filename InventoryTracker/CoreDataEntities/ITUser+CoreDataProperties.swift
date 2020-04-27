@@ -24,6 +24,7 @@ extension ITUser {
     @NSManaged public var createDate: Date?
     @NSManaged public var pwHash: String?
     @NSManaged public var logins: NSSet?
+    @NSManaged public var locations: NSSet?
 
 }
 
@@ -41,5 +42,22 @@ extension ITUser {
 
     @objc(removeLogins:)
     @NSManaged public func removeFromLogins(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for locations
+extension ITUser {
+
+    @objc(addLocationsObject:)
+    @NSManaged public func addToLocations(_ value: ITLocation)
+
+    @objc(removeLocationsObject:)
+    @NSManaged public func removeFromLocations(_ value: ITLocation)
+
+    @objc(addLocations:)
+    @NSManaged public func addToLocations(_ values: NSSet)
+
+    @objc(removeLocations:)
+    @NSManaged public func removeFromLocations(_ values: NSSet)
 
 }

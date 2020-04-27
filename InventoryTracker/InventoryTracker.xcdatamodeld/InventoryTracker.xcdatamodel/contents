@@ -5,7 +5,7 @@
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
-        <relationship name="createUser" maxCount="1" deletionRule="Nullify" destinationEntity="ITUser"/>
+        <relationship name="createUser" maxCount="1" deletionRule="Nullify" destinationEntity="ITUser" inverseName="locations" inverseEntity="ITUser"/>
         <relationship name="parentLocation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ITLocation" inverseName="subLocations" inverseEntity="ITLocation"/>
         <relationship name="subLocations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITLocation" inverseName="parentLocation" inverseEntity="ITLocation"/>
     </entity>
@@ -16,6 +16,7 @@
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="lastName" attributeType="String"/>
         <attribute name="pwHash" attributeType="String"/>
+        <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITLocation" inverseName="createUser" inverseEntity="ITLocation"/>
         <relationship name="logins" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITUserLogin" inverseName="user" inverseEntity="ITUserLogin"/>
     </entity>
     <entity name="ITUserLogin" representedClassName="ITUserLogin" syncable="YES" codeGenerationType="class">
@@ -24,7 +25,7 @@
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ITUser" inverseName="logins" inverseEntity="ITUser"/>
     </entity>
     <elements>
-        <element name="ITUser" positionX="-63" positionY="-18" width="128" height="148"/>
+        <element name="ITUser" positionX="-63" positionY="-18" width="128" height="163"/>
         <element name="ITUserLogin" positionX="206.1796875" positionY="99.15234375" width="128" height="88"/>
         <element name="ITLocation" positionX="111.34375" positionY="-92.70703125" width="128" height="148"/>
     </elements>
