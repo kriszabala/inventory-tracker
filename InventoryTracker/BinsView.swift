@@ -11,13 +11,15 @@ import SwiftUI
 struct BinsView: View {
 	@EnvironmentObject private var dataManager: DataManager
 	@State private var showCreateBinsSheet = false
-	var level: Int16 = 0
+	var level: Int16
 	
-	@FetchRequest(entity: ITBin.entity(),
-								sortDescriptors: [],
-								predicate: NSPredicate(format: "level == %d", 0))
-	
+	@FetchRequest(fetchRequest: ITBin.fetchRequest())
 	var bins: FetchedResults<ITBin>
+	
+	init(level: Int16){
+		self.level = level
+		_bins = FetchRequest<ITBin>(fetchRequest:ITBin.getBinsForLevel(level: level))
+	}
 	
 	var body: some View {
 		NavigationView {
@@ -59,7 +61,7 @@ struct BinsView: View {
 
 struct BinView_Previews: PreviewProvider {
 	static var previews: some View {
-		BinsView().modifier(SystemServices())
+		BinsView(level: 0).modifier(SystemServices())
 	}
 }
 

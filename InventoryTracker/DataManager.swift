@@ -115,10 +115,10 @@ class DataManager: ObservableObject{
 	func findUserWith(email: String) -> ITUser? {
 		// TODO: Handle email checks with . and + characters
 		
-		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ITUser")
+		let fetchRequest:NSFetchRequest<ITUser> = ITUser.fetchRequest()
 		fetchRequest.predicate = NSPredicate(format: "email == %@", email.lowercased())
 		do {
-			let user = try self.persistentContainer.viewContext.fetch(fetchRequest) as! [ITUser]
+			let user = try self.persistentContainer.viewContext.fetch(fetchRequest)
 			if user.count > 0{
 				print("Found user")
 				return user[0]
@@ -191,10 +191,10 @@ class DataManager: ObservableObject{
 	}
 	
 	func findBinWith(name: String, level: Int16) -> ITBin? {
-		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ITBin")
+		let fetchRequest:NSFetchRequest<ITBin> = ITBin.fetchRequest()
 		fetchRequest.predicate = NSPredicate(format: "name LIKE[c] %@ AND level == %d", name, level)
 		do {
-			let bins = try self.persistentContainer.viewContext.fetch(fetchRequest) as! [ITBin]
+			let bins = try self.persistentContainer.viewContext.fetch(fetchRequest)
 			if bins.count > 0{
 				print("Found bin")
 				return bins[0]

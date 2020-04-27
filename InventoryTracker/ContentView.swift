@@ -16,7 +16,7 @@ struct ContentView: View {
 			
 			
 			TabView {
-				BinsView()
+				BinsView(level: 0)
 					.tabItem {
 						Image(systemName: "1.square.fill")
 						Text("Bins")
