@@ -48,16 +48,16 @@ extension ITUser {
 // MARK: Generated accessors for locations
 extension ITUser {
 
-    @objc(addLocationsObject:)
-    @NSManaged public func addToLocations(_ value: ITLocation)
+    @objc(addBinsObject:)
+    @NSManaged public func addToBins(_ value: ITBin)
 
-    @objc(removeLocationsObject:)
-    @NSManaged public func removeFromLocations(_ value: ITLocation)
+    @objc(removeBinsObject:)
+    @NSManaged public func removeFromBins(_ value: ITBin)
 
-    @objc(addLocations:)
-    @NSManaged public func addToLocations(_ values: NSSet)
+    @objc(addBins:)
+    @NSManaged public func addToBins(_ values: NSSet)
 
-    @objc(removeLocations:)
-    @NSManaged public func removeFromLocations(_ values: NSSet)
+    @objc(removeBins:)
+    @NSManaged public func removeFromBins(_ values: NSSet)
 
 }

@@ -171,18 +171,18 @@ class DataManager: ObservableObject{
 		return "\(password).\(email.lowercased()).\(pwHashSalt)".sha256()
 	}
 	
-	func createLocation(name: String, notes: String? ) -> CreateStatus{
-		let newLocation = ITLocation(context: self.persistentContainer.viewContext)
-		newLocation.id = UUID()
-		newLocation.createDate = Date()
-		newLocation.name = name
+	func createBin(name: String, notes: String? ) -> CreateStatus{
+		let newBin = ITBin(context: self.persistentContainer.viewContext)
+		newBin.id = UUID()
+		newBin.createDate = Date()
+		newBin.name = name
 		if let notes = notes, !notes.isEmpty {
 			/* notes is not blank */
-			newLocation.notes = notes
+			newBin.notes = notes
 		}
 		if let currentUser = currentUser {
-			newLocation.createUser = currentUser
-			currentUser.addToLocations(newLocation)
+			newBin.createUser = currentUser
+			currentUser.addToBins(newBin)
 		}
 		saveContext()
 		return .createSuccess;

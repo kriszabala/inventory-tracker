@@ -1,5 +1,5 @@
 //
-//  ITLocation+CoreDataClass.swift
+//  ITBin+CoreDataClass.swift
 //  InventoryTracker
 //
 //  Created by Kris Zabala on 4/27/20.
@@ -10,7 +10,7 @@
 import Foundation
 import CoreData
 
-@objc(ITLocation)
-public class ITLocation: NSManagedObject {
+@objc(ITBin)
+public class ITBin: NSManagedObject {
 
 }
