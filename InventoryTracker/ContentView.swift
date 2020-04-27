@@ -33,13 +33,13 @@ struct ContentView: View {
 				}
 			}
 			.font(.headline)
-			.sheet(isPresented: $dataManager.isLoggedIn.negate()) { LoginView().environmentObject(self.dataManager) }
+			.sheet(isPresented: $dataManager.isLoggedIn.negate()) { LoginView().modifier(SystemServices()) }
 			}
     
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-			ContentView().environmentObject(DataManager())
+			ContentView().modifier(SystemServices())
     }
 }

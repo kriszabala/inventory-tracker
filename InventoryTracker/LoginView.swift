@@ -52,7 +52,7 @@ struct LoginView: View {
 				}
 			}
 			.padding()
-			.sheet(isPresented: $isShowingCreateUserView) { CreateUserView().environmentObject(self.dataManager) }
+			.sheet(isPresented: $isShowingCreateUserView) { CreateUserView().modifier(SystemServices()) }
 		}
 	}
 		
@@ -62,7 +62,7 @@ struct LoginView: View {
 #if DEBUG
 struct LoginView_Previews : PreviewProvider {
 	static var previews: some View {
-		LoginView().environmentObject(DataManager())
+		LoginView().modifier(SystemServices())
 	}
 }
 #endif

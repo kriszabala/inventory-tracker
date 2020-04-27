@@ -8,6 +8,16 @@
 
 import SwiftUI
 
+struct SystemServices: ViewModifier {
+	static var dataManager = DataManager()
+	
+	func body(content: Content) -> some View {
+		content
+			// services
+			.environmentObject(Self.dataManager)
+	}
+}
+
 extension Binding where Value == Bool {
 	public func negate() -> Binding<Bool> {
 		return Binding<Bool>(get:{ !self.wrappedValue },

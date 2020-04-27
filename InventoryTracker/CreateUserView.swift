@@ -107,7 +107,7 @@ struct CreateUserView: View {
 #if DEBUG
 struct CreateUserView_Previews : PreviewProvider {
 	static var previews: some View {
-		CreateUserView().environmentObject(DataManager())
+		CreateUserView().modifier(SystemServices())
 	}
 }
 #endif
