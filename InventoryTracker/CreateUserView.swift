@@ -18,6 +18,7 @@ struct CreateUserView: View {
 	@State var lastName: String = "Zabala"
 	@State var password: String = "123456"
 	@State var showingEmailInvalid: Bool = false
+	@State var showingEmailExists: Bool = false
 	@State var showingPasswordInvalid: Bool = false
 	@State var showingFirstNameInvalid: Bool = false
 	@State var showingLastNameInvalid: Bool = false
@@ -30,6 +31,10 @@ struct CreateUserView: View {
 						TextField("Email Address", text: $email).modifier(ITTextFieldStyle())
 						if showingEmailInvalid {
 							Text("Please enter a valid email address.")
+								.foregroundColor(.red)
+						}
+						if showingEmailExists {
+							Text("User with email already exists.")
 								.foregroundColor(.red)
 						}
 						TextField("First Name", text: $firstName).modifier(ITTextFieldStyle())
@@ -53,9 +58,15 @@ struct CreateUserView: View {
 						self.validateInput()
 						if self.isInputValid()
 						{
-							print("Creating User")
-							if (self.dataManager.createUser(email: self.email, firstName: self.firstName, lastName: self.lastName, password: self.password)){
+							print("Attempting to Creating User")
+							let createStatus = self.dataManager.createUser(email: self.email, firstName: self.firstName, lastName: self.lastName, password: self.password)
+							if (createStatus == .createUserSuccess){
+								print("User created successfully")
 								self.presentationMode.wrappedValue.dismiss()
+							}
+							else if (createStatus == .createUserFailedAlreadyExists){
+								print("User with email \(self.email) already exists")
+								self.showingEmailExists = true
 							}
 						}
 					})

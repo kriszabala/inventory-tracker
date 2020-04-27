@@ -85,28 +85,43 @@ class DataManager: ObservableObject{
 		}
 	}
 	
-	func login(email: String, password: String) -> Bool{
-		let emailLowercased = email.lowercased()
-		print ("Logging in with username \(emailLowercased) and pw: \(password)")
-		let moc = self.persistentContainer.viewContext
-		let userFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "ITUser")
-		let pwHash = passwordHashFrom(email: emailLowercased, password: password)
-		userFetch.predicate = NSPredicate(format: "email == %@ AND pwHash == %@", emailLowercased, pwHash)
+	func findUserWith(email: String) -> ITUser? {
+		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ITUser")
+		fetchRequest.predicate = NSPredicate(format: "email == %@", email.lowercased())
 		do {
-			let user = try moc.fetch(userFetch) as! [ITUser]
+			let user = try self.persistentContainer.viewContext.fetch(fetchRequest) as! [ITUser]
 			if user.count > 0{
 				print("Found user")
-				self.isLoggedIn = true
-				return true
+				return user[0]
 			}
 		} catch {
 			fatalError("Failed to fetch ITUser: \(error)")
 		}
-
+		return nil
+	}
+	
+	func login(email: String, password: String) -> Bool{
+		print ("Logging in with username \(email) and pw: \(password)")
+		if let user = findUserWith(email: email){
+			if user.pwHash == passwordHashFrom(email: email, password: password){
+				self.isLoggedIn = true
+				return true
+			}
+		}
 		return false
 	}
 	
-	func createUser(email: String, firstName: String, lastName: String, password: String) -> Bool{
+	enum CreateUserStatus {
+		case createUserSuccess
+		case createUserFailedAlreadyExists
+	}
+	
+	func createUser(email: String, firstName: String, lastName: String, password: String) -> CreateUserStatus{
+		//Check to make sure user with email doesn't already exist/
+		if findUserWith(email: email) != nil{
+			return .createUserFailedAlreadyExists
+		}
+		
 		let newUser = ITUser(context: self.persistentContainer.viewContext)
 		newUser.email = email.lowercased()
 		newUser.firstName = firstName
@@ -116,11 +131,11 @@ class DataManager: ObservableObject{
 		newUser.dateCreated = Date()
 		saveContext()
 		self.isLoggedIn = true
-		return true;
+		return .createUserSuccess;
 	}
 	
 	func passwordHashFrom(email: String, password: String) -> String {
-		return "\(password).\(email).\(pwHashSalt)".sha256()
+		return "\(password).\(email.lowercased()).\(pwHashSalt)".sha256()
 	}
 	
 }
