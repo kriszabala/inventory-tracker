@@ -12,6 +12,7 @@ struct BinsView: View {
 	@EnvironmentObject private var dataManager: DataManager
 	@State private var showCreateBinsSheet = false
 	var level: Int16
+	var bin: ITBin?
 	
 	@FetchRequest(fetchRequest: ITBin.fetchRequest())
 	var bins: FetchedResults<ITBin>
@@ -21,8 +22,12 @@ struct BinsView: View {
 		_bins = FetchRequest<ITBin>(fetchRequest:ITBin.getBinsForLevel(level: level))
 	}
 	
+	init(level: Int16, bin:ITBin?){
+		self.init(level: 	level)
+		self.bin = bin
+	}
+	
 	var body: some View {
-		NavigationView {
 			List {
 				ForEach(bins) { bin in
 					HStack {
@@ -35,9 +40,7 @@ struct BinsView: View {
 							}
 						}
 						Spacer()
-						Button(action: { print ("on tap")}) {
-							Text(">")
-						}
+						NavigationLink("", destination: BinsView(level: bin.level+1, bin: bin).navigationBarTitle(Text("\(bin.name ?? "")")))
 					}
 				}
 				.onDelete { indexSet in
@@ -46,7 +49,6 @@ struct BinsView: View {
 					}
 				}
 			}
-			.navigationBarTitle("Bins")
 			.navigationBarItems(trailing: Button(action: {
 				self.showCreateBinsSheet = true
 			}, label: {
@@ -54,8 +56,8 @@ struct BinsView: View {
 					.resizable()
 					.frame(width: 32, height: 32, alignment: .center)
 			}))
-				.sheet(isPresented: $showCreateBinsSheet) { CreateBinView().modifier(SystemServices()) }
-		}
+				.sheet(isPresented: $showCreateBinsSheet) { CreateBinView(parentBin: self.bin).modifier(SystemServices()) }
+		
 	}
 }
 

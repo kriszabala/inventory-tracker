@@ -16,10 +16,12 @@ struct ContentView: View {
 			
 			
 			TabView {
-				BinsView(level: 0)
-					.tabItem {
-						Image(systemName: "1.square.fill")
-						Text("Bins")
+				NavigationView{
+					BinsView(level: 0).navigationBarTitle("Home")
+				}
+				.tabItem {
+					Image(systemName: "1.square.fill")
+					Text("Bins")
 				}
 				Text("Another Tab")
 					.tabItem {
