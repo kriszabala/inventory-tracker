@@ -13,7 +13,7 @@ import KeychainAccess
 
 class DataManager: ObservableObject{
 	let pwHashSalt = "Jg*<B9@UW6Kde+1OxaSxbf3m#&8W-Kf7"
-
+	
 	private let keychain = Keychain(service: Bundle.main.bundleIdentifier ?? "com.zabala.inventory")
 	init() {
 		//reset()
@@ -54,7 +54,7 @@ class DataManager: ObservableObject{
 					print("Deleting existing store at URL \(storeURL)", storeURL)
 					try persistentContainer.persistentStoreCoordinator.destroyPersistentStore(at: storeURL, ofType: NSSQLiteStoreType, options: nil)
 				} catch {
-						fatalError("Error deleting persistent store \(error)")
+					fatalError("Error deleting persistent store \(error)")
 				}
 				
 				do {
@@ -92,7 +92,7 @@ class DataManager: ObservableObject{
 	
 	func findUserWith(email: String) -> ITUser? {
 		// TODO: Handle email checks with . and + characters
-	
+		
 		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ITUser")
 		fetchRequest.predicate = NSPredicate(format: "email == %@", email.lowercased())
 		do {
