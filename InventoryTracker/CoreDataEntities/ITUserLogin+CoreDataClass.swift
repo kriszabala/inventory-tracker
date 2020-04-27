@@ -1,5 +1,5 @@
 //
-//  ITUser+CoreDataClass.swift
+//  ITUserLogin+CoreDataClass.swift
 //  InventoryTracker
 //
 //  Created by Kris Zabala on 4/27/20.
@@ -10,7 +10,7 @@
 import Foundation
 import CoreData
 
-@objc(ITUser)
-public class ITUser: NSManagedObject {
+@objc(ITUserLogin)
+public class ITUserLogin: NSManagedObject {
 
 }

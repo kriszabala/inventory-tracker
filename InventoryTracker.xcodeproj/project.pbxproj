@@ -20,9 +20,9 @@
 		90E77D162455D0BB00A3C7FF /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D152455D0BB00A3C7FF /* DataManager.swift */; };
 		90E77D192456010700A3C7FF /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 90E77D182456010700A3C7FF /* KeychainAccess */; };
 		90E77D222456134800A3C7FF /* CreateUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D212456134800A3C7FF /* CreateUserView.swift */; };
-		90E77D272456171700A3C7FF /* CoreDataEntities in Resources */ = {isa = PBXBuildFile; fileRef = 90E77D262456171700A3C7FF /* CoreDataEntities */; };
 		90E77D3124561B4B00A3C7FF /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D3024561B4B00A3C7FF /* Helper.swift */; };
 		90E77D342456577400A3C7FF /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 90E77D332456577400A3C7FF /* CryptoSwift */; };
+		90E77D392456993D00A3C7FF /* CoreDataEntities in Resources */ = {isa = PBXBuildFile; fileRef = 90E77D262456171700A3C7FF /* CoreDataEntities */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -169,7 +169,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90E77D272456171700A3C7FF /* CoreDataEntities in Resources */,
+				90E77D392456993D00A3C7FF /* CoreDataEntities in Resources */,
 				90D57A7024536D3E00B600BA /* LaunchScreen.storyboard in Resources */,
 				90D57A6D24536D3E00B600BA /* Preview Assets.xcassets in Resources */,
 				90D57A6A24536D3E00B600BA /* Assets.xcassets in Resources */,

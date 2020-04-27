@@ -58,7 +58,7 @@ struct CreateUserView: View {
 						self.validateInput()
 						if self.isInputValid()
 						{
-							print("Attempting to Creating User")
+							print("Attempting to create User")
 							let createStatus = self.dataManager.createUser(email: self.email, firstName: self.firstName, lastName: self.lastName, password: self.password)
 							if (createStatus == .createUserSuccess){
 								print("User created successfully")

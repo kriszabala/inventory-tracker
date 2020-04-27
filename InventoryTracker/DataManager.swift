@@ -72,7 +72,7 @@ class DataManager: ObservableObject{
 	}
 	
 	func saveContext () {
-		print("Saving Context")
+		print("Saving context")
 		let context = self.persistentContainer.viewContext
 		if context.hasChanges {
 			do {
@@ -83,7 +83,7 @@ class DataManager: ObservableObject{
 				let nserror = error as NSError
 				fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
 			}
-			print("Saved Context Successfully")
+			print("Saved context successfully")
 		}
 		else{
 			print("Nothing to save")
@@ -107,11 +107,26 @@ class DataManager: ObservableObject{
 		return nil
 	}
 	
+	private func loginForUser(user: ITUser) {
+		user.addToLogins(createLoginForUser(user: user))
+		saveContext()
+		self.isLoggedIn = true
+	}
+	
 	func login(email: String, password: String) -> Bool{
 		print ("Logging in with username \(email) and pw: \(password)")
 		if let user = findUserWith(email: email){
 			if user.pwHash == passwordHashFrom(email: email, password: password){
-				self.isLoggedIn = true
+				if let previousLogins = user.logins{
+					for case let thisLogin as ITUserLogin in previousLogins{
+						if let date = thisLogin.loginDate, let user = thisLogin.user{
+							if let thisEmail = user.email {
+								print("User \(thisEmail) previously logged in on \(date)")
+							}
+						}
+					}
+				}
+				loginForUser(user: user)
 				return true
 			}
 		}
@@ -121,6 +136,14 @@ class DataManager: ObservableObject{
 	enum CreateUserStatus {
 		case createUserSuccess
 		case createUserFailedAlreadyExists
+	}
+	
+	func createLoginForUser(user: ITUser) -> ITUserLogin{
+		let login = ITUserLogin(context: self.persistentContainer.viewContext)
+		login.id = UUID()
+		login.loginDate = Date()
+		login.user = user
+		return login
 	}
 	
 	func createUser(email: String, firstName: String, lastName: String, password: String) -> CreateUserStatus{
@@ -135,9 +158,8 @@ class DataManager: ObservableObject{
 		newUser.lastName = lastName
 		newUser.id = UUID()
 		newUser.pwHash = passwordHashFrom(email: email, password: password)
-		newUser.dateCreated = Date()
-		saveContext()
-		self.isLoggedIn = true
+		newUser.createDate = Date()
+		loginForUser(user: newUser)
 		return .createUserSuccess;
 	}
 	
