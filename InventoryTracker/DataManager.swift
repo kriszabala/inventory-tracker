@@ -159,6 +159,7 @@ class DataManager: ObservableObject{
 	enum CreateStatus {
 		case createSuccess
 		case createFailedAlreadyExists
+		case createFailedMissingData
 	}
 	
 	func createLoginForUser(user: ITUser) -> ITUserLogin{
@@ -210,27 +211,27 @@ class DataManager: ObservableObject{
 			print("Bin with name \(name) and level \(level) already exists")
 			return .createFailedAlreadyExists
 		}
-		
-		let newBin = ITBin(context: self.persistentContainer.viewContext)
-		newBin.id = UUID()
-		newBin.createDate = Date()
-		newBin.name = name
-		newBin.level = level
-		if let notes = notes, !notes.isEmpty {
-			/* notes is not blank */
-			newBin.notes = notes
-		}
 		if let currentUser = currentUser {
+			let newBin = ITBin(context: self.persistentContainer.viewContext)
+			newBin.id = UUID()
 			newBin.createUser = currentUser
 			currentUser.addToBins(newBin)
+			newBin.createDate = Date()
+			newBin.name = name
+			newBin.level = level
+			
+			if let notes = notes, !notes.isEmpty {
+				/* notes is not blank */
+				newBin.notes = notes
+			}
+			if let parentBin = parentBin {
+				newBin.parentBin = parentBin
+				parentBin.addToSubBins(newBin)
+			}
+			saveContext()
+			print("Bin with name \(name) and level \(level) created succesfully")
+			return .createSuccess
 		}
-		if let parentBin = parentBin {
-			newBin.parentBin = parentBin
-			parentBin.addToSubBins(newBin)
-		}
-		saveContext()
-		print("Bin with name \(name) and level \(level) created succesfully")
-		return .createSuccess;
+		return .createFailedMissingData
 	}
-	
 }
