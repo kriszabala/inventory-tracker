@@ -16,34 +16,20 @@ struct ContentView: View {
 			
 			
 			TabView {
-				VStack{
-					Text("The First Tab")
-					Button(action: {
-						self.dataManager.isLoggedIn = false;
-					})
-					{
-						Text("LOGOUT")
-							.font(.headline)
-							.foregroundColor(.white)
-							.padding()
-							.frame(width: 220, height: 60)
-							.background(Color.green)
-							.cornerRadius(15.0)
-					}
-				}
+				BinsView()
 					.tabItem {
 						Image(systemName: "1.square.fill")
-						Text("First")
+						Text("Bins")
 				}
 				Text("Another Tab")
 					.tabItem {
 						Image(systemName: "2.square.fill")
 						Text("Second")
 				}
-				Text("The Last Tab")
+				SettingsView()
 					.tabItem {
 						Image(systemName: "3.square.fill")
-						Text("Third")
+						Text("Settings")
 				}
 			}
 			.font(.headline)
