@@ -71,14 +71,14 @@ struct CreateUserView: View {
 						}
 					})
 					{
-						CreateUserButtonContent()
+						ITButton(label: "CREATE USER")
 					}
 					
 					Button(action: {
 						self.presentationMode.wrappedValue.dismiss()
 					})
 					{
-						CreateUserCancelButtonContent()
+						ITButton(label: "CANCEL")
 					}
 				}
 			}
@@ -111,32 +111,6 @@ struct CreateUserView_Previews : PreviewProvider {
 	}
 }
 #endif
-
-struct CreateUserButtonContent : View {
-	var body: some View {
-		return Text("CREATE USER")
-			.font(.headline)
-			.foregroundColor(.white)
-			.frame(width: 220, height: 60)
-			.background(Color.green)
-			.cornerRadius(15.0)
-			.padding(.top, 20)
-		
-	}
-}
-
-struct CreateUserCancelButtonContent : View {
-	var body: some View {
-		return Text("CANCEL")
-			.font(.headline)
-			.foregroundColor(.white)
-			.frame(width: 220, height: 60)
-			.background(Color.green)
-			.cornerRadius(15.0)
-			.padding(.top, 20)
-		
-	}
-}
 
 struct ITTextFieldStyle: ViewModifier{
 	func body(content: Content) -> some View {

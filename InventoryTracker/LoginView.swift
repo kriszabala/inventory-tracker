@@ -37,14 +37,14 @@ struct LoginView: View {
 						}
 					})
 					{
-						LoginButtonContent()
+						ITButton(label: "LOGIN")
 					}
 					
 					Button(action: {
 						self.isShowingCreateUserView = true
 					})
 					{
-						CreateUserButtonContent()
+						ITButton(label: "CREATE USER")
 					}
 				}
 				if authenticationDidSucceed {

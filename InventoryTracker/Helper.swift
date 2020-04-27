@@ -40,3 +40,17 @@ extension String {
 		return emailTest.evaluate(with: self)
 	}
 }
+
+
+struct ITButton: View {
+	var label: String
+	var body: some View {
+		Text("\(label)")
+			.font(.headline)
+			.foregroundColor(.white)
+			.frame(width: 220, height: 60)
+			.background(Color.green)
+			.cornerRadius(15.0)
+			.padding(.top, 20)
+	}
+}

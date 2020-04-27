@@ -15,18 +15,7 @@ struct SettingsView: View {
 		NavigationView {
 			VStack{
 				Text("Settings")
-				Button(action: {
-					self.dataManager.isLoggedIn = false;
-				})
-				{
-					Text("LOGOUT")
-						.font(.headline)
-						.foregroundColor(.white)
-						.padding()
-						.frame(width: 220, height: 60)
-						.background(Color.green)
-						.cornerRadius(15.0)
-				}
+				ITButton(label: "Logout")
 			}.navigationBarTitle("Settings")
 		}
 	}
