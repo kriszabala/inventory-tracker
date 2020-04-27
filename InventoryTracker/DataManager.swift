@@ -18,6 +18,7 @@ struct SystemServices: ViewModifier {
 		content
 			// services
 			.environmentObject(Self.dataManager)
+			.environment(\.managedObjectContext, Self.dataManager.persistentContainer.viewContext )
 	}
 }
 
@@ -26,24 +27,30 @@ class DataManager: ObservableObject{
 	
 	private let keychain = Keychain(service: Bundle.main.bundleIdentifier ?? "com.zabala.inventory")
 	init() {
-		reset()
+		//reset()
 	}
 	
 	@Published var _isLoggedIn : Bool = false
-	
 	var currentUser: ITUser?
 	
 	var isLoggedIn: Bool {
 		get {
-			let loggedIn = keychain["isLoggedIn"]
-			return loggedIn == "loggedIn"
+			let email = keychain["isLoggedIn"]
+			print("Logged in with email \(email ?? "nil")")
+			if currentUser == nil {
+				if let email = email{
+					currentUser = findUserWith(email: email)
+				}
+			}
+			return email != nil
 		}
 		set {
 			if newValue{
-				keychain["isLoggedIn"] = "loggedIn"
+				keychain["isLoggedIn"] = currentUser?.email
 			}
 			else{
-				keychain["isLoggedIn"] = "notLoggedIn"
+				keychain["isLoggedIn"] = nil
+				currentUser = nil
 			}
 			self._isLoggedIn = newValue
 		}
@@ -60,6 +67,8 @@ class DataManager: ObservableObject{
 	}()
 	
 	func reset () {
+		self.isLoggedIn = false
+		
 		print("Reseting CoreData store")
 		for persistentStoreDescription in persistentContainer.persistentStoreDescriptions {
 			if let storeURL = persistentStoreDescription.url {
@@ -181,12 +190,32 @@ class DataManager: ObservableObject{
 		return "\(password).\(email.lowercased()).\(pwHashSalt)".sha256()
 	}
 	
-	func createBin(name: String, notes: String? ) -> CreateStatus{
+	func findBinWith(name: String, level: Int16) -> ITBin? {
+		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ITBin")
+		fetchRequest.predicate = NSPredicate(format: "name LIKE[c] %@ AND level == %d", name, level)
+		do {
+			let bins = try self.persistentContainer.viewContext.fetch(fetchRequest) as! [ITBin]
+			if bins.count > 0{
+				print("Found bin")
+				return bins[0]
+			}
+		} catch {
+			fatalError("Failed to fetch ITBin: \(error)")
+		}
+		return nil
+	}
+	
+	func createBin(name: String, level:Int16, notes: String? ) -> CreateStatus{
+		if findBinWith(name: name, level: level) != nil{
+			print("Bin with name \(name) and level \(level) already exists")
+			return .createFailedAlreadyExists
+		}
+		
 		let newBin = ITBin(context: self.persistentContainer.viewContext)
 		newBin.id = UUID()
 		newBin.createDate = Date()
 		newBin.name = name
-		newBin.level = 0
+		newBin.level = level
 		if let notes = notes, !notes.isEmpty {
 			/* notes is not blank */
 			newBin.notes = notes
@@ -196,6 +225,7 @@ class DataManager: ObservableObject{
 			currentUser.addToBins(newBin)
 		}
 		saveContext()
+		print("Bin with name \(name) and level \(level) created succesfully")
 		return .createSuccess;
 	}
 	

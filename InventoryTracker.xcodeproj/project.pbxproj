@@ -22,9 +22,16 @@
 		90E77D222456134800A3C7FF /* CreateUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D212456134800A3C7FF /* CreateUserView.swift */; };
 		90E77D3124561B4B00A3C7FF /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D3024561B4B00A3C7FF /* Helper.swift */; };
 		90E77D342456577400A3C7FF /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 90E77D332456577400A3C7FF /* CryptoSwift */; };
-		90E77D51245719E000A3C7FF /* CoreDataEntities in Resources */ = {isa = PBXBuildFile; fileRef = 90E77D262456171700A3C7FF /* CoreDataEntities */; };
 		90E77D5324571B6300A3C7FF /* BinsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D5224571B6300A3C7FF /* BinsView.swift */; };
 		90E77D5524571DA700A3C7FF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D5424571DA700A3C7FF /* SettingsView.swift */; };
+		90E77D572457386500A3C7FF /* CreateBinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D562457386500A3C7FF /* CreateBinView.swift */; };
+		90E77D732457530600A3C7FF /* ITUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D6C2457530600A3C7FF /* ITUser+CoreDataProperties.swift */; };
+		90E77D742457530600A3C7FF /* ITBin+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D6D2457530600A3C7FF /* ITBin+CoreDataClass.swift */; };
+		90E77D752457530600A3C7FF /* CoreDataClass+ITExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D6E2457530600A3C7FF /* CoreDataClass+ITExtensions.swift */; };
+		90E77D762457530600A3C7FF /* ITUserLogin+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D6F2457530600A3C7FF /* ITUserLogin+CoreDataProperties.swift */; };
+		90E77D772457530600A3C7FF /* ITUserLogin+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D702457530600A3C7FF /* ITUserLogin+CoreDataClass.swift */; };
+		90E77D782457530600A3C7FF /* ITUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D712457530600A3C7FF /* ITUser+CoreDataClass.swift */; };
+		90E77D792457530600A3C7FF /* ITBin+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D722457530600A3C7FF /* ITBin+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,10 +49,17 @@
 		90E77CE72453C38900A3C7FF /* KeyboardGuardian.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardGuardian.swift; sourceTree = "<group>"; };
 		90E77D152455D0BB00A3C7FF /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		90E77D212456134800A3C7FF /* CreateUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserView.swift; sourceTree = "<group>"; };
-		90E77D262456171700A3C7FF /* CoreDataEntities */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CoreDataEntities; sourceTree = "<group>"; };
 		90E77D3024561B4B00A3C7FF /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		90E77D5224571B6300A3C7FF /* BinsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinsView.swift; sourceTree = "<group>"; };
 		90E77D5424571DA700A3C7FF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		90E77D562457386500A3C7FF /* CreateBinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBinView.swift; sourceTree = "<group>"; };
+		90E77D6C2457530600A3C7FF /* ITUser+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ITUser+CoreDataProperties.swift"; path = "InventoryTracker/CoreDataEntities/ITUser+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		90E77D6D2457530600A3C7FF /* ITBin+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ITBin+CoreDataClass.swift"; path = "InventoryTracker/CoreDataEntities/ITBin+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		90E77D6E2457530600A3C7FF /* CoreDataClass+ITExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CoreDataClass+ITExtensions.swift"; path = "InventoryTracker/CoreDataEntities/CoreDataClass+ITExtensions.swift"; sourceTree = SOURCE_ROOT; };
+		90E77D6F2457530600A3C7FF /* ITUserLogin+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ITUserLogin+CoreDataProperties.swift"; path = "InventoryTracker/CoreDataEntities/ITUserLogin+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		90E77D702457530600A3C7FF /* ITUserLogin+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ITUserLogin+CoreDataClass.swift"; path = "InventoryTracker/CoreDataEntities/ITUserLogin+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		90E77D712457530600A3C7FF /* ITUser+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ITUser+CoreDataClass.swift"; path = "InventoryTracker/CoreDataEntities/ITUser+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		90E77D722457530600A3C7FF /* ITBin+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ITBin+CoreDataProperties.swift"; path = "InventoryTracker/CoreDataEntities/ITBin+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,13 +94,14 @@
 		90D57A5F24536D3C00B600BA /* InventoryTracker */ = {
 			isa = PBXGroup;
 			children = (
-				90E77D262456171700A3C7FF /* CoreDataEntities */,
+				90E77D6B245752ED00A3C7FF /* Entities */,
 				90E77D152455D0BB00A3C7FF /* DataManager.swift */,
 				90D57A6024536D3C00B600BA /* AppDelegate.swift */,
 				90D57A6224536D3C00B600BA /* SceneDelegate.swift */,
 				90E77CE72453C38900A3C7FF /* KeyboardGuardian.swift */,
 				90E77CE324538B4300A3C7FF /* Palette.swift */,
 				90D57A6724536D3C00B600BA /* ContentView.swift */,
+				90E77D562457386500A3C7FF /* CreateBinView.swift */,
 				90E77D5224571B6300A3C7FF /* BinsView.swift */,
 				90E77D5424571DA700A3C7FF /* SettingsView.swift */,
 				90E77CE12453866500A3C7FF /* LoginView.swift */,
@@ -107,6 +122,20 @@
 				90D57A6C24536D3E00B600BA /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		90E77D6B245752ED00A3C7FF /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				90E77D6E2457530600A3C7FF /* CoreDataClass+ITExtensions.swift */,
+				90E77D6D2457530600A3C7FF /* ITBin+CoreDataClass.swift */,
+				90E77D722457530600A3C7FF /* ITBin+CoreDataProperties.swift */,
+				90E77D712457530600A3C7FF /* ITUser+CoreDataClass.swift */,
+				90E77D6C2457530600A3C7FF /* ITUser+CoreDataProperties.swift */,
+				90E77D702457530600A3C7FF /* ITUserLogin+CoreDataClass.swift */,
+				90E77D6F2457530600A3C7FF /* ITUserLogin+CoreDataProperties.swift */,
+			);
+			path = Entities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,7 +204,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90E77D51245719E000A3C7FF /* CoreDataEntities in Resources */,
 				90D57A7024536D3E00B600BA /* LaunchScreen.storyboard in Resources */,
 				90D57A6D24536D3E00B600BA /* Preview Assets.xcassets in Resources */,
 				90D57A6A24536D3E00B600BA /* Assets.xcassets in Resources */,
@@ -197,10 +225,18 @@
 				90D57A6124536D3C00B600BA /* AppDelegate.swift in Sources */,
 				90E77CE424538B4300A3C7FF /* Palette.swift in Sources */,
 				90E77CE82453C38900A3C7FF /* KeyboardGuardian.swift in Sources */,
+				90E77D752457530600A3C7FF /* CoreDataClass+ITExtensions.swift in Sources */,
+				90E77D782457530600A3C7FF /* ITUser+CoreDataClass.swift in Sources */,
 				90D57A6824536D3C00B600BA /* ContentView.swift in Sources */,
+				90E77D742457530600A3C7FF /* ITBin+CoreDataClass.swift in Sources */,
+				90E77D762457530600A3C7FF /* ITUserLogin+CoreDataProperties.swift in Sources */,
+				90E77D732457530600A3C7FF /* ITUser+CoreDataProperties.swift in Sources */,
+				90E77D792457530600A3C7FF /* ITBin+CoreDataProperties.swift in Sources */,
 				90E77D5524571DA700A3C7FF /* SettingsView.swift in Sources */,
 				90E77D162455D0BB00A3C7FF /* DataManager.swift in Sources */,
 				90D57A6324536D3C00B600BA /* SceneDelegate.swift in Sources */,
+				90E77D572457386500A3C7FF /* CreateBinView.swift in Sources */,
+				90E77D772457530600A3C7FF /* ITUserLogin+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

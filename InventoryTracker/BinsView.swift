@@ -11,14 +11,38 @@ import SwiftUI
 struct BinsView: View {
 	@EnvironmentObject private var dataManager: DataManager
 	@State private var showCreateBinsSheet = false
+	var level: Int16 = 0
+	
+	@FetchRequest(entity: ITBin.entity(),
+								sortDescriptors: [],
+								predicate: NSPredicate(format: "level == %d", 0))
+	
+	var bins: FetchedResults<ITBin>
 	
 	var body: some View {
 		NavigationView {
-			VStack{
-				Text("Bins")
-				Button(action: {
-					self.dataManager.isLoggedIn = false;
-				}){ ITButton(label: "Logout") }
+			List {
+				ForEach(bins) { bin in
+					HStack {
+						VStack(alignment: .leading) {
+							Text("\(bin.name!) - \(bin.level)")
+								.font(.headline)
+							if (bin.notes != nil){
+							Text("Notes: \(bin.notes!)")
+								.font(.subheadline)
+							}
+						}
+						Spacer()
+						Button(action: { print ("on tap")}) {
+							Text(">")
+						}
+					}
+				}
+				.onDelete { indexSet in
+					for index in indexSet {
+						//self.managedObjectContext.delete(self.orders[index])
+					}
+				}
 			}
 			.navigationBarTitle("Bins")
 			.navigationBarItems(trailing: Button(action: {
@@ -28,6 +52,7 @@ struct BinsView: View {
 					.resizable()
 					.frame(width: 32, height: 32, alignment: .center)
 			}))
+				.sheet(isPresented: $showCreateBinsSheet) { CreateBinView().modifier(SystemServices()) }
 		}
 	}
 }
