@@ -15,7 +15,9 @@ struct SettingsView: View {
 		NavigationView {
 			VStack{
 				Text("Settings")
-				ITButton(label: "Logout")
+				Button(action: {
+					self.dataManager.isLoggedIn = false;
+				}){ ITButton(label: "Logout") }
 			}.navigationBarTitle("Settings")
 		}
 	}
