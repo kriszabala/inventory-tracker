@@ -52,7 +52,7 @@ class DataManager: ObservableObject{
 					print("Deleting existing store at URL \(storeURL)", storeURL)
 					try persistentContainer.persistentStoreCoordinator.destroyPersistentStore(at: storeURL, ofType: NSSQLiteStoreType, options: nil)
 				} catch {
-					fatalError("Error deleting persistent store")
+						fatalError("Error deleting persistent store \(error)")
 				}
 				
 				do {
@@ -62,7 +62,8 @@ class DataManager: ObservableObject{
 																																								at: storeURL,
 																																								options: nil)
 				} catch {
-					fatalError("Unable to Load Persistent Store")
+					print(error.localizedDescription)
+					fatalError("Unable to Load Persistent Store \(error)")
 				}
 			}
 		}
