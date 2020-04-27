@@ -60,11 +60,11 @@ struct CreateUserView: View {
 						{
 							print("Attempting to create User")
 							let createStatus = self.dataManager.createUser(email: self.email, firstName: self.firstName, lastName: self.lastName, password: self.password)
-							if (createStatus == .createUserSuccess){
+							if (createStatus == .createSuccess){
 								print("User created successfully")
 								self.presentationMode.wrappedValue.dismiss()
 							}
-							else if (createStatus == .createUserFailedAlreadyExists){
+							else if (createStatus == .createFailedAlreadyExists){
 								print("User with email \(self.email) already exists")
 								self.showingEmailExists = true
 							}

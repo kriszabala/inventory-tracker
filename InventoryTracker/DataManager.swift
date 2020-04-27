@@ -20,6 +20,9 @@ class DataManager: ObservableObject{
 	}
 	
 	@Published var _isLoggedIn : Bool = false
+	
+	var currentUser: ITUser?
+	
 	var isLoggedIn: Bool {
 		get {
 			let loggedIn = keychain["isLoggedIn"]
@@ -110,6 +113,7 @@ class DataManager: ObservableObject{
 	private func loginForUser(user: ITUser) {
 		user.addToLogins(createLoginForUser(user: user))
 		saveContext()
+		self.currentUser = user
 		self.isLoggedIn = true
 	}
 	
@@ -133,9 +137,9 @@ class DataManager: ObservableObject{
 		return false
 	}
 	
-	enum CreateUserStatus {
-		case createUserSuccess
-		case createUserFailedAlreadyExists
+	enum CreateStatus {
+		case createSuccess
+		case createFailedAlreadyExists
 	}
 	
 	func createLoginForUser(user: ITUser) -> ITUserLogin{
@@ -146,10 +150,10 @@ class DataManager: ObservableObject{
 		return login
 	}
 	
-	func createUser(email: String, firstName: String, lastName: String, password: String) -> CreateUserStatus{
+	func createUser(email: String, firstName: String, lastName: String, password: String) -> CreateStatus{
 		//Check to make sure user with email doesn't already exist
 		if findUserWith(email: email) != nil{
-			return .createUserFailedAlreadyExists
+			return .createFailedAlreadyExists
 		}
 		
 		let newUser = ITUser(context: self.persistentContainer.viewContext)
@@ -160,11 +164,27 @@ class DataManager: ObservableObject{
 		newUser.pwHash = passwordHashFrom(email: email, password: password)
 		newUser.createDate = Date()
 		loginForUser(user: newUser)
-		return .createUserSuccess;
+		return .createSuccess;
 	}
 	
 	func passwordHashFrom(email: String, password: String) -> String {
 		return "\(password).\(email.lowercased()).\(pwHashSalt)".sha256()
+	}
+	
+	func createLocation(name: String, notes: String? ) -> CreateStatus{
+		let newLocation = ITLocation(context: self.persistentContainer.viewContext)
+		newLocation.id = UUID()
+		newLocation.createDate = Date()
+		newLocation.name = name
+		if let notes = notes, !notes.isEmpty {
+			/* notes is not blank */
+			newLocation.notes = notes
+		}
+		if let currentUser = currentUser {
+			newLocation.createUser = currentUser
+		}
+		saveContext()
+		return .createSuccess;
 	}
 	
 }
