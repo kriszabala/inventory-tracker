@@ -72,6 +72,7 @@ class DataManager: ObservableObject{
 	}
 	
 	func saveContext () {
+		print("Saving Context")
 		let context = self.persistentContainer.viewContext
 		if context.hasChanges {
 			do {
@@ -82,6 +83,10 @@ class DataManager: ObservableObject{
 				let nserror = error as NSError
 				fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
 			}
+			print("Saved Context Successfully")
+		}
+		else{
+			print("Nothing to save")
 		}
 	}
 	
