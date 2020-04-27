@@ -68,7 +68,7 @@ class DataManager: ObservableObject{
 	
 	func reset () {
 		self.isLoggedIn = false
-		
+		self.persistentContainer.viewContext.reset()
 		print("Reseting CoreData store")
 		for persistentStoreDescription in persistentContainer.persistentStoreDescriptions {
 			if let storeURL = persistentStoreDescription.url {
@@ -89,8 +89,10 @@ class DataManager: ObservableObject{
 					print(error.localizedDescription)
 					fatalError("Unable to Load Persistent Store \(error)")
 				}
+				
 			}
 		}
+		exit(0)
 	}
 	
 	func saveContext () {

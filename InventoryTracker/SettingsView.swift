@@ -18,6 +18,9 @@ struct SettingsView: View {
 				Button(action: {
 					self.dataManager.isLoggedIn = false;
 				}){ ITButton(label: "Logout") }
+				Button(action: {
+					self.dataManager.reset()
+				}){ ITButton(label: "Reset") }
 			}.navigationBarTitle("Settings")
 		}
 	}
