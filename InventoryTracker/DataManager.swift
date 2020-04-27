@@ -119,7 +119,7 @@ class DataManager: ObservableObject{
 	}
 	
 	func createUser(email: String, firstName: String, lastName: String, password: String) -> CreateUserStatus{
-		//Check to make sure user with email doesn't already exist/
+		//Check to make sure user with email doesn't already exist
 		if findUserWith(email: email) != nil{
 			return .createUserFailedAlreadyExists
 		}
