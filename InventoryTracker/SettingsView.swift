@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-	@EnvironmentObject var dataManager: DataManager
+	@EnvironmentObject private var dataManager: DataManager
 	
 	var body: some View {
 		NavigationView {

@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct LoginView: View {
-	@EnvironmentObject var dataManager: DataManager
+	@EnvironmentObject private var dataManager: DataManager
 	@Environment (\.presentationMode) var presentationMode
 
 	@State var email: String = "kris.zabala@gmail.com"

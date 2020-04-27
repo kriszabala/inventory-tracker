@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct CreateUserView: View {
-	@EnvironmentObject var dataManager: DataManager
+	@EnvironmentObject private var dataManager: DataManager
 	
 	@Environment (\.presentationMode) var presentationMode
 	

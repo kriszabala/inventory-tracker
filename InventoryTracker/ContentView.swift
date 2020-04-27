@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ContentView: View {
-	@EnvironmentObject var dataManager: DataManager
+	@EnvironmentObject private var dataManager: DataManager
 	@State var isLoggedIn = true
 	
     var body: some View {

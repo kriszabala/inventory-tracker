@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct BinsView: View {
-	@EnvironmentObject var dataManager: DataManager
+	@EnvironmentObject private var dataManager: DataManager
 	
 	var body: some View {
 		NavigationView {
