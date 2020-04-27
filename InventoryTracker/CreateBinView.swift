@@ -22,46 +22,61 @@ struct CreateBinView: View {
 		NavigationView {
 			Form {
 				Section(header: Text("Name")) {
-						TextField("Name", text: $name)
-						//.keyboardType(.default)
-						if showingBinExists {
-							Text("Bin with same name already exists.")
-								.foregroundColor(.red)
-						}
-				}
-					
-					Section(header: Text("Notes")) {
-						TextField("Notes", text: $notes)
-						//.keyboardType(.default)
+					TextField("Name", text: $name)
+					//.keyboardType(.default)
+					if showingBinExists {
+						Text("Bin with same name already exists.")
+							.foregroundColor(.red)
 					}
-					
-					Button(action: {
-						let level: Int16
-						if let parentBin = self.parentBin{
-							level = parentBin.level + 1
-						}
-						else{
-							level = 0
-						}
-						
-						let createStatus = self.dataManager.createBin(name: self.name, level: level, notes: self.notes, parentBin: self.parentBin)
-						if (createStatus == .createSuccess){
-							self.presentationMode.wrappedValue.dismiss()
-						}
-						else if (createStatus == .createFailedAlreadyExists){
-							self.showingBinExists = true
-						}
-					}) {
-						Text("Add Bin")
-					}
-					.navigationBarTitle("Add Bin")
 				}
+				
+				Section(header: Text("Notes")) {
+					TextField("Notes", text: $notes)
+					//.keyboardType(.default)
+				}
+				
+				Button(action: {
+					self.createButtonAction()
+				}) {
+					Text("Add Bin")
+				}
+				Button(action: {
+					self.cancelButtonAction()
+				}) {
+					Text("Cancel")
+				}
+				.navigationBarTitle("Add Bin")
 			}
-    }
+		}
+	}
+	
+	private func createButtonAction(){
+		let level: Int16
+		if let parentBin = self.parentBin{
+			level = parentBin.level + 1
+		}
+		else{
+			level = 0
+		}
+		
+		let createStatus = self.dataManager.createBin(name: self.name, level: level, notes: self.notes, parentBin: self.parentBin)
+		if (createStatus == .createSuccess){
+			self.presentationMode.wrappedValue.dismiss()
+		}
+		else if (createStatus == .createFailedAlreadyExists){
+			self.showingBinExists = true
+		}
+	}
+	
+	private func cancelButtonAction(){
+		self.presentationMode.wrappedValue.dismiss()
+	}
+	
+	
 }
 
 struct CreateBinView_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateBinView()
-    }
+	static var previews: some View {
+		CreateBinView()
+	}
 }
