@@ -35,6 +35,9 @@ struct BinsView: View {
 			List {
 				ForEach(bins) { bin in
 					HStack {
+						Image(systemName: bin.subBins!.count > 0 ? "tray.2.fill" : "tray")
+							.resizable()
+							.frame(width: 32, height: 32, alignment: .center)
 						VStack(alignment: .leading) {
 							Text("\(bin.name!) - \(bin.level)")
 								.font(.headline)
