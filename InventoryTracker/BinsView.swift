@@ -39,7 +39,7 @@ struct BinsView: View {
 							.resizable()
 							.frame(width: 32, height: 32, alignment: .center)
 						VStack(alignment: .leading) {
-							Text("\(bin.name!) - \(bin.level)")
+							Text("\(bin.name!)")
 								.font(.headline)
 							if (bin.notes != nil){
 							Text("Notes: \(bin.notes!)")
