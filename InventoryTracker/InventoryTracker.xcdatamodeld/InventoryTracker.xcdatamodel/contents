@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E266" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ITBin" representedClassName="ITBin" syncable="YES">
+        <attribute name="attribute" optional="YES"/>
+        <attribute name="attribute1" optional="YES"/>
         <attribute name="createDate" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="level" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
         <relationship name="createUser" maxCount="1" deletionRule="Nullify" destinationEntity="ITUser" inverseName="bins" inverseEntity="ITUser"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITItem" inverseName="bin" inverseEntity="ITItem"/>
         <relationship name="parentBin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ITBin" inverseName="subBins" inverseEntity="ITBin"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITPhoto" inverseName="bin" inverseEntity="ITPhoto"/>
         <relationship name="subBins" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITBin" inverseName="parentBin" inverseEntity="ITBin"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITTag" inverseName="bins" inverseEntity="ITTag"/>
+    </entity>
+    <entity name="ITItem" representedClassName="ITItem" syncable="YES" codeGenerationType="class">
+        <attribute name="createDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <relationship name="bin" maxCount="1" deletionRule="Nullify" destinationEntity="ITBin" inverseName="items" inverseEntity="ITBin"/>
+        <relationship name="createUser" maxCount="1" deletionRule="Nullify" destinationEntity="ITUser" inverseName="items" inverseEntity="ITUser"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITPhoto" inverseName="item" inverseEntity="ITPhoto"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITTag" inverseName="items" inverseEntity="ITTag"/>
+    </entity>
+    <entity name="ITPhoto" representedClassName="ITPhoto" syncable="YES" codeGenerationType="class">
+        <attribute name="createDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="imageData" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <relationship name="bin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ITBin" inverseName="photos" inverseEntity="ITBin"/>
+        <relationship name="createUser" maxCount="1" deletionRule="Nullify" destinationEntity="ITUser" inverseName="photos" inverseEntity="ITUser"/>
+        <relationship name="item" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ITItem" inverseName="photos" inverseEntity="ITItem"/>
+    </entity>
+    <entity name="ITTag" representedClassName="ITTag" syncable="YES" codeGenerationType="class">
+        <attribute name="createDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="bins" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITBin" inverseName="tags" inverseEntity="ITBin"/>
+        <relationship name="createUser" maxCount="1" deletionRule="Nullify" destinationEntity="ITUser" inverseName="tags" inverseEntity="ITUser"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITItem" inverseName="tags" inverseEntity="ITItem"/>
     </entity>
     <entity name="ITUser" representedClassName="ITUser" syncable="YES">
         <attribute name="createDate" attributeType="Date" usesScalarValueType="NO"/>
@@ -18,16 +49,22 @@
         <attribute name="lastName" attributeType="String"/>
         <attribute name="pwHash" attributeType="String"/>
         <relationship name="bins" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITBin" inverseName="createUser" inverseEntity="ITBin"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITItem" inverseName="createUser" inverseEntity="ITItem"/>
         <relationship name="logins" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITUserLogin" inverseName="user" inverseEntity="ITUserLogin"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITPhoto" inverseName="createUser" inverseEntity="ITPhoto"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITTag" inverseName="createUser" inverseEntity="ITTag"/>
     </entity>
     <entity name="ITUserLogin" representedClassName="ITUserLogin" syncable="YES">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="loginDate" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ITUser" inverseName="logins" inverseEntity="ITUser"/>
+        <relationship name="user" maxCount="1" deletionRule="Nullify" destinationEntity="ITUser" inverseName="logins" inverseEntity="ITUser"/>
     </entity>
     <elements>
-        <element name="ITBin" positionX="111.34375" positionY="-92.70703125" width="128" height="163"/>
-        <element name="ITUser" positionX="-63" positionY="-18" width="128" height="163"/>
+        <element name="ITBin" positionX="111.34375" positionY="-92.70703125" width="128" height="238"/>
+        <element name="ITUser" positionX="-63" positionY="-18" width="128" height="208"/>
         <element name="ITUserLogin" positionX="206.1796875" positionY="99.15234375" width="128" height="88"/>
+        <element name="ITItem" positionX="72" positionY="36" width="128" height="163"/>
+        <element name="ITPhoto" positionX="81" positionY="45" width="128" height="133"/>
+        <element name="ITTag" positionX="99" positionY="63" width="128" height="133"/>
     </elements>
 </model>

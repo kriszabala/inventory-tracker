@@ -2,7 +2,7 @@
 //  ITUserLogin+CoreDataProperties.swift
 //  InventoryTracker
 //
-//  Created by Kris Zabala on 4/27/20.
+//  Created by Kris Zabala on 4/30/20.
 //  Copyright © 2020 Zabala. All rights reserved.
 //
 //
