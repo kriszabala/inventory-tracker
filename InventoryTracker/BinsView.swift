@@ -76,7 +76,7 @@ struct BinsView: View {
 				}}))
 				.sheet(isPresented: $showSheet) {
 					if self.activeSheet == .itemSheet {
-						CreateItemView(bin:self.bin!).modifier(SystemServices())
+						CreateItemView(bin:self.bin).modifier(SystemServices())
 					}
 					else {
 						CreateBinView(parentBin: self.bin).modifier(SystemServices())

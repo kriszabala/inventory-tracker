@@ -22,7 +22,7 @@
         <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="price" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="quantity" attributeType="Integer 32" defaultValueString="1" usesScalarValueType="YES"/>
-        <relationship name="bin" maxCount="1" deletionRule="Nullify" destinationEntity="ITBin" inverseName="items" inverseEntity="ITBin"/>
+        <relationship name="bin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ITBin" inverseName="items" inverseEntity="ITBin"/>
         <relationship name="createUser" maxCount="1" deletionRule="Nullify" destinationEntity="ITUser" inverseName="items" inverseEntity="ITUser"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITPhoto" inverseName="item" inverseEntity="ITPhoto"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ITTag" inverseName="items" inverseEntity="ITTag"/>
@@ -63,10 +63,10 @@
     </entity>
     <elements>
         <element name="ITBin" positionX="111.34375" positionY="-92.70703125" width="128" height="208"/>
-        <element name="ITUser" positionX="-63" positionY="-18" width="128" height="208"/>
-        <element name="ITUserLogin" positionX="206.1796875" positionY="99.15234375" width="128" height="88"/>
         <element name="ITItem" positionX="72" positionY="36" width="128" height="223"/>
         <element name="ITPhoto" positionX="81" positionY="45" width="128" height="133"/>
         <element name="ITTag" positionX="99" positionY="63" width="128" height="133"/>
+        <element name="ITUser" positionX="-63" positionY="-18" width="128" height="208"/>
+        <element name="ITUserLogin" positionX="206.1796875" positionY="99.15234375" width="128" height="88"/>
     </elements>
 </model>

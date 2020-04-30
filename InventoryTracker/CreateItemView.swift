@@ -16,7 +16,7 @@ struct CreateItemView: View {
 	@State var notes: String = ""
 	@State var showingItemExists: Bool = false
 	
-	var bin: ITBin
+	var bin: ITBin?
 	
 	var body: some View {
 		NavigationView {
@@ -61,6 +61,6 @@ struct CreateItemView: View {
 
 struct CreateItemView_Previews: PreviewProvider {
     static var previews: some View {
-			CreateItemView(bin: ITBin())
+			CreateItemView()
     }
 }
