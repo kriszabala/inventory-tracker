@@ -8,9 +8,14 @@
 
 import SwiftUI
 
+enum ActiveSheet {
+	case itemSheet, binSheet
+}
+
 struct BinsView: View {
 	@EnvironmentObject private var dataManager: DataManager
-	@State private var showCreateBinsSheet = false
+	@State private var showSheet = false
+	@State private var activeSheet: ActiveSheet = .itemSheet
 	var bin: ITBin?
 	
 	@FetchRequest(entity: ITBin.entity(),
@@ -56,15 +61,28 @@ struct BinsView: View {
 					}
 				}
 			}
-			.navigationBarItems(trailing: Button(action: {
-				self.showCreateBinsSheet = true
-			}, label: {
+			.navigationBarItems(trailing: Button(action: {}, label: {
 				Image(systemName: "plus.circle")
 					.resizable()
 					.frame(width: 32, height: 32, alignment: .center)
-			}))
-				.sheet(isPresented: $showCreateBinsSheet) { CreateBinView(parentBin: self.bin).modifier(SystemServices()) }
-		
+					.onTapGesture {
+						print("Add Item")
+						self.activeSheet = .itemSheet
+						self.showSheet = true
+				}
+				.onLongPressGesture(minimumDuration: 0.1) {
+					self.activeSheet = .binSheet
+					self.showSheet = true
+				}}))
+				.sheet(isPresented: $showSheet) {
+					if self.activeSheet == .itemSheet {
+						CreateItemView(bin:self.bin!).modifier(SystemServices())
+					}
+					else {
+						CreateBinView(parentBin: self.bin).modifier(SystemServices())
+					}
+					
+		}
 	}
 }
 

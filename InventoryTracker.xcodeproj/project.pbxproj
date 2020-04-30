@@ -13,6 +13,7 @@
 		90789D6D245B860900D124D0 /* ITTag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90789D67245B860900D124D0 /* ITTag+CoreDataProperties.swift */; };
 		90789D6E245B860900D124D0 /* ITItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90789D68245B860900D124D0 /* ITItem+CoreDataProperties.swift */; };
 		90789D6F245B860900D124D0 /* ITPhoto+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90789D69245B860900D124D0 /* ITPhoto+CoreDataClass.swift */; };
+		90789D73245B8CD000D124D0 /* CreateItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90789D72245B8CD000D124D0 /* CreateItemView.swift */; };
 		90D57A6124536D3C00B600BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D57A6024536D3C00B600BA /* AppDelegate.swift */; };
 		90D57A6324536D3C00B600BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D57A6224536D3C00B600BA /* SceneDelegate.swift */; };
 		90D57A6624536D3C00B600BA /* InventoryTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 90D57A6424536D3C00B600BA /* InventoryTracker.xcdatamodeld */; };
@@ -47,6 +48,7 @@
 		90789D67245B860900D124D0 /* ITTag+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ITTag+CoreDataProperties.swift"; path = "InventoryTracker/CoreDataEntities/ITTag+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		90789D68245B860900D124D0 /* ITItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ITItem+CoreDataProperties.swift"; path = "InventoryTracker/CoreDataEntities/ITItem+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		90789D69245B860900D124D0 /* ITPhoto+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ITPhoto+CoreDataClass.swift"; path = "InventoryTracker/CoreDataEntities/ITPhoto+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		90789D72245B8CD000D124D0 /* CreateItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemView.swift; sourceTree = "<group>"; };
 		90D57A5D24536D3C00B600BA /* InventoryTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InventoryTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90D57A6024536D3C00B600BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		90D57A6224536D3C00B600BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				90E77CE72453C38900A3C7FF /* KeyboardGuardian.swift */,
 				90E77CE324538B4300A3C7FF /* Palette.swift */,
 				90D57A6724536D3C00B600BA /* ContentView.swift */,
+				90789D72245B8CD000D124D0 /* CreateItemView.swift */,
 				90E77D562457386500A3C7FF /* CreateBinView.swift */,
 				90E77D5224571B6300A3C7FF /* BinsView.swift */,
 				90E77D5424571DA700A3C7FF /* SettingsView.swift */,
@@ -258,6 +261,7 @@
 				90E77D5524571DA700A3C7FF /* SettingsView.swift in Sources */,
 				90E77D162455D0BB00A3C7FF /* DataManager.swift in Sources */,
 				90D57A6324536D3C00B600BA /* SceneDelegate.swift in Sources */,
+				90789D73245B8CD000D124D0 /* CreateItemView.swift in Sources */,
 				90789D6F245B860900D124D0 /* ITPhoto+CoreDataClass.swift in Sources */,
 				90E77D572457386500A3C7FF /* CreateBinView.swift in Sources */,
 				90E77D772457530600A3C7FF /* ITUserLogin+CoreDataClass.swift in Sources */,
