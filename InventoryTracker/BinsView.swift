@@ -47,7 +47,7 @@ struct BinsView: View {
 							}
 						}
 						Spacer()
-						NavigationLink("", destination: BinsView(bin: bin).navigationBarTitle(Text("\(bin.name ?? "")")))
+						NavigationLink("", destination: BinsView(bin: bin).navigationBarTitle(Text(self.dataManager.displayNameForBin(bin: bin))))
 					}
 				}
 				.onDelete { indexSet in

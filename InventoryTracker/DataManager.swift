@@ -236,4 +236,11 @@ class DataManager: ObservableObject{
 		}
 		return .createFailedMissingData
 	}
+	
+	func displayNameForBin(bin: ITBin) -> String{
+		if let parentBin = bin.parentBin{
+			return "\(displayNameForBin(bin: parentBin))\u{2b95}\(bin.name!)"
+		}
+		return bin.name!
+	}
 }
