@@ -22,8 +22,6 @@ extension ITBin {
     @NSManaged public var level: Int16
     @NSManaged public var name: String?
     @NSManaged public var notes: String?
-    @NSManaged public var attribute: NSObject?
-    @NSManaged public var attribute1: NSObject?
     @NSManaged public var createUser: ITUser?
     @NSManaged public var parentBin: ITBin?
     @NSManaged public var subBins: NSSet?
