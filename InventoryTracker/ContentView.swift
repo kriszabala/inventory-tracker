@@ -19,6 +19,7 @@ struct ContentView: View {
 				NavigationView{
 					BinsView().navigationBarTitle("Home")
 				}
+				.navigationViewStyle(StackNavigationViewStyle())
 				.tabItem {
 					Image(systemName: "1.square.fill")
 					Text("Bins")

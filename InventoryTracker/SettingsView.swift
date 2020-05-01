@@ -23,6 +23,7 @@ struct SettingsView: View {
 				}){ ITButton(label: "Reset") }
 			}.navigationBarTitle("Settings")
 		}
+		.navigationViewStyle(StackNavigationViewStyle())
 	}
 }
 
