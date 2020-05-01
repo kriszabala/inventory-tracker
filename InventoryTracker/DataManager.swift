@@ -246,7 +246,12 @@ class DataManager: ObservableObject{
 	
 	func findItemWith(name: String, bin: ITBin?) -> ITItem? {
 		let fetchRequest:NSFetchRequest<ITItem> = ITItem.fetchRequest()
-		fetchRequest.predicate = NSPredicate(format: "name LIKE[c] %@", name)
+		if let bin = bin {
+			fetchRequest.predicate = NSPredicate(format: "name LIKE[c] %@ AND bin == %@", name, bin)
+		}
+		else{
+			fetchRequest.predicate = NSPredicate(format: "name LIKE[c] %@ AND bin == nil" , name)
+		}
 		do {
 			let results = try self.persistentContainer.viewContext.fetch(fetchRequest)
 			if results.count > 0{
