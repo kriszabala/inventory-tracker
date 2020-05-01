@@ -12,8 +12,9 @@ struct CreateItemView: View {
 	@EnvironmentObject private var dataManager: DataManager
 	@Environment (\.presentationMode) var presentationMode
 	
-	@State var name: String = ""
-	@State var notes: String = ""
+	@State var name: String = "Item1"
+	@State var notes: String = "note1"
+	@State var quantity: Int32 = 1
 	@State var showingItemExists: Bool = false
 	
 	var bin: ITBin?
@@ -28,6 +29,9 @@ struct CreateItemView: View {
 						Text("Item with same name already exists.")
 							.foregroundColor(.red)
 					}
+				}
+				Section(header: Text("Quantity")) {
+						Stepper("\(quantity)", value: $quantity, in: 1...12)
 				}
 				
 				Section(header: Text("Notes")) {
@@ -51,7 +55,13 @@ struct CreateItemView: View {
 	}
 	
 	private func createButtonAction(){
-	
+		let createStatus = self.dataManager.createItem(name: name, bin: bin, quantity: quantity, notes: notes, price: 0.00, minLevel: 0, barcode: nil)
+		if (createStatus == .createSuccess){
+			self.presentationMode.wrappedValue.dismiss()
+		}
+		else if (createStatus == .createFailedAlreadyExists){
+			self.showingItemExists = true
+		}
 	}
 	
 	private func cancelButtonAction(){

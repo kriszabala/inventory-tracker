@@ -243,4 +243,60 @@ class DataManager: ObservableObject{
 		}
 		return bin.name!
 	}
+	
+	func findItemWith(name: String, bin: ITBin?) -> ITItem? {
+		let fetchRequest:NSFetchRequest<ITItem> = ITItem.fetchRequest()
+		fetchRequest.predicate = NSPredicate(format: "name LIKE[c] %@", name)
+		do {
+			let results = try self.persistentContainer.viewContext.fetch(fetchRequest)
+			if results.count > 0{
+				print("Found Item")
+				return results[0]
+			}
+		} catch {
+			fatalError("Failed to fetch ITItems: \(error)")
+		}
+		return nil
+	}
+
+	func createItem(name:String, bin:ITBin?, quantity:Int32, notes: String?, price: Double, minLevel:Int32, barcode:String?) -> CreateStatus {
+		if findItemWith(name: name, bin: bin) != nil{
+			print("Item with name \(name) in bin \(String(describing: bin?.name)) already exists")
+			return .createFailedAlreadyExists
+		}
+		
+		if let currentUser = currentUser {
+			let newItem = ITItem(context: self.persistentContainer.viewContext)
+			newItem.id = UUID()
+			newItem.createUser = currentUser
+			currentUser.addToItems(newItem)
+			newItem.createDate = Date()
+			newItem.name = name
+			newItem.quantity = quantity
+			newItem.barcode = barcode
+			newItem.minLevel = minLevel
+			newItem.price = price
+			
+			if let notes = notes, !notes.isEmpty {
+				/* notes is not blank */
+				newItem.notes = notes
+			}
+			
+			if let bin = bin {
+				newItem.bin = bin
+				bin.addToItems(newItem)
+			}
+			
+			if let barcode = barcode, !barcode.isEmpty {
+				newItem.barcode = barcode
+			}
+			
+			saveContext()
+			print("Item \(newItem) created succesfully")
+			return .createSuccess
+		}
+		return .createFailedMissingData
+		
+	}
+
 }

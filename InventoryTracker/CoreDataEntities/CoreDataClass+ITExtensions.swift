@@ -19,3 +19,12 @@ extension ITBin: Identifiable {
 	}
 }
 
+extension ITItem: Identifiable{
+	static func getItemsForBin(bin: ITBin) -> NSFetchRequest<ITItem> {
+		let request: NSFetchRequest<ITItem> = ITItem.fetchRequest()
+		request.predicate = NSPredicate(format: "bin == %@", bin)
+		request.sortDescriptors = [NSSortDescriptor(keyPath: \ITItem.name, ascending: true)]
+		return request
+	}
+}
+
