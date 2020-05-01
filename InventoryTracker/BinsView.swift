@@ -35,7 +35,7 @@ struct BinsView: View {
 	init(bin:ITBin?){
 		if let bin = bin{
 			self.bin = bin
-			_bins = FetchRequest<ITBin>(fetchRequest:ITBin.getSubBinsForParent(parentBin: bin))
+			_bins = FetchRequest<ITBin>(fetchRequest:ITBin.getSubBinsForBin(bin: bin))
 			_items = FetchRequest<ITItem>(fetchRequest:ITItem.getItemsForBin(bin: bin))
 		}
 	}

@@ -11,9 +11,9 @@ import Foundation
 import CoreData
 
 extension ITBin: Identifiable {	
-	static func getSubBinsForParent(parentBin: ITBin) -> NSFetchRequest<ITBin> {
+	static func getSubBinsForBin(bin: ITBin) -> NSFetchRequest<ITBin> {
 		let request: NSFetchRequest<ITBin> = ITBin.fetchRequest()
-		request.predicate = NSPredicate(format: "parentBin == %@", parentBin)
+		request.predicate = NSPredicate(format: "parentBin == %@", bin)
 		request.sortDescriptors = [NSSortDescriptor(keyPath: \ITBin.name, ascending: true)]
 		return request
 	}
