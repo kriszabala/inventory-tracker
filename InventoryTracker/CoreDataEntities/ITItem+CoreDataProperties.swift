@@ -23,7 +23,7 @@ extension ITItem {
     @NSManaged public var notes: String?
     @NSManaged public var quantity: Int32
     @NSManaged public var minLevel: Int32
-    @NSManaged public var price: Int32
+    @NSManaged public var price: Double
     @NSManaged public var barcode: String?
     @NSManaged public var createUser: ITUser?
     @NSManaged public var bin: ITBin?
