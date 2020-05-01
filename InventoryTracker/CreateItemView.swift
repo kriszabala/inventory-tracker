@@ -18,9 +18,9 @@ struct CreateItemView: View {
 	@State var showingItemExists: Bool = false
 	
 	var bin: ITBin?
+	var item: ITItem?
 	
 	var body: some View {
-		NavigationView {
 			Form {
 				Section(header: Text("Name")) {
 					TextField("Name", text: $name)
@@ -42,24 +42,29 @@ struct CreateItemView: View {
 				Button(action: {
 					self.createButtonAction()
 				}) {
-					Text("Add Item")
+					Text(self.item != nil ? "Save" : "Add Item")
 				}
 				Button(action: {
 					self.cancelButtonAction()
 				}) {
 					Text("Cancel")
 				}
-				.navigationBarTitle("Add Item")
-			}
+			
+			}.onAppear {
+				if let item = self.item{
+					self.name = item.name!
+					self.notes = item.notes ?? ""
+					self.quantity = item.quantity
+				}
 		}
 	}
 	
-	private func createButtonAction(){
-		let createStatus = self.dataManager.createItem(name: name, bin: bin, quantity: quantity, notes: notes, price: 0.00, minLevel: 0, barcode: nil)
-		if (createStatus == .createSuccess){
+	private func createButtonAction() {
+		let createStatus = self.dataManager.createOrUpdateItem(item:self.item, name: name, bin: bin, quantity: quantity, notes: notes, price: 0.00, minLevel: 0, barcode: nil)
+		if (createStatus == .saveSuccess) {
 			self.presentationMode.wrappedValue.dismiss()
 		}
-		else if (createStatus == .createFailedAlreadyExists){
+		else if (createStatus == .saveFailedAlreadyExists) {
 			self.showingItemExists = true
 		}
 	}

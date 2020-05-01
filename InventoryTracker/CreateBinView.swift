@@ -60,10 +60,10 @@ struct CreateBinView: View {
 		}
 		
 		let createStatus = self.dataManager.createBin(name: self.name, level: level, notes: self.notes, parentBin: self.parentBin)
-		if (createStatus == .createSuccess){
+		if (createStatus == .saveSuccess){
 			self.presentationMode.wrappedValue.dismiss()
 		}
-		else if (createStatus == .createFailedAlreadyExists){
+		else if (createStatus == .saveFailedAlreadyExists){
 			self.showingBinExists = true
 		}
 	}

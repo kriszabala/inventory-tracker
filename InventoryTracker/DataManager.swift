@@ -158,10 +158,10 @@ class DataManager: ObservableObject{
 		return false
 	}
 	
-	enum CreateStatus {
-		case createSuccess
-		case createFailedAlreadyExists
-		case createFailedMissingData
+	enum SaveStatus {
+		case saveSuccess
+		case saveFailedAlreadyExists
+		case saveFailedMissingData
 	}
 	
 	func createLoginForUser(user: ITUser) -> ITUserLogin{
@@ -172,10 +172,10 @@ class DataManager: ObservableObject{
 		return login
 	}
 	
-	func createUser(email: String, firstName: String, lastName: String, password: String) -> CreateStatus{
+	func createUser(email: String, firstName: String, lastName: String, password: String) -> SaveStatus{
 		//Check to make sure user with email doesn't already exist
 		if findUserWith(email: email) != nil{
-			return .createFailedAlreadyExists
+			return .saveFailedAlreadyExists
 		}
 		
 		let newUser = ITUser(context: self.persistentContainer.viewContext)
@@ -186,7 +186,7 @@ class DataManager: ObservableObject{
 		newUser.pwHash = passwordHashFrom(email: email, password: password)
 		newUser.createDate = Date()
 		loginForUser(user: newUser)
-		return .createSuccess;
+		return .saveSuccess;
 	}
 	
 	func passwordHashFrom(email: String, password: String) -> String {
@@ -208,10 +208,10 @@ class DataManager: ObservableObject{
 		return nil
 	}
 	
-	func createBin(name: String, level:Int16, notes: String?, parentBin: ITBin?) -> CreateStatus{
+	func createBin(name: String, level:Int16, notes: String?, parentBin: ITBin?) -> SaveStatus{
 		if findBinWith(name: name, level: level) != nil{
 			print("Bin with name \(name) and level \(level) already exists")
-			return .createFailedAlreadyExists
+			return .saveFailedAlreadyExists
 		}
 		if let currentUser = currentUser {
 			let newBin = ITBin(context: self.persistentContainer.viewContext)
@@ -232,9 +232,9 @@ class DataManager: ObservableObject{
 			}
 			saveContext()
 			print("Bin with name \(name) and level \(level) created succesfully")
-			return .createSuccess
+			return .saveSuccess
 		}
-		return .createFailedMissingData
+		return .saveFailedMissingData
 	}
 	
 	func displayNameForBin(bin: ITBin) -> String{
@@ -259,44 +259,52 @@ class DataManager: ObservableObject{
 		return nil
 	}
 
-	func createItem(name:String, bin:ITBin?, quantity:Int32, notes: String?, price: Double, minLevel:Int32, barcode:String?) -> CreateStatus {
-		if findItemWith(name: name, bin: bin) != nil{
-			print("Item with name \(name) in bin \(String(describing: bin?.name)) already exists")
-			return .createFailedAlreadyExists
+	func createOrUpdateItem(item:ITItem?, name:String, bin:ITBin?, quantity:Int32, notes: String?, price: Double, minLevel:Int32, barcode:String?) -> SaveStatus {
+		
+		var thisItem:ITItem
+		
+		if let item = item {
+			thisItem = item
+		}
+		else{
+			if findItemWith(name: name, bin: bin) != nil{
+				print("Item with name \(name) in bin \(String(describing: bin?.name)) already exists")
+				return .saveFailedAlreadyExists
+			}
+			if let currentUser = currentUser {
+				thisItem = ITItem(context: self.persistentContainer.viewContext)
+				thisItem.id = UUID()
+				thisItem.createUser = currentUser
+				currentUser.addToItems(thisItem)
+				thisItem.createDate = Date()
+				if let bin = bin {
+					thisItem.bin = bin
+					bin.addToItems(thisItem)
+				}
+			}
+			else{
+				return .saveFailedMissingData
+			}
 		}
 		
-		if let currentUser = currentUser {
-			let newItem = ITItem(context: self.persistentContainer.viewContext)
-			newItem.id = UUID()
-			newItem.createUser = currentUser
-			currentUser.addToItems(newItem)
-			newItem.createDate = Date()
-			newItem.name = name
-			newItem.quantity = quantity
-			newItem.barcode = barcode
-			newItem.minLevel = minLevel
-			newItem.price = price
-			
-			if let notes = notes, !notes.isEmpty {
-				/* notes is not blank */
-				newItem.notes = notes
-			}
-			
-			if let bin = bin {
-				newItem.bin = bin
-				bin.addToItems(newItem)
-			}
-			
-			if let barcode = barcode, !barcode.isEmpty {
-				newItem.barcode = barcode
-			}
-			
-			saveContext()
-			print("Item \(newItem) created succesfully")
-			return .createSuccess
-		}
-		return .createFailedMissingData
+		thisItem.name = name
+		thisItem.quantity = quantity
+		thisItem.barcode = barcode
+		thisItem.minLevel = minLevel
+		thisItem.price = price
 		
+		if let notes = notes, !notes.isEmpty {
+			/* notes is not blank */
+			thisItem.notes = notes
+		}
+		
+		if let barcode = barcode, !barcode.isEmpty {
+			thisItem.barcode = barcode
+		}
+		
+		saveContext()
+		print("Item \(thisItem) created succesfully")
+		return .saveSuccess
 	}
 
 }

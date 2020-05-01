@@ -59,6 +59,7 @@ struct BinsView: View {
 							}
 							Spacer()
 							NavigationLink("", destination: BinsView(bin: bin).navigationBarTitle(Text(self.dataManager.displayNameForBin(bin: bin))))
+							
 						}
 					}
 				}
@@ -78,7 +79,8 @@ struct BinsView: View {
 										.font(.subheadline)
 								}
 							}
-							
+							NavigationLink("", destination:
+								CreateItemView(item:item).modifier(SystemServices()))
 						}
 					}
 				}
