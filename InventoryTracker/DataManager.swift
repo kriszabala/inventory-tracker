@@ -258,7 +258,7 @@ class DataManager: ObservableObject{
 		}
 		return nil
 	}
-
+	
 	func createOrUpdateItem(item:ITItem?, name:String, bin:ITBin?, quantity:Int32, notes: String?, price: Double, minLevel:Int32, barcode:String?) -> SaveStatus {
 		
 		var thisItem:ITItem
@@ -306,5 +306,5 @@ class DataManager: ObservableObject{
 		print("Item \(thisItem) created succesfully")
 		return .saveSuccess
 	}
-
+	
 }

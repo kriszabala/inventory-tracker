@@ -12,50 +12,59 @@ struct CreateItemView: View {
 	@EnvironmentObject private var dataManager: DataManager
 	@Environment (\.presentationMode) var presentationMode
 	
-	@State var name: String = "Item1"
-	@State var notes: String = "note1"
-	@State var quantity: Int32 = 1
+	@State var name: String
+	@State var notes: String
+	@State var quantity: Int32
 	@State var showingItemExists: Bool = false
 	
 	var bin: ITBin?
 	var item: ITItem?
 	
+	init(item:ITItem? = nil, bin:ITBin? = nil) {
+		self.item = item
+		self.bin = bin
+		if let item = item{
+			_name = State(initialValue:item.name!)
+			_notes = State(initialValue:item.notes ?? "")
+			_quantity = State(initialValue:item.quantity)
+		}
+		else{
+			_name = State(initialValue:"Item")
+			_notes = State(initialValue:"Note")
+			_quantity = State(initialValue:1)
+		}
+	}
+	
 	var body: some View {
-			Form {
-				Section(header: Text("Name")) {
-					TextField("Name", text: $name)
-					//.keyboardType(.default)
-					if showingItemExists {
-						Text("Item with same name already exists.")
-							.foregroundColor(.red)
-					}
+		Form {
+			Section(header: Text("Name")) {
+				TextField("Name", text: $name)
+				//.keyboardType(.default)
+				if showingItemExists {
+					Text("Item with same name already exists.")
+						.foregroundColor(.red)
 				}
-				Section(header: Text("Quantity")) {
-						Stepper("\(quantity)", value: $quantity, in: 1...12)
-				}
-				
-				Section(header: Text("Notes")) {
-					TextField("Notes", text: $notes)
-					//.keyboardType(.default)
-				}
-				
-				Button(action: {
-					self.createButtonAction()
-				}) {
-					Text(self.item != nil ? "Save" : "Add Item")
-				}
-				Button(action: {
-					self.cancelButtonAction()
-				}) {
-					Text("Cancel")
-				}
+			}
+			Section(header: Text("Quantity")) {
+				Stepper("\(quantity)", value: $quantity, in: 1...12)
+			}
 			
-			}.onAppear {
-				if let item = self.item{
-					self.name = item.name!
-					self.notes = item.notes ?? ""
-					self.quantity = item.quantity
-				}
+			Section(header: Text("Notes")) {
+				TextField("Notes", text: $notes)
+				//.keyboardType(.default)
+			}
+			
+			Button(action: {
+				self.createButtonAction()
+			}) {
+				Text(self.item != nil ? "Save" : "Add Item")
+			}
+			Button(action: {
+				self.cancelButtonAction()
+			}) {
+				Text("Cancel")
+			}
+		
 		}
 	}
 	
@@ -75,7 +84,7 @@ struct CreateItemView: View {
 }
 
 struct CreateItemView_Previews: PreviewProvider {
-    static var previews: some View {
-			CreateItemView()
-    }
+	static var previews: some View {
+		CreateItemView()
+	}
 }
