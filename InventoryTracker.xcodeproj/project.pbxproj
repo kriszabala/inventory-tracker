@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9023F3892463587A00B465EB /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9023F3882463587A00B465EB /* HostingController.swift */; };
 		90789D6A245B860900D124D0 /* ITItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90789D64245B860800D124D0 /* ITItem+CoreDataClass.swift */; };
 		90789D6B245B860900D124D0 /* ITTag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90789D65245B860800D124D0 /* ITTag+CoreDataClass.swift */; };
 		90789D6C245B860900D124D0 /* ITPhoto+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90789D66245B860900D124D0 /* ITPhoto+CoreDataProperties.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9023F3882463587A00B465EB /* HostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingController.swift; sourceTree = "<group>"; };
 		90789D64245B860800D124D0 /* ITItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ITItem+CoreDataClass.swift"; path = "InventoryTracker/CoreDataEntities/ITItem+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		90789D65245B860800D124D0 /* ITTag+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ITTag+CoreDataClass.swift"; path = "InventoryTracker/CoreDataEntities/ITTag+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		90789D66245B860900D124D0 /* ITPhoto+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ITPhoto+CoreDataProperties.swift"; path = "InventoryTracker/CoreDataEntities/ITPhoto+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
@@ -111,6 +113,7 @@
 				90E77D6B245752ED00A3C7FF /* Entities */,
 				90E77D152455D0BB00A3C7FF /* DataManager.swift */,
 				90D57A6024536D3C00B600BA /* AppDelegate.swift */,
+				9023F3882463587A00B465EB /* HostingController.swift */,
 				90D57A6224536D3C00B600BA /* SceneDelegate.swift */,
 				90E77CE72453C38900A3C7FF /* KeyboardGuardian.swift */,
 				90E77CE324538B4300A3C7FF /* Palette.swift */,
@@ -244,6 +247,7 @@
 				90E77D222456134800A3C7FF /* CreateUserView.swift in Sources */,
 				90D57A6624536D3C00B600BA /* InventoryTracker.xcdatamodeld in Sources */,
 				90789D6B245B860900D124D0 /* ITTag+CoreDataClass.swift in Sources */,
+				9023F3892463587A00B465EB /* HostingController.swift in Sources */,
 				90D57A6124536D3C00B600BA /* AppDelegate.swift in Sources */,
 				90E77CE424538B4300A3C7FF /* Palette.swift in Sources */,
 				90E77CE82453C38900A3C7FF /* KeyboardGuardian.swift in Sources */,
