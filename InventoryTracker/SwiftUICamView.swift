@@ -25,6 +25,9 @@ struct SwiftUICamView: View {
 		}
 		.navigationBarTitle("Snap Pictures", displayMode: .inline)
 		.navigationBarItems(leading: CamCancelButton(), trailing: CamSkipButton())
+		.onAppear(){
+			self.dataManager.resetPendingPhotos()
+		}
 	}
 }
 
@@ -82,7 +85,6 @@ struct CamCancelButton: View {
 	@Environment(\.viewController) private var viewControllerHolder: UIViewController?
 	var body: some View {
 		Button("Cancel") {
-			self.dataManager.resetPendingPhotos()
 			self.viewControllerHolder?.dismiss(animated: true, completion: nil)
 		}.foregroundColor(.white)
 	}

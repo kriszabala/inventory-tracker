@@ -348,6 +348,5 @@ class DataManager: ObservableObject{
 	
 	func mergePendingPhotos() {
 		self.photosToAdd += self.photosPending
-		self.resetPendingPhotos()
 	}
 }
