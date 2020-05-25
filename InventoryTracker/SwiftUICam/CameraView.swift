@@ -11,6 +11,8 @@ import AVFoundation
 
 // MARK: CameraView
 public struct CameraView: UIViewControllerRepresentable {
+		@EnvironmentObject private var dataManager: DataManager
+		
     @ObservedObject var events: UserEvents
     //To enable call to updateUIView() on change of UserEvents() bc there is a bug
     class RandomClass { }
@@ -39,6 +41,10 @@ public struct CameraView: UIViewControllerRepresentable {
         self.tapToFocus = tapToFocus
         self.doubleTapCameraSwitch = doubleTapCameraSwitch
     }
+	
+	public func didFinishProcessingPhoto(_ image: UIImage) {
+		self.dataManager.photosToAdd.append(image)
+	}
     
     public func makeUIViewController(context: Context) -> CameraViewController {
         let cameraViewController = CameraViewController()
@@ -59,14 +65,17 @@ public struct CameraView: UIViewControllerRepresentable {
     
     public func updateUIViewController(_ cameraViewController: CameraViewController, context: Context) {
         if events.didAskToCapturePhoto {
+						events.didAskToCapturePhoto = false
             cameraViewController.takePhoto()
         }
         
         if events.didAskToRotateCamera {
+						events.didAskToRotateCamera = false
             cameraViewController.rotateCamera()
         }
         
         if events.didAskToChangeFlashMode {
+						events.didAskToChangeFlashMode = false
             cameraViewController.changeFlashMode()
         }
         
@@ -109,8 +118,8 @@ public struct CameraView: UIViewControllerRepresentable {
             }
             
         public func didFinishProcessingPhoto(_ image: UIImage) {
-                //Not yet implemented
-            }
+					parent.didFinishProcessingPhoto(image)
+			}
             
         public func didFinishSavingWithError(_ image: UIImage, error: NSError?, contextInfo: UnsafeRawPointer) {
                 //Not yet implemented

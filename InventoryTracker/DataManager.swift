@@ -31,6 +31,8 @@ class DataManager: ObservableObject{
 	}
 	
 	@Published var _isLoggedIn : Bool = false
+	@Published var photosToAdd: [UIImage] = []
+	
 	var currentUser: ITUser?
 	
 	var isLoggedIn: Bool {
@@ -264,6 +266,16 @@ class DataManager: ObservableObject{
 		return nil
 	}
 	
+	func addPhotoForItem(item:ITItem, image:UIImage){
+		let photo = ITPhoto(context: self.persistentContainer.viewContext)
+		photo.id = UUID()
+		photo.createDate = Date()
+		photo.createUser = currentUser
+		photo.imageData = image.jpegData(compressionQuality: 1)
+		photo.item = item
+		item.addToPhotos(photo)
+	}
+	
 	func createOrUpdateItem(item:ITItem?, name:String, bin:ITBin?, quantity:Int32, notes: String?, price: Double, minLevel:Int32, barcode:String?) -> SaveStatus {
 		
 		var thisItem:ITItem
@@ -286,6 +298,12 @@ class DataManager: ObservableObject{
 					thisItem.bin = bin
 					bin.addToItems(thisItem)
 				}
+				
+				for index in 0...2{
+					if let image = UIImage(named: "test\(index)"){
+						self.addPhotoForItem(item: thisItem, image: image)
+					}
+				}
 			}
 			else{
 				return .saveFailedMissingData
@@ -306,6 +324,12 @@ class DataManager: ObservableObject{
 		if let barcode = barcode, !barcode.isEmpty {
 			thisItem.barcode = barcode
 		}
+		
+		for image in self.photosToAdd {
+			self.addPhotoForItem(item: thisItem, image: image)
+		}
+		
+		self.photosToAdd.removeAll()
 		
 		saveContext()
 		print("Item \(thisItem) created succesfully")

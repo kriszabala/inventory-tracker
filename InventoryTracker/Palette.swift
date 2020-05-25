@@ -36,4 +36,8 @@ struct Palette {
 	static let sunGradient = Gradient(colors: [
 		ColorFromRGB(rgb: 0xFFFBA1), ColorFromRGB(rgb: 0xF7CE58)
 	])
+	
+	static let whiteToBlackGradient = Gradient(colors: [
+		ColorFromRGB(rgb: 0xFFFFFF).opacity(0.4), ColorFromRGB(rgb: 0x000000).opacity(0.8)
+	])
 }

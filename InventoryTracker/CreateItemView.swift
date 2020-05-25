@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct CreateItemView: View {
+	@Environment(\.viewController) private var viewControllerHolder: UIViewController?
 	@EnvironmentObject private var dataManager: DataManager
 	@Environment (\.presentationMode) var presentationMode
 	
@@ -16,6 +17,19 @@ struct CreateItemView: View {
 	@State var notes: String
 	@State var quantity: Int32
 	@State var showingItemExists: Bool = false
+	@State var photos: [UIImage]
+	@State var isCameraPresented = false
+	
+
+	@ObservedObject var events = UserEvents()
+
+	@State private var image: Image?
+	@State private var inputImage: UIImage?
+
+	func loadImage() {
+		guard let inputImage = inputImage else { return }
+		image = Image(uiImage: inputImage)
+	}
 	
 	var bin: ITBin?
 	var item: ITItem?
@@ -27,16 +41,50 @@ struct CreateItemView: View {
 			_name = State(initialValue:item.name!)
 			_notes = State(initialValue:item.notes ?? "")
 			_quantity = State(initialValue:item.quantity)
+			_photos = State(initialValue: item.photoArray)
 		}
 		else{
 			_name = State(initialValue:"Item")
 			_notes = State(initialValue:"Note")
 			_quantity = State(initialValue:1)
+			_photos = State(initialValue: [])
 		}
 	}
 	
 	var body: some View {
+		ZStack {
 		Form {
+			Section() {
+				ScrollView(.horizontal, content: {
+					HStack{
+						Button("Add Photo") {
+							self.viewControllerHolder?.present(style: .fullScreen) {
+								NavigationView {
+									SwiftUICamView().modifier(SystemServices())
+								}.navigationViewStyle(StackNavigationViewStyle())
+							}
+						}
+							.foregroundColor(.white)
+							.padding()
+							.background(Color.accentColor)
+							.cornerRadius(8)
+						ForEach(0..<photos.count) { index in
+							Image(uiImage: self.photos[index])
+								.resizable()
+								.aspectRatio(contentMode: .fit)
+						}
+						ForEach(0..<dataManager.photosToAdd.count, id: \.self) { index in
+							Image(uiImage: self.dataManager.photosToAdd[index])
+								.resizable()
+								.aspectRatio(contentMode: .fit)
+						}
+					}
+					.padding(.leading, 10)
+				})
+					.frame(height: 100)
+				
+				
+			}
 			Section(header: Text("Name")) {
 				TextField("Name", text: $name)
 				//.keyboardType(.default)
@@ -67,6 +115,7 @@ struct CreateItemView: View {
 		
 		}
 	}
+	}
 	
 	private func createButtonAction() {
 		let createStatus = self.dataManager.createOrUpdateItem(item:self.item, name: name, bin: bin, quantity: quantity, notes: notes, price: 0.00, minLevel: 0, barcode: nil)
@@ -79,12 +128,15 @@ struct CreateItemView: View {
 	}
 	
 	private func cancelButtonAction(){
+		self.dataManager.photosToAdd.removeAll()
 		self.presentationMode.wrappedValue.dismiss()
 	}
 }
 
 struct CreateItemView_Previews: PreviewProvider {
 	static var previews: some View {
-		CreateItemView()
+		let context = DataManager().persistentContainer.viewContext
+		let item = ITItem.testItem(context: context)
+		return CreateItemView(item: item, bin: nil)
 	}
 }

@@ -54,3 +54,34 @@ struct ITButton: View {
 			.padding(.top, 20)
 	}
 }
+
+extension UIColor {
+	func toImage() -> UIImage? {
+		return toImageWithSize(size: CGSize(width: 1, height: 1))
+	}
+	func toImageWithSize(size: CGSize) -> UIImage? {
+		UIGraphicsBeginImageContext(size)
+		
+		if let ctx = UIGraphicsGetCurrentContext() {
+			let rectangle = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+			ctx.setFillColor(self.cgColor)
+			ctx.addRect(rectangle)
+			ctx.drawPath(using: .fill)
+			let colorImage = UIGraphicsGetImageFromCurrentImageContext()
+			UIGraphicsEndImageContext()
+			return colorImage
+		} else {
+			return nil
+		}
+	}
+}
+
+extension UIImage {
+	func imageWithAlpha(alpha: CGFloat) -> UIImage? {
+		UIGraphicsBeginImageContextWithOptions(size, false, scale)
+		draw(at: CGPoint.zero, blendMode: .normal, alpha: alpha)
+		let newImage = UIGraphicsGetImageFromCurrentImageContext()
+		UIGraphicsEndImageContext()
+		return newImage
+	}
+}

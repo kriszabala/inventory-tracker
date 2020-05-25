@@ -156,7 +156,7 @@ public class CameraViewController: UIViewController {
         previewView.session = session
         previewView.videoPreviewLayer.videoGravity = videoGravity
         previewView.videoPreviewLayer.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
-        previewView.frame = view.frame
+        previewView.frame = UIScreen.main.bounds
         view.addSubview(previewView)
         
         // Add Gesture Recognizers
@@ -210,7 +210,11 @@ public class CameraViewController: UIViewController {
         
         
     }
-    
+	public override func viewDidLayoutSubviews() {
+		//print("viewDidLayoutSubviews self.view.frame \(self.view.frame)")
+		self.previewView.frame = UIScreen.main.bounds
+		super.viewDidLayoutSubviews()
+	}
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -305,7 +309,7 @@ public class CameraViewController: UIViewController {
         session.beginConfiguration()
         
         //Preset of the Snapchat Camera is .high
-        session.sessionPreset = .high
+        session.sessionPreset = .photo
         //.photo is the preset for normal photo in the iOS camera app
         //      session.sessionPreset = .photo
         
@@ -617,7 +621,7 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
             
             //2 options to save
             //First is to use UIImageWriteToSavedPhotosAlbum
-            savePhoto(image)
+            //savePhoto(image)
             //Second is adapting Apple documentation with data of the modified image
             //savePhoto(image.jpegData(compressionQuality: 1)!)
             

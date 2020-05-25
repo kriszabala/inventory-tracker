@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9023F37C2463148900B465EB /* SwiftUICamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9023F37B2463148900B465EB /* SwiftUICamView.swift */; };
 		9023F383246322A100B465EB /* CameraViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9023F37E246322A100B465EB /* CameraViewControllerDelegate.swift */; };
 		9023F384246322A100B465EB /* UserEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9023F37F246322A100B465EB /* UserEvents.swift */; };
 		9023F385246322A100B465EB /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9023F380246322A100B465EB /* CameraViewController.swift */; };
 		9023F386246322A100B465EB /* CameraActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9023F381246322A100B465EB /* CameraActions.swift */; };
 		9023F387246322A100B465EB /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9023F382246322A100B465EB /* CameraView.swift */; };
 		9023F3892463587A00B465EB /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9023F3882463587A00B465EB /* HostingController.swift */; };
+		9066CC46247C285B0054E637 /* FullScreenModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9066CC45247C285B0054E637 /* FullScreenModal.swift */; };
 		90789D6A245B860900D124D0 /* ITItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90789D64245B860800D124D0 /* ITItem+CoreDataClass.swift */; };
 		90789D6B245B860900D124D0 /* ITTag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90789D65245B860800D124D0 /* ITTag+CoreDataClass.swift */; };
 		90789D6C245B860900D124D0 /* ITPhoto+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90789D66245B860900D124D0 /* ITPhoto+CoreDataProperties.swift */; };
@@ -48,12 +50,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9023F37B2463148900B465EB /* SwiftUICamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUICamView.swift; sourceTree = "<group>"; };
 		9023F37E246322A100B465EB /* CameraViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewControllerDelegate.swift; sourceTree = "<group>"; };
 		9023F37F246322A100B465EB /* UserEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEvents.swift; sourceTree = "<group>"; };
 		9023F380246322A100B465EB /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		9023F381246322A100B465EB /* CameraActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraActions.swift; sourceTree = "<group>"; };
 		9023F382246322A100B465EB /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		9023F3882463587A00B465EB /* HostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingController.swift; sourceTree = "<group>"; };
+		9066CC45247C285B0054E637 /* FullScreenModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenModal.swift; sourceTree = "<group>"; };
 		90789D64245B860800D124D0 /* ITItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ITItem+CoreDataClass.swift"; path = "InventoryTracker/CoreDataEntities/ITItem+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		90789D65245B860800D124D0 /* ITTag+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ITTag+CoreDataClass.swift"; path = "InventoryTracker/CoreDataEntities/ITTag+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		90789D66245B860900D124D0 /* ITPhoto+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ITPhoto+CoreDataProperties.swift"; path = "InventoryTracker/CoreDataEntities/ITPhoto+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
@@ -141,7 +145,9 @@
 				90E77CE72453C38900A3C7FF /* KeyboardGuardian.swift */,
 				90E77CE324538B4300A3C7FF /* Palette.swift */,
 				90D57A6724536D3C00B600BA /* ContentView.swift */,
+				9023F37B2463148900B465EB /* SwiftUICamView.swift */,
 				90789D72245B8CD000D124D0 /* CreateItemView.swift */,
+				9066CC45247C285B0054E637 /* FullScreenModal.swift */,
 				90E77D562457386500A3C7FF /* CreateBinView.swift */,
 				90E77D5224571B6300A3C7FF /* BinsView.swift */,
 				90E77D5424571DA700A3C7FF /* SettingsView.swift */,
@@ -271,10 +277,12 @@
 				90D57A6624536D3C00B600BA /* InventoryTracker.xcdatamodeld in Sources */,
 				90789D6B245B860900D124D0 /* ITTag+CoreDataClass.swift in Sources */,
 				9023F3892463587A00B465EB /* HostingController.swift in Sources */,
+				9023F37C2463148900B465EB /* SwiftUICamView.swift in Sources */,
 				90D57A6124536D3C00B600BA /* AppDelegate.swift in Sources */,
 				9023F387246322A100B465EB /* CameraView.swift in Sources */,
 				9023F386246322A100B465EB /* CameraActions.swift in Sources */,
 				90E77CE424538B4300A3C7FF /* Palette.swift in Sources */,
+				9066CC46247C285B0054E637 /* FullScreenModal.swift in Sources */,
 				90E77CE82453C38900A3C7FF /* KeyboardGuardian.swift in Sources */,
 				90E77D752457530600A3C7FF /* CoreDataClass+ITExtensions.swift in Sources */,
 				9023F385246322A100B465EB /* CameraViewController.swift in Sources */,
