@@ -107,7 +107,10 @@ struct BinsView: View {
 					else {
 						CreateBinView(parentBin: self.bin).modifier(SystemServices())
 					}
-					
+		}
+		.onAppear(){
+			//Resets photosToAdd when user did not save or presses the back button
+			self.dataManager.resetAllPhotos()
 		}
 	}
 }

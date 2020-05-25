@@ -116,7 +116,6 @@ struct ItemView: View {
 	}
 	
 	private func cancelButtonAction(){
-		self.dataManager.photosToAdd.removeAll()
 		self.presentationMode.wrappedValue.dismiss()
 	}
 }

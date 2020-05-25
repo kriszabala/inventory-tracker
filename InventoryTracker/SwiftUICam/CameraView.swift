@@ -43,7 +43,7 @@ public struct CameraView: UIViewControllerRepresentable {
     }
 	
 	public func didFinishProcessingPhoto(_ image: UIImage) {
-		self.dataManager.photosToAdd.append(image)
+		self.dataManager.photosPending.append(image)
 	}
     
     public func makeUIViewController(context: Context) -> CameraViewController {

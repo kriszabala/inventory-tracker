@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct SwiftUICamView: View {
+	@EnvironmentObject private var dataManager: DataManager
 	@Environment(\.viewController) private var viewControllerHolder: UIViewController?
 	@ObservedObject var events = UserEvents()
 	
@@ -77,18 +78,22 @@ struct CameraInterfaceView: View, CameraActions {
 }
 
 struct CamCancelButton: View {
+	@EnvironmentObject private var dataManager: DataManager
 	@Environment(\.viewController) private var viewControllerHolder: UIViewController?
 	var body: some View {
 		Button("Cancel") {
+			self.dataManager.resetPendingPhotos()
 			self.viewControllerHolder?.dismiss(animated: true, completion: nil)
 		}.foregroundColor(.white)
 	}
 }
 
 struct CamSkipButton: View {
+	@EnvironmentObject private var dataManager: DataManager
 	@Environment(\.viewController) private var viewControllerHolder: UIViewController?
 	var body: some View {
-		Button("Skip") {
+		Button(self.dataManager.photosPending.count == 0 ? "Skip" : "Next") {
+			self.dataManager.mergePendingPhotos()
 			self.viewControllerHolder?.dismiss(animated: true, completion: nil)
 		}.foregroundColor(.white)
 	}

@@ -32,6 +32,7 @@ class DataManager: ObservableObject{
 	
 	@Published var _isLoggedIn : Bool = false
 	@Published var photosToAdd: [UIImage] = []
+	@Published var photosPending: [UIImage] = []
 	
 	var currentUser: ITUser?
 	
@@ -329,11 +330,24 @@ class DataManager: ObservableObject{
 			self.addPhotoForItem(item: thisItem, image: image)
 		}
 		
-		self.photosToAdd.removeAll()
+		self.resetAllPhotos()
 		
 		saveContext()
 		print("Item \(thisItem) created succesfully")
 		return .saveSuccess
 	}
 	
+	func resetAllPhotos() {
+		self.photosToAdd.removeAll()
+		self.photosPending.removeAll()
+	}
+	
+	func resetPendingPhotos() {
+		self.photosPending.removeAll()
+	}
+	
+	func mergePendingPhotos() {
+		self.photosToAdd += self.photosPending
+		self.resetPendingPhotos()
+	}
 }
