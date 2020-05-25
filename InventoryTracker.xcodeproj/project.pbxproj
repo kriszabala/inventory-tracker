@@ -22,6 +22,7 @@
 		90789D6E245B860900D124D0 /* ITItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90789D68245B860900D124D0 /* ITItem+CoreDataProperties.swift */; };
 		90789D6F245B860900D124D0 /* ITPhoto+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90789D69245B860900D124D0 /* ITPhoto+CoreDataClass.swift */; };
 		90789D73245B8CD000D124D0 /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90789D72245B8CD000D124D0 /* ItemView.swift */; };
+		90908E1F247C57BB0066482B /* PhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90908E1E247C57BB0066482B /* PhotosView.swift */; };
 		90D57A6124536D3C00B600BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D57A6024536D3C00B600BA /* AppDelegate.swift */; };
 		90D57A6324536D3C00B600BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D57A6224536D3C00B600BA /* SceneDelegate.swift */; };
 		90D57A6624536D3C00B600BA /* InventoryTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 90D57A6424536D3C00B600BA /* InventoryTracker.xcdatamodeld */; };
@@ -65,6 +66,7 @@
 		90789D68245B860900D124D0 /* ITItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ITItem+CoreDataProperties.swift"; path = "InventoryTracker/CoreDataEntities/ITItem+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		90789D69245B860900D124D0 /* ITPhoto+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ITPhoto+CoreDataClass.swift"; path = "InventoryTracker/CoreDataEntities/ITPhoto+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		90789D72245B8CD000D124D0 /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
+		90908E1E247C57BB0066482B /* PhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosView.swift; sourceTree = "<group>"; };
 		90D57A5D24536D3C00B600BA /* InventoryTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InventoryTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90D57A6024536D3C00B600BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		90D57A6224536D3C00B600BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				90D57A6224536D3C00B600BA /* SceneDelegate.swift */,
 				90D57A6724536D3C00B600BA /* ContentView.swift */,
 				9023F37B2463148900B465EB /* SwiftUICamView.swift */,
+				90908E1E247C57BB0066482B /* PhotosView.swift */,
 				90789D72245B8CD000D124D0 /* ItemView.swift */,
 				90E77D562457386500A3C7FF /* CreateBinView.swift */,
 				90E77D5224571B6300A3C7FF /* BinsView.swift */,
@@ -301,6 +304,7 @@
 				90789D6E245B860900D124D0 /* ITItem+CoreDataProperties.swift in Sources */,
 				90789D6C245B860900D124D0 /* ITPhoto+CoreDataProperties.swift in Sources */,
 				90E77D742457530600A3C7FF /* ITBin+CoreDataClass.swift in Sources */,
+				90908E1F247C57BB0066482B /* PhotosView.swift in Sources */,
 				90E77D762457530600A3C7FF /* ITUserLogin+CoreDataProperties.swift in Sources */,
 				90E77D732457530600A3C7FF /* ITUser+CoreDataProperties.swift in Sources */,
 				90E77D792457530600A3C7FF /* ITBin+CoreDataProperties.swift in Sources */,

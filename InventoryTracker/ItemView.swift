@@ -60,6 +60,13 @@ struct ItemView: View {
 								Image(uiImage: self.photos[index])
 									.resizable()
 									.aspectRatio(contentMode: .fit)
+									.onTapGesture {
+										self.viewControllerHolder?.present(style: .fullScreen) {
+											NavigationView {
+												PhotosView(index:index, photos: self.photos).modifier(SystemServices())
+											}.navigationViewStyle(StackNavigationViewStyle())
+										}
+								}
 							}
 							ForEach(0..<dataManager.photosToAdd.count, id: \.self) { index in
 								Image(uiImage: self.dataManager.photosToAdd[index])
