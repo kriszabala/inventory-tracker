@@ -84,10 +84,10 @@ struct BinsView: View {
 			}
 		}
 			NavigationLink(destination: ItemView(bin:self.bin).modifier(SystemServices()), isActive: self.$pushItemView) {
-				Text("")
+				EmptyView()
 			}.hidden()
 			NavigationLink(destination: CreateBinView(parentBin: self.bin).modifier(SystemServices()), isActive: self.$pushBinView) {
-				Text("")
+				EmptyView()
 			}.hidden()
 		}
 			
