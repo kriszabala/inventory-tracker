@@ -18,18 +18,6 @@ struct CreateItemView: View {
 	@State var quantity: Int32
 	@State var showingItemExists: Bool = false
 	@State var photos: [UIImage]
-	@State var isCameraPresented = false
-	
-	
-	@ObservedObject var events = UserEvents()
-	
-	@State private var image: Image?
-	@State private var inputImage: UIImage?
-	
-	func loadImage() {
-		guard let inputImage = inputImage else { return }
-		image = Image(uiImage: inputImage)
-	}
 	
 	var bin: ITBin?
 	var item: ITItem?
