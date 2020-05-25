@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct CreateItemView: View {
+struct ItemView: View {
 	@Environment(\.viewController) private var viewControllerHolder: UIViewController?
 	@EnvironmentObject private var dataManager: DataManager
 	@Environment (\.presentationMode) var presentationMode
@@ -125,6 +125,6 @@ struct CreateItemView_Previews: PreviewProvider {
 	static var previews: some View {
 		let context = DataManager().persistentContainer.viewContext
 		let item = ITItem.testItem(context: context)
-		return CreateItemView(item: item, bin: nil)
+		return ItemView(item: item, bin: nil)
 	}
 }
