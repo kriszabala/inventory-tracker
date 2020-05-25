@@ -121,10 +121,11 @@ struct ItemView: View {
 	}
 }
 
-struct CreateItemView_Previews: PreviewProvider {
+struct ItemView_Previews: PreviewProvider {
 	static var previews: some View {
-		let context = DataManager().persistentContainer.viewContext
+		let dataManager = DataManager()
+		let context = dataManager.persistentContainer.viewContext
 		let item = ITItem.testItem(context: context)
-		return ItemView(item: item, bin: nil)
+		return ItemView(item: item, bin: nil).environmentObject(dataManager)
 	}
 }
