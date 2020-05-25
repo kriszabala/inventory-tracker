@@ -136,24 +136,20 @@
 		90D57A5F24536D3C00B600BA /* InventoryTracker */ = {
 			isa = PBXGroup;
 			children = (
+				90E79BCD247C320500261242 /* Utils */,
 				9023F37D2463228800B465EB /* SwiftUICam */,
 				90E77D6B245752ED00A3C7FF /* Entities */,
 				90E77D152455D0BB00A3C7FF /* DataManager.swift */,
 				90D57A6024536D3C00B600BA /* AppDelegate.swift */,
-				9023F3882463587A00B465EB /* HostingController.swift */,
 				90D57A6224536D3C00B600BA /* SceneDelegate.swift */,
-				90E77CE72453C38900A3C7FF /* KeyboardGuardian.swift */,
-				90E77CE324538B4300A3C7FF /* Palette.swift */,
 				90D57A6724536D3C00B600BA /* ContentView.swift */,
 				9023F37B2463148900B465EB /* SwiftUICamView.swift */,
 				90789D72245B8CD000D124D0 /* CreateItemView.swift */,
-				9066CC45247C285B0054E637 /* FullScreenModal.swift */,
 				90E77D562457386500A3C7FF /* CreateBinView.swift */,
 				90E77D5224571B6300A3C7FF /* BinsView.swift */,
 				90E77D5424571DA700A3C7FF /* SettingsView.swift */,
 				90E77CE12453866500A3C7FF /* LoginView.swift */,
 				90E77D212456134800A3C7FF /* CreateUserView.swift */,
-				90E77D3024561B4B00A3C7FF /* Helper.swift */,
 				90D57A6924536D3E00B600BA /* Assets.xcassets */,
 				90D57A6E24536D3E00B600BA /* LaunchScreen.storyboard */,
 				90D57A7124536D3E00B600BA /* Info.plist */,
@@ -189,6 +185,18 @@
 				90E77D6F2457530600A3C7FF /* ITUserLogin+CoreDataProperties.swift */,
 			);
 			path = Entities;
+			sourceTree = "<group>";
+		};
+		90E79BCD247C320500261242 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				9066CC45247C285B0054E637 /* FullScreenModal.swift */,
+				90E77D3024561B4B00A3C7FF /* Helper.swift */,
+				9023F3882463587A00B465EB /* HostingController.swift */,
+				90E77CE72453C38900A3C7FF /* KeyboardGuardian.swift */,
+				90E77CE324538B4300A3C7FF /* Palette.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
