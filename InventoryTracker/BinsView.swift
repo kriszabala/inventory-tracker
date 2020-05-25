@@ -8,14 +8,10 @@
 
 import SwiftUI
 
-enum ActiveSheet {
-	case itemSheet, binSheet
-}
-
 struct BinsView: View {
 	@EnvironmentObject private var dataManager: DataManager
-	@State private var showSheet = false
-	@State private var activeSheet: ActiveSheet = .itemSheet
+	@State private var pushItemView = false
+	@State private var pushBinView = false
 	var bin: ITBin?
 	
 	@FetchRequest(entity: ITBin.entity(),
@@ -41,6 +37,7 @@ struct BinsView: View {
 	}
 	
 	var body: some View {
+		ZStack{
 		List {
 			if (bins.count > 0) {
 				Section(header: Text("Bins")) {
@@ -86,6 +83,13 @@ struct BinsView: View {
 				}
 			}
 		}
+			NavigationLink(destination: ItemView(bin:self.bin).modifier(SystemServices()), isActive: self.$pushItemView) {
+				Text("")
+			}.hidden()
+			NavigationLink(destination: CreateBinView(parentBin: self.bin).modifier(SystemServices()), isActive: self.$pushBinView) {
+				Text("")
+			}.hidden()
+		}
 			
 		.navigationBarItems(trailing: Button(action: {}, label: {
 				Image(systemName: "plus.circle")
@@ -93,21 +97,11 @@ struct BinsView: View {
 					.frame(width: 32, height: 32, alignment: .center)
 					.onTapGesture {
 						print("Add Item")
-						self.activeSheet = .itemSheet
-						self.showSheet = true
+						self.pushItemView = true
 				}
 				.onLongPressGesture(minimumDuration: 0.1) {
-					self.activeSheet = .binSheet
-					self.showSheet = true
+					self.pushBinView = true
 				}}))
-				.sheet(isPresented: $showSheet) {
-					if self.activeSheet == .itemSheet {
-						ItemView(bin:self.bin).modifier(SystemServices())
-					}
-					else {
-						CreateBinView(parentBin: self.bin).modifier(SystemServices())
-					}
-		}
 		.onAppear(){
 			//Resets photosToAdd when user did not save or presses the back button
 			self.dataManager.resetAllPhotos()

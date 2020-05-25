@@ -19,7 +19,6 @@ struct CreateBinView: View {
 	var parentBin: ITBin?
 	
 	var body: some View {
-		NavigationView {
 			Form {
 				Section(header: Text("Name")) {
 					TextField("Name", text: $name)
@@ -47,7 +46,6 @@ struct CreateBinView: View {
 				}
 				.navigationBarTitle("Add Bin")
 			}
-		}
 	}
 	
 	private func createButtonAction(){
