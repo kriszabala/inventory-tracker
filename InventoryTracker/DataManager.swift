@@ -299,12 +299,6 @@ class DataManager: ObservableObject{
 					thisItem.bin = bin
 					bin.addToItems(thisItem)
 				}
-				
-				for index in 0...2{
-					if let image = UIImage(named: "test\(index)"){
-						self.addPhotoForItem(item: thisItem, image: image)
-					}
-				}
 			}
 			else{
 				return .saveFailedMissingData
