@@ -20,12 +20,12 @@ struct CreateItemView: View {
 	@State var photos: [UIImage]
 	@State var isCameraPresented = false
 	
-
+	
 	@ObservedObject var events = UserEvents()
-
+	
 	@State private var image: Image?
 	@State private var inputImage: UIImage?
-
+	
 	func loadImage() {
 		guard let inputImage = inputImage else { return }
 		image = Image(uiImage: inputImage)
@@ -53,68 +53,68 @@ struct CreateItemView: View {
 	
 	var body: some View {
 		ZStack {
-		Form {
-			Section() {
-				ScrollView(.horizontal, content: {
-					HStack{
-						Button("Add Photo") {
-							self.viewControllerHolder?.present(style: .fullScreen) {
-								NavigationView {
-									SwiftUICamView().modifier(SystemServices())
-								}.navigationViewStyle(StackNavigationViewStyle())
+			Form {
+				Section() {
+					ScrollView(.horizontal, content: {
+						HStack{
+							Button("Add Photo") {
+								self.viewControllerHolder?.present(style: .fullScreen) {
+									NavigationView {
+										SwiftUICamView().modifier(SystemServices())
+									}.navigationViewStyle(StackNavigationViewStyle())
+								}
 							}
-						}
 							.foregroundColor(.white)
 							.padding()
 							.background(Color.accentColor)
 							.cornerRadius(8)
-						ForEach(0..<photos.count) { index in
-							Image(uiImage: self.photos[index])
-								.resizable()
-								.aspectRatio(contentMode: .fit)
+							ForEach(0..<photos.count) { index in
+								Image(uiImage: self.photos[index])
+									.resizable()
+									.aspectRatio(contentMode: .fit)
+							}
+							ForEach(0..<dataManager.photosToAdd.count, id: \.self) { index in
+								Image(uiImage: self.dataManager.photosToAdd[index])
+									.resizable()
+									.aspectRatio(contentMode: .fit)
+							}
 						}
-						ForEach(0..<dataManager.photosToAdd.count, id: \.self) { index in
-							Image(uiImage: self.dataManager.photosToAdd[index])
-								.resizable()
-								.aspectRatio(contentMode: .fit)
-						}
-					}
-					.padding(.leading, 10)
-				})
-					.frame(height: 100)
-				
-				
-			}
-			Section(header: Text("Name")) {
-				TextField("Name", text: $name)
-				//.keyboardType(.default)
-				if showingItemExists {
-					Text("Item with same name already exists.")
-						.foregroundColor(.red)
+						.padding(.leading, 10)
+					})
+						.frame(height: 100)
+					
+					
 				}
+				Section(header: Text("Name")) {
+					TextField("Name", text: $name)
+					//.keyboardType(.default)
+					if showingItemExists {
+						Text("Item with same name already exists.")
+							.foregroundColor(.red)
+					}
+				}
+				Section(header: Text("Quantity")) {
+					Stepper("\(quantity)", value: $quantity, in: 1...12)
+				}
+				
+				Section(header: Text("Notes")) {
+					TextField("Notes", text: $notes)
+					//.keyboardType(.default)
+				}
+				
+				Button(action: {
+					self.createButtonAction()
+				}) {
+					Text(self.item != nil ? "Save" : "Add Item")
+				}
+				Button(action: {
+					self.cancelButtonAction()
+				}) {
+					Text("Cancel")
+				}
+				
 			}
-			Section(header: Text("Quantity")) {
-				Stepper("\(quantity)", value: $quantity, in: 1...12)
-			}
-			
-			Section(header: Text("Notes")) {
-				TextField("Notes", text: $notes)
-				//.keyboardType(.default)
-			}
-			
-			Button(action: {
-				self.createButtonAction()
-			}) {
-				Text(self.item != nil ? "Save" : "Add Item")
-			}
-			Button(action: {
-				self.cancelButtonAction()
-			}) {
-				Text("Cancel")
-			}
-		
 		}
-	}
 	}
 	
 	private func createButtonAction() {
