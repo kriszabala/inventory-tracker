@@ -7,82 +7,102 @@
 //
 
 import SwiftUI
+import CoreStore
 
 struct BinsView: View {
 	@EnvironmentObject private var dataManager: DataManager
+
+	@Environment(\.dataStack)
+	var dataStack: DataStack
+	
+	@ObservedObject
+	var csBins: ListPublisher<Bin> = CoreStoreDefaults.dataStack.publishList(
+		From<Bin>()
+			.where(\.$level == 0)
+			.orderBy(.ascending(\.$name))
+	)
+	
+	@ObservedObject
+	var items: ListPublisher<Item> = CoreStoreDefaults.dataStack.publishList(
+		From<Item>()
+			.where(\.$bin == nil)
+			.orderBy(.ascending(\.$name))
+	)
+	
 	@State private var pushItemView = false
 	@State private var pushBinView = false
-	var bin: ITBin?
-	
-	@FetchRequest(entity: ITBin.entity(),
-								sortDescriptors: [NSSortDescriptor(keyPath: \ITBin.name, ascending: true)],
-								predicate: NSPredicate(format: "level == %d", 0))
-		var bins: FetchedResults<ITBin>
-	
-	@FetchRequest(entity: ITItem.entity(),
-								sortDescriptors: [NSSortDescriptor(keyPath: \ITItem.name, ascending: true)],
-								predicate: NSPredicate(format: "bin == nil"))
-	var items: FetchedResults<ITItem>
+	var bin: Bin?
 	
 	init() {
 		self.init(bin: nil)
 	}
 	
-	init(bin:ITBin?){
+	init(bin:Bin?){
 		if let bin = bin{
 			self.bin = bin
-			_bins = FetchRequest<ITBin>(fetchRequest:ITBin.getSubBinsForBin(bin: bin))
-			_items = FetchRequest<ITItem>(fetchRequest:ITItem.getItemsForBin(bin: bin))
+			csBins = CoreStoreDefaults.dataStack.publishList(
+				From<Bin>()
+					.where(\.$parentBin == bin)
+					.orderBy(.ascending(\.$name))
+			)
+			
+			items = CoreStoreDefaults.dataStack.publishList(
+				From<Item>()
+					.where(\.$bin == bin)
+					.orderBy(.ascending(\.$name))
+			)
 		}
 	}
 	
 	var body: some View {
 		ZStack{
-		List {
-			if (bins.count > 0) {
+			List {
+			if (self.csBins.snapshot.count > 0) {
 				Section(header: Text("Bins")) {
-					ForEach(bins) { bin in
+					//Text(verbatim:"Debug = \(csBins.snapshot.numberOfSections)")
+					ForEach(self.csBins.snapshot.items(inSectionWithID: self.csBins.snapshot.sectionIDs[0]), id: \.self) { csBin in
 						HStack {
-							Image(systemName: bin.subBins!.count > 0 ? "tray.2.fill" : "tray")
+							Image(systemName: csBin.subBins!.count > 0 ? "tray.2.fill" : "tray")
 								.resizable()
 								.frame(width: 32, height: 32, alignment: .center)
 							VStack(alignment: .leading) {
-								Text("\(bin.name!)")
+								Text("\(csBin.name!)")
 									.font(.headline)
-								if (bin.notes != nil){
-									Text("Notes: \(bin.notes!)")
+								if (csBin.notes!.count > 0){
+									Text("Notes: \(csBin.notes!)")
 										.font(.subheadline)
 								}
+								
 							}
 							Spacer()
-							NavigationLink("", destination: BinsView(bin: bin).navigationBarTitle(Text(self.dataManager.displayNameForBin(bin: bin))))
-							
+							NavigationLink("", destination: BinsView(bin: csBin.object).navigationBarTitle(Text(self.dataManager.displayNameForBin(bin: csBin.object!))))
 						}
 					}
 				}
 			}
-			if (items.count > 0) {
+			if (items.snapshot.count > 0) {
 				Section(header: Text("Items")) {
-					ForEach(items) { item in
+					ForEach(self.items.snapshot.items(inSectionWithID: self.items.snapshot.sectionIDs[0]), id: \.self) { item in
 						HStack {
 							Image(systemName: "eye")
 								.resizable()
 								.frame(width: 32, height: 32, alignment: .center)
 							VStack(alignment: .leading) {
-								Text("\(item.name!)")
+								Text("\(item.name!!)")
 									.font(.headline)
-								if (item.notes != nil){
-									Text("Item: \(item.notes!)")
+								if (item.notes != nil && !item.notes!!.isEmpty) {
+									Text("Notes: \(item.notes!!)")
 										.font(.subheadline)
 								}
 							}
 							NavigationLink("", destination:
-								ItemView(item:item).modifier(SystemServices()))
+								ItemView(item:item.object).modifier(SystemServices()))
 						}
 					}
 				}
 			}
 		}
+				
 			NavigationLink(destination: ItemView(bin:self.bin).modifier(SystemServices()), isActive: self.$pushItemView) {
 				EmptyView()
 			}.hidden()

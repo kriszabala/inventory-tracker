@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import CoreStore
 
 struct ItemView: View {
 	@Environment(\.viewController) private var viewControllerHolder: UIViewController?
@@ -19,10 +20,10 @@ struct ItemView: View {
 	@State var showingItemExists: Bool = false
 	@State var photos: [UIImage]
 	
-	var bin: ITBin?
-	var item: ITItem?
+	var bin: Bin?
+	var item: Item?
 	
-	init(item:ITItem? = nil, bin:ITBin? = nil) {
+	init(item:Item? = nil, bin:Bin? = nil) {
 		self.item = item
 		self.bin = bin
 		if let item = item{
@@ -113,7 +114,7 @@ struct ItemView: View {
 	}
 	
 	private func createButtonAction() {
-		let createStatus = self.dataManager.createOrUpdateItem(item:self.item, name: name, bin: bin, quantity: quantity, notes: notes, price: 0.00, minLevel: 0, barcode: nil)
+		let createStatus = self.dataManager.createOrUpdateItem(item:item, name: name, bin: bin, quantity: quantity, notes: notes, price: 0.00, minLevel: 0, barcode: nil)
 		if (createStatus == .saveSuccess) {
 			self.presentationMode.wrappedValue.dismiss()
 		}
@@ -129,9 +130,6 @@ struct ItemView: View {
 
 struct ItemView_Previews: PreviewProvider {
 	static var previews: some View {
-		let dataManager = DataManager()
-		let context = dataManager.persistentContainer.viewContext
-		let item = ITItem.testItem(context: context)
-		return ItemView(item: item, bin: nil).environmentObject(dataManager)
+		return ItemView(item: Item.testItem(), bin: nil).environmentObject(DataManager())
 	}
 }

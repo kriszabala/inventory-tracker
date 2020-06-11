@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "CoreStore",
+        "repositoryURL": "https://github.com/JohnEstropia/CoreStore",
+        "state": {
+          "branch": "develop",
+          "revision": "4a97d5a8dc023f8e4b0d94bf4dbfd2da4286532c",
+          "version": null
+        }
+      },
+      {
         "package": "CryptoSwift",
         "repositoryURL": "https://github.com/krzyzanowskim/CryptoSwift",
         "state": {

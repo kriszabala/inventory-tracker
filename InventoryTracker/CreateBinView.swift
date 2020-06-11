@@ -16,7 +16,7 @@ struct CreateBinView: View {
 	@State var notes: String = ""
 	@State var showingBinExists: Bool = false
 	
-	var parentBin: ITBin?
+	var parentBin: Bin?
 	
 	var body: some View {
 			Form {

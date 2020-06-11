@@ -6,10 +6,10 @@
 //  Copyright © 2020 Zabala. All rights reserved.
 //
 
-import CoreData
 import CryptoSwift
 import KeychainAccess
 import SwiftUI
+import CoreStore
 
 struct SystemServices: ViewModifier {
 	static var dataManager = DataManager()
@@ -18,23 +18,56 @@ struct SystemServices: ViewModifier {
 		content
 			// services
 			.environmentObject(Self.dataManager)
-			.environment(\.managedObjectContext, Self.dataManager.persistentContainer.viewContext )
 	}
 }
 
 class DataManager: ObservableObject{
 	let pwHashSalt = "Jg*<B9@UW6Kde+1OxaSxbf3m#&8W-Kf7"
+	static let dataStack:DataStack = {
+		let dataStack = DataStack(
+		CoreStoreSchema(
+			modelVersion: "V1",
+			entities: [
+				Entity<User>("User"),
+				Entity<UserLogin>("UserLogin"),
+				Entity<Bin>("Bin"),
+				Entity<Item>("Item"),
+				Entity<Photo>("Photo"),
+				Entity<Tag>("Tag")
+			],
+			versionLock: [
+				"Bin": [0x68dce2554d47e072, 0xb00419fa71dab1f0, 0x501dbd126d791d5e, 0xa25710efb0e63280],
+				"Item": [0x18ccd9b8dd849e9f, 0x1c7316acb556f29e, 0x93ac28869e04334c, 0xbe4f93f0dc0b9ef5],
+				"Photo": [0x9a698a1e5913dd2c, 0x54f1e40a0d10b34d, 0x73b9b302bbd1efa6, 0xfafa887dcda81ac2],
+				"Tag": [0xcef8b075864ef668, 0x7bc71a99a46b6445, 0x4f5b19bf73a23309, 0xd32ef54c858d70cb],
+				"User": [0xa702af552c15fce6, 0x359146052ea76b43, 0xbb74668fb3dfce3c, 0x4c53f8277f09204a],
+				"UserLogin": [0x473c916f9cc1b856, 0xab80ebb459e6bcff, 0xa77cda7c8f8bf9a, 0x4f7d9f7828d3a0be]
+			]
+		)
+	)
+		try! dataStack.addStorageAndWait()
+		CoreStoreDefaults.dataStack = dataStack
+		return dataStack
+	}()
 	
 	private let keychain = Keychain(service: Bundle.main.bundleIdentifier ?? "com.zabala.inventory")
 	init() {
 		//reset()
+		
+		return
+		let user = try! CoreStoreDefaults.dataStack.fetchOne(From<User>().where(\.$firstName == "Kris"))!
+		print("Succesfully fetched corestore object \(user)")
+		print(user.firstName)
+		print(user.lastName)
+		print (user.logins.shuffled()[0].loginDate)
+		print (user.logins.sorted(by: { $0.loginDate > $1.loginDate }))
 	}
 	
 	@Published var _isLoggedIn : Bool = false
 	@Published var photosToAdd: [UIImage] = []
 	@Published var photosPending: [UIImage] = []
 	
-	var currentUser: ITUser?
+	var currentUser: User?
 	
 	var isLoggedIn: Bool {
 		get {
@@ -59,84 +92,53 @@ class DataManager: ObservableObject{
 		}
 	}
 	
-	lazy var persistentContainer: NSPersistentContainer = {
-		let container = NSPersistentContainer(name: "InventoryTracker")
-		container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-			if let error = error as NSError? {
-				fatalError("Unresolved error \(error), \(error.userInfo)")
-			}
-		})
-		return container
-	}()
-	
 	func reset () {
 		self.isLoggedIn = false
-		self.persistentContainer.viewContext.reset()
 		print("Reseting CoreData store")
-		for persistentStoreDescription in persistentContainer.persistentStoreDescriptions {
-			if let storeURL = persistentStoreDescription.url {
-				do {
-					print("Deleting existing store at URL \(storeURL)", storeURL)
-					try persistentContainer.persistentStoreCoordinator.destroyPersistentStore(at: storeURL, ofType: NSSQLiteStoreType, options: nil)
-				} catch {
-					fatalError("Error deleting persistent store \(error)")
-				}
-				
-				do {
-					print("Creating new store")
-					try persistentContainer.persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType,
-																																								configurationName: nil,
-																																								at: storeURL,
-																																								options: nil)
-				} catch {
-					print(error.localizedDescription)
-					fatalError("Unable to Load Persistent Store \(error)")
-				}
-				
-			}
-		}
 		exit(0)
 	}
 	
-	func saveContext () {
-		print("Saving context")
-		let context = self.persistentContainer.viewContext
-		if context.hasChanges {
-			do {
-				try context.save()
-			} catch {
-				// Replace this implementation with code to handle the error appropriately.
-				// fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-				let nserror = error as NSError
-				fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-			}
-			print("Saved context successfully")
-		}
-		else{
-			print("Nothing to save")
-		}
-	}
-	
-	func findUserWith(email: String) -> ITUser? {
+	func findUserWith(email: String) -> User? {
 		// TODO: Handle email checks with . and + characters
 		
-		let fetchRequest:NSFetchRequest<ITUser> = ITUser.fetchRequest()
-		fetchRequest.predicate = NSPredicate(format: "email == %@", email.lowercased())
+		let predicate = NSPredicate(format: "email == %@", email.lowercased())
 		do {
-			let user = try self.persistentContainer.viewContext.fetch(fetchRequest)
+			let user = try CoreStoreDefaults.dataStack.fetchAll(
+				From<User>(),
+				Where<User>(predicate)
+			)
 			if user.count > 0{
 				print("Found user")
 				return user[0]
 			}
+			
 		} catch {
 			fatalError("Failed to fetch ITUser: \(error)")
 		}
 		return nil
 	}
 	
-	private func loginForUser(user: ITUser) {
-		user.addToLogins(createLoginForUser(user: user))
-		saveContext()
+	private func loginForUser(user: User) {
+		CoreStoreDefaults.dataStack.perform(
+			asynchronous: { transaction in
+				let user = transaction.edit(user)!
+				let userLogin = transaction.create(Into<UserLogin>())
+				userLogin.id = UUID()
+				userLogin.loginDate = Date()
+				userLogin.user = user
+				user.logins.insert(userLogin)
+		},
+			completion: { result in
+				
+				switch result {
+					
+				case .failure(let error):
+					print(error)
+					
+				case .success:
+					print("Succesfully created corestore loginForUser")}
+		}
+		)
 		self.currentUser = user
 		self.isLoggedIn = true
 	}
@@ -145,13 +147,9 @@ class DataManager: ObservableObject{
 		print ("Logging in with username \(email) and pw: \(password)")
 		if let user = findUserWith(email: email){
 			if user.pwHash == passwordHashFrom(email: email, password: password){
-				if let previousLogins = user.logins{
-					for case let thisLogin as ITUserLogin in previousLogins{
-						if let date = thisLogin.loginDate, let user = thisLogin.user{
-							if let thisEmail = user.email {
-								print("User \(thisEmail) previously logged in on \(date)")
-							}
-						}
+				if user.logins.count > 0{
+					for thisLogin in user.logins{
+						print("User \(user.email) previously logged in on \(thisLogin.loginDate)")
 					}
 				}
 				loginForUser(user: user)
@@ -167,28 +165,34 @@ class DataManager: ObservableObject{
 		case saveFailedMissingData
 	}
 	
-	func createLoginForUser(user: ITUser) -> ITUserLogin{
-		let login = ITUserLogin(context: self.persistentContainer.viewContext)
-		login.id = UUID()
-		login.loginDate = Date()
-		login.user = user
-		return login
-	}
-	
 	func createUser(email: String, firstName: String, lastName: String, password: String) -> SaveStatus{
 		//Check to make sure user with email doesn't already exist
 		if findUserWith(email: email) != nil{
 			return .saveFailedAlreadyExists
 		}
-		
-		let newUser = ITUser(context: self.persistentContainer.viewContext)
-		newUser.email = email.lowercased()
-		newUser.firstName = firstName
-		newUser.lastName = lastName
-		newUser.id = UUID()
-		newUser.pwHash = passwordHashFrom(email: email, password: password)
-		newUser.createDate = Date()
-		loginForUser(user: newUser)
+		CoreStoreDefaults.dataStack.perform(
+			asynchronous: { transaction in
+				let user = transaction.create(Into<User>())
+				user.email = email.lowercased()
+				user.firstName = firstName
+				user.lastName = lastName
+				user.id = UUID()
+				user.pwHash = self.passwordHashFrom(email: email, password: password)
+				user.createDate = Date()
+		},
+			completion: { result in
+				switch result {
+				case .failure(let error):
+					print(error)
+				case .success:
+					/// Accessing Objects =====
+					let user = try! CoreStoreDefaults.dataStack.fetchOne(From<User>().where(\.$email == email))!
+					print("Succesfully created corestore object \(user)")
+					self.loginForUser(user: user)
+					/// =======================
+				}
+		}
+		)
 		return .saveSuccess;
 	}
 	
@@ -196,67 +200,76 @@ class DataManager: ObservableObject{
 		return "\(password).\(email.lowercased()).\(pwHashSalt)".sha256()
 	}
 	
-	func findBinWith(name: String, level: Int16) -> ITBin? {
-		let fetchRequest:NSFetchRequest<ITBin> = ITBin.fetchRequest()
-		fetchRequest.predicate = NSPredicate(format: "name LIKE[c] %@ AND level == %d", name, level)
+	func findBinWith(name: String, level: Int16) -> Bin? {
+		let predicate = NSPredicate(format: "name LIKE[c] %@ AND level == %d", name, level)
 		do {
-			let bins = try self.persistentContainer.viewContext.fetch(fetchRequest)
+			let bins = try CoreStoreDefaults.dataStack.fetchAll(
+				From<Bin>(),
+				Where<Bin>(predicate)
+			)
 			if bins.count > 0{
 				print("Found bin")
 				return bins[0]
 			}
+			
 		} catch {
 			fatalError("Failed to fetch ITBin: \(error)")
 		}
 		return nil
 	}
 	
-	func createBin(name: String, level:Int16, notes: String?, parentBin: ITBin?) -> SaveStatus{
+	func createBin(name: String, level:Int16, notes: String?, parentBin: Bin?) -> SaveStatus{
 		if findBinWith(name: name, level: level) != nil{
 			print("Bin with name \(name) and level \(level) already exists")
 			return .saveFailedAlreadyExists
 		}
 		if let currentUser = currentUser {
-			let newBin = ITBin(context: self.persistentContainer.viewContext)
-			newBin.id = UUID()
-			newBin.createUser = currentUser
-			currentUser.addToBins(newBin)
-			newBin.createDate = Date()
-			newBin.name = name
-			newBin.level = level
-			
-			if let notes = notes, !notes.isEmpty {
-				/* notes is not blank */
-				newBin.notes = notes
+			CoreStoreDefaults.dataStack.perform(
+				asynchronous: { transaction in
+					let currentUser = transaction.edit(currentUser)!
+					let bin = transaction.create(Into<Bin>())
+					bin.id = UUID()
+					bin.createUser = currentUser
+					currentUser.bins.insert(bin)
+					bin.createDate = Date()
+					bin.name = name
+					bin.level = level
+					if let notes = notes {
+						bin.notes = notes
+					}
+					if let parentBin = parentBin {
+						let parentBin = transaction.edit(parentBin)!
+						bin.parentBin = parentBin
+						parentBin.subBins.insert(bin)
+					}
+			},
+				completion: { result in
+					switch result {
+					case .failure(let error):
+						print(error)
+					case .success:
+						print("Bin with name \(name) and level \(level) created succesfully")
+					}
 			}
-			if let parentBin = parentBin {
-				newBin.parentBin = parentBin
-				parentBin.addToSubBins(newBin)
-			}
-			saveContext()
-			print("Bin with name \(name) and level \(level) created succesfully")
+			)
 			return .saveSuccess
 		}
 		return .saveFailedMissingData
 	}
 	
-	func displayNameForBin(bin: ITBin) -> String{
+	func displayNameForBin(bin: Bin) -> String{
 		if let parentBin = bin.parentBin{
-			return "\(displayNameForBin(bin: parentBin))\u{2b95}\(bin.name!)"
+			return "\(displayNameForBin(bin: parentBin))\u{2b95}\(bin.name)"
 		}
-		return bin.name!
+		return bin.name
 	}
 	
-	func findItemWith(name: String, bin: ITBin?) -> ITItem? {
-		let fetchRequest:NSFetchRequest<ITItem> = ITItem.fetchRequest()
-		if let bin = bin {
-			fetchRequest.predicate = NSPredicate(format: "name LIKE[c] %@ AND bin == %@", name, bin)
-		}
-		else{
-			fetchRequest.predicate = NSPredicate(format: "name LIKE[c] %@ AND bin == nil" , name)
-		}
+	func findItemWith(name: String, bin: Bin?) -> Item? {
 		do {
-			let results = try self.persistentContainer.viewContext.fetch(fetchRequest)
+			let results = try CoreStoreDefaults.dataStack.fetchAll(
+				From<Item>(),
+				(Where<Item>(NSPredicate(format: "name LIKE[c] %@", name)) && Where<Item>(\.$bin == bin))
+			)
 			if results.count > 0{
 				print("Found Item")
 				return results[0]
@@ -267,68 +280,71 @@ class DataManager: ObservableObject{
 		return nil
 	}
 	
-	func addPhotoForItem(item:ITItem, image:UIImage){
-		let photo = ITPhoto(context: self.persistentContainer.viewContext)
-		photo.id = UUID()
-		photo.createDate = Date()
-		photo.createUser = currentUser
-		photo.imageData = image.jpegData(compressionQuality: 1)
-		photo.item = item
-		item.addToPhotos(photo)
-	}
-	
-	func createOrUpdateItem(item:ITItem?, name:String, bin:ITBin?, quantity:Int32, notes: String?, price: Double, minLevel:Int32, barcode:String?) -> SaveStatus {
-		
-		var thisItem:ITItem
-		
-		if let item = item {
-			thisItem = item
-		}
-		else{
-			if findItemWith(name: name, bin: bin) != nil{
-				print("Item with name \(name) in bin \(String(describing: bin?.name)) already exists")
-				return .saveFailedAlreadyExists
-			}
+	func createOrUpdateItem(item:Item?, name:String, bin:Bin?, quantity:Int32, notes: String?, price: Double, minLevel:Int32, barcode:String?) -> SaveStatus {
 			if let currentUser = currentUser {
-				thisItem = ITItem(context: self.persistentContainer.viewContext)
-				thisItem.id = UUID()
-				thisItem.createUser = currentUser
-				currentUser.addToItems(thisItem)
-				thisItem.createDate = Date()
-				if let bin = bin {
-					thisItem.bin = bin
-					bin.addToItems(thisItem)
+				if item == nil, findItemWith(name: name, bin: bin) != nil{
+					print("Item with name \(name) in bin \(String(describing: bin?.name)) already exists")
+					return .saveFailedAlreadyExists
 				}
-			}
-			else{
-				return .saveFailedMissingData
-			}
+				
+				CoreStoreDefaults.dataStack.perform(
+					asynchronous: { transaction in
+						var thisItem:Item
+						let currentUser = transaction.edit(currentUser)!
+						if let item = item {
+							thisItem = transaction.edit(item)!
+						}
+						else{
+							thisItem = transaction.create(Into<Item>())
+						}
+						thisItem.id = UUID()
+						thisItem.createUser = currentUser
+						currentUser.items.insert(thisItem)
+						thisItem.createDate = Date()
+						thisItem.name = name
+						thisItem.quantity = quantity
+						thisItem.barcode = barcode
+						thisItem.minLevel = minLevel
+						thisItem.price = price
+						
+						if let bin = bin{
+							let bin = transaction.edit(bin)!
+							thisItem.bin = bin
+							bin.items.insert(thisItem)
+						}
+						
+						if let notes = notes{
+							thisItem.notes = notes
+						}
+						
+						if let barcode = barcode, !barcode.isEmpty {
+							thisItem.barcode = barcode
+						}
+						
+						for image in self.photosToAdd {
+							let photo = transaction.create(Into<Photo>())
+							photo.id = UUID()
+							photo.createDate = Date()
+							photo.createUser = currentUser
+							photo.imageData = image.jpegData(compressionQuality: 1)!
+							photo.item = thisItem
+							thisItem.photos.insert(photo)
+						}
+				},
+					completion: { result in
+						switch result {
+						case .failure(let error):
+							print(error)
+						case .success:
+							print("Item with name \(name) created succesfully")
+						}
+				}
+				)
+				self.resetAllPhotos()
+				return .saveSuccess
 		}
-		
-		thisItem.name = name
-		thisItem.quantity = quantity
-		thisItem.barcode = barcode
-		thisItem.minLevel = minLevel
-		thisItem.price = price
-		
-		if let notes = notes, !notes.isEmpty {
-			/* notes is not blank */
-			thisItem.notes = notes
-		}
-		
-		if let barcode = barcode, !barcode.isEmpty {
-			thisItem.barcode = barcode
-		}
-		
-		for image in self.photosToAdd {
-			self.addPhotoForItem(item: thisItem, image: image)
-		}
-		
-		self.resetAllPhotos()
-		
-		saveContext()
-		print("Item \(thisItem) created succesfully")
-		return .saveSuccess
+		print("Item save failed")
+		return .saveFailedMissingData
 	}
 	
 	func resetAllPhotos() {
