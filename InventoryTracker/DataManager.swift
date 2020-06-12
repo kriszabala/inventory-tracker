@@ -46,12 +46,12 @@ class DataManager: ObservableObject{
 		)
 	)
 		try! dataStack.addStorageAndWait()
-		CoreStoreDefaults.dataStack = dataStack
 		return dataStack
 	}()
 	
 	private let keychain = Keychain(service: Bundle.main.bundleIdentifier ?? "com.zabala.inventory")
 	init() {
+		CoreStoreDefaults.dataStack = DataManager.dataStack
 		//reset()
 		
 		return
