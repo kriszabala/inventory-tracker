@@ -11,9 +11,6 @@ import CoreStore
 
 struct BinsView: View {
 	@EnvironmentObject private var dataManager: DataManager
-
-	@Environment(\.dataStack)
-	var dataStack: DataStack
 	
 	@ObservedObject
 	var csBins: ListPublisher<Bin> = CoreStoreDefaults.dataStack.publishList(
