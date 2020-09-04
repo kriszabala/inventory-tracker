@@ -36,18 +36,18 @@ struct PhotosView: View {
 				.aspectRatio(4/3, contentMode: .fit)
 				.clipShape(RoundedRectangle(cornerRadius: 15))
 				
-				PagingView(index: $index.animation(), maxIndex: photos.count - 1) {
-					ForEach(self.photos, id: \.self) { image in
-						Image(uiImage: image)
+				//Clickable preview bar for selecting photo to display in the paging view above.
+				HStack{
+					ForEach(0..<photos.count) { index in
+						Image(uiImage: self.photos[index])
 							.resizable()
-							.scaledToFill()
+							.aspectRatio(contentMode: .fit)
+							.onTapGesture {
+								self.index = index
+						}
 					}
 				}
-				.aspectRatio(3/4, contentMode: .fit)
-				.clipShape(RoundedRectangle(cornerRadius: 15))
-				
-				Stepper("Index: \(index)", value: $index.animation(.easeInOut), in: 0...photos.count-1)
-					.font(Font.body.monospacedDigit())
+				.padding(.leading, 10)
 			}
 			.padding()
 			.navigationBarTitle("Photo Preview", displayMode: .inline)
