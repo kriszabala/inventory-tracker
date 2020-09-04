@@ -12,8 +12,8 @@ struct LoginView: View {
 	@EnvironmentObject private var dataManager: DataManager
 	@Environment (\.presentationMode) var presentationMode
 
-	@State var email: String = "kris.zabala@gmail.com"
-	@State var password: String = "123456"
+	@State var email: String = ""
+	@State var password: String = ""
 	@State var authenticationDidFail: Bool = false
 	@State var authenticationDidSucceed: Bool = false
 	@State var isShowingCreateUserView: Bool = false
