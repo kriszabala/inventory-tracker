@@ -21,18 +21,11 @@ struct ContentView: View {
 				}
 				.navigationViewStyle(StackNavigationViewStyle())
 				.tabItem {
-					Image(systemName: "1.square.fill")
 					Text("Bins")
 				}
-				Text("Another Tab")
-					.tabItem {
-						Image(systemName: "2.square.fill")
-						Text("Second")
-				}
 				SettingsView()
-					.tabItem {
-						Image(systemName: "3.square.fill")
-						Text("Settings")
+				.tabItem {
+					Text("Settings")
 				}
 			}
 			.font(.headline)
