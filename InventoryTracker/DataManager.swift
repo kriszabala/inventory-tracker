@@ -338,9 +338,9 @@ class DataManager: ObservableObject{
 						case .success:
 							print("Item with name \(name) created succesfully")
 						}
+						self.resetAllPhotos()
 				}
 				)
-				self.resetAllPhotos()
 				return .saveSuccess
 		}
 		print("Item save failed")
