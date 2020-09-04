@@ -138,6 +138,17 @@ class Item: CoreStoreObject {
 		return imageArray
 	}
 	
+	public var previewPhoto: UIImage {
+		let photoArray = photos.sorted {
+			$0.createDate < $1.createDate
+		}
+		
+		if (photoArray.count > 0){
+			return UIImage(data: photoArray.first!.imageData)!
+		}
+		return UIImage()
+	}
+	
 	public class func testItem () -> Item{
 		let transaction = DataManager.dataStack.beginUnsafe()
 		let user = transaction.create(Into<User>())
