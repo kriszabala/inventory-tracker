@@ -81,7 +81,7 @@ struct BinsView: View {
 				Section(header: Text("Items")) {
 					ForEach(self.items.snapshot.items(inSectionWithID: self.items.snapshot.sectionIDs[0]), id: \.self) { item in
 						HStack {
-							Image(uiImage:item.previewPhoto as! UIImage)
+							Image(uiImage:item.previewPhoto!)
 								.resizable()
 								.frame(width: 32, height: 32, alignment: .center)
 							VStack(alignment: .leading) {
