@@ -52,15 +52,6 @@ class DataManager: ObservableObject{
 	private let keychain = Keychain(service: Bundle.main.bundleIdentifier ?? "com.zabala.inventory")
 	init() {
 		CoreStoreDefaults.dataStack = DataManager.dataStack
-		//reset()
-		
-		return
-		let user = try! CoreStoreDefaults.dataStack.fetchOne(From<User>().where(\.$firstName == "Kris"))!
-		print("Succesfully fetched corestore object \(user)")
-		print(user.firstName)
-		print(user.lastName)
-		print (user.logins.shuffled()[0].loginDate)
-		print (user.logins.sorted(by: { $0.loginDate > $1.loginDate }))
 	}
 	
 	@Published var _isLoggedIn : Bool = false
