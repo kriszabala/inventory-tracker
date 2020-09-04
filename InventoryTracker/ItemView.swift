@@ -109,7 +109,7 @@ struct ItemView: View {
 					Text("Cancel")
 				}
 				
-			}
+			}.navigationBarTitle(self.item != nil ? "" : "Add Item")
 		}
 	}
 	
