@@ -13,10 +13,10 @@ struct CreateUserView: View {
 	
 	@Environment (\.presentationMode) var presentationMode
 	
-	@State var email: String = ""
-	@State var firstName: String = ""
-	@State var lastName: String = ""
-	@State var password: String = ""
+	@State var email: String = "testuser@gmail.com"
+	@State var firstName: String = "Test"
+	@State var lastName: String = "User"
+	@State var password: String = "123456"
 	@State var showingEmailInvalid: Bool = false
 	@State var showingEmailExists: Bool = false
 	@State var showingPasswordInvalid: Bool = false
