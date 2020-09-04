@@ -21,6 +21,8 @@ struct SystemServices: ViewModifier {
 	}
 }
 
+let sqliteFilename = "InventoryTracker.sqlite"
+
 class DataManager: ObservableObject{
 	let pwHashSalt = "Jg*<B9@UW6Kde+1OxaSxbf3m#&8W-Kf7"
 	static let dataStack:DataStack = {
@@ -45,13 +47,19 @@ class DataManager: ObservableObject{
 			]
 		)
 	)
-		try! dataStack.addStorageAndWait()
+		try! dataStack.addStorageAndWait(SQLiteStore(fileName: sqliteFilename))
 		return dataStack
 	}()
 	
 	private let keychain = Keychain(service: Bundle.main.bundleIdentifier ?? "com.zabala.inventory")
 	init() {
+		let sqliteExists = FileManager.default.fileExists(atPath: self.sqliteFilePath())
 		CoreStoreDefaults.dataStack = DataManager.dataStack
+		//Since login state is also stored in keychain, if sqlite store doesn't already exist on startup,
+		//such as if the user deletes the app, set isLoggedIn to false.
+		if (self.isLoggedIn && !sqliteExists){
+			self.isLoggedIn = false;
+		}
 	}
 	
 	@Published var _isLoggedIn : Bool = false
@@ -63,7 +71,6 @@ class DataManager: ObservableObject{
 	var isLoggedIn: Bool {
 		get {
 			let email = keychain["isLoggedIn"]
-			print("Logged in with email \(email ?? "nil")")
 			if currentUser == nil {
 				if let email = email{
 					currentUser = findUserWith(email: email)
@@ -84,9 +91,35 @@ class DataManager: ObservableObject{
 	}
 	
 	func reset () {
+		CoreStoreDefaults.dataStack.unsafeRemoveAllPersistentStoresAndWait()
+		deleteSqliteFile()
 		self.isLoggedIn = false
 		print("Reseting CoreData store")
 		exit(0)
+	}
+	
+	private func sqliteFilePath() -> String {
+		FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!.appendingPathComponent(Bundle.main.bundleIdentifier!).appendingPathComponent(sqliteFilename).path
+	}
+	
+	private func deleteSqliteFile(){
+		let filePath = sqliteFilePath()
+			print("Local path = \(filePath)")
+		
+		do {
+			let fileManager = FileManager.default
+			// Check if file exists
+			if fileManager.fileExists(atPath: filePath) {
+				// Delete file
+				try fileManager.removeItem(atPath: filePath)
+			} else {
+				print("File does not exist")
+			}
+			
+		}
+		catch let error as NSError {
+			print("An error took place: \(error)")
+		}
 	}
 	
 	func findUserWith(email: String) -> User? {
