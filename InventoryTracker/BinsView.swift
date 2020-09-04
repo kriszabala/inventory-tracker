@@ -108,7 +108,9 @@ struct BinsView: View {
 			}.hidden()
 		}
 			
-		.navigationBarItems(trailing: Button(action: {}, label: {
+		.navigationBarItems(trailing: HStack {
+			Text("Tap to add item, hold to add bin \u{2794}")
+			Button(action: {}, label: {
 				Image(systemName: "plus.circle")
 					.resizable()
 					.frame(width: 32, height: 32, alignment: .center)
@@ -118,7 +120,8 @@ struct BinsView: View {
 				}
 				.onLongPressGesture(minimumDuration: 0.1) {
 					self.pushBinView = true
-				}}))
+				}})
+			})
 		.onAppear(){
 			//Resets photosToAdd when user did not save or presses the back button
 			self.dataManager.resetAllPhotos()
