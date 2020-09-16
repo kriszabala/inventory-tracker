@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9020BE8B251273F200B5D487 /* DataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9020BE8A251273F200B5D487 /* DataCoordinator.swift */; };
+		9020BE8D2512755600B5D487 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9020BE8C2512755600B5D487 /* User.swift */; };
+		9020BE8F251276C700B5D487 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9020BE8E251276C700B5D487 /* Config.swift */; };
+		9020BE912512AFD500B5D487 /* UserLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9020BE902512AFD500B5D487 /* UserLogin.swift */; };
 		9023F37C2463148900B465EB /* SwiftUICamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9023F37B2463148900B465EB /* SwiftUICamView.swift */; };
 		9023F383246322A100B465EB /* CameraViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9023F37E246322A100B465EB /* CameraViewControllerDelegate.swift */; };
 		9023F384246322A100B465EB /* UserEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9023F37F246322A100B465EB /* UserEvents.swift */; };
@@ -20,6 +24,11 @@
 		90908E1F247C57BB0066482B /* PhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90908E1E247C57BB0066482B /* PhotosView.swift */; };
 		90908E5D24813FC90066482B /* CoreStore in Frameworks */ = {isa = PBXBuildFile; productRef = 90908E5C24813FC90066482B /* CoreStore */; };
 		9091F85D2511EB7F000FEF01 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 9091F85C2511EB7F000FEF01 /* Resolver */; };
+		9091F8642511ED21000FEF01 /* CreateUserVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9091F8632511ED21000FEF01 /* CreateUserVM.swift */; };
+		9091F8662511ED35000FEF01 /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9091F8652511ED35000FEF01 /* LoginVM.swift */; };
+		9091F8682511ED5D000FEF01 /* AppDelegate+Resolving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9091F8672511ED5D000FEF01 /* AppDelegate+Resolving.swift */; };
+		9091F86B2511EDE7000FEF01 /* Disk in Frameworks */ = {isa = PBXBuildFile; productRef = 9091F86A2511EDE7000FEF01 /* Disk */; };
+		9091F86D2511EF68000FEF01 /* ContentVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9091F86C2511EF68000FEF01 /* ContentVM.swift */; };
 		90D57A6124536D3C00B600BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D57A6024536D3C00B600BA /* AppDelegate.swift */; };
 		90D57A6324536D3C00B600BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D57A6224536D3C00B600BA /* SceneDelegate.swift */; };
 		90D57A6624536D3C00B600BA /* InventoryTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 90D57A6424536D3C00B600BA /* InventoryTracker.xcdatamodeld */; };
@@ -41,6 +50,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9020BE8A251273F200B5D487 /* DataCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCoordinator.swift; sourceTree = "<group>"; };
+		9020BE8C2512755600B5D487 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		9020BE8E251276C700B5D487 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		9020BE902512AFD500B5D487 /* UserLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLogin.swift; sourceTree = "<group>"; };
 		9023F37B2463148900B465EB /* SwiftUICamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUICamView.swift; sourceTree = "<group>"; };
 		9023F37E246322A100B465EB /* CameraViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewControllerDelegate.swift; sourceTree = "<group>"; };
 		9023F37F246322A100B465EB /* UserEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEvents.swift; sourceTree = "<group>"; };
@@ -52,6 +65,10 @@
 		906D170A248DE54500A85F94 /* Entities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entities.swift; sourceTree = "<group>"; };
 		90789D72245B8CD000D124D0 /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		90908E1E247C57BB0066482B /* PhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosView.swift; sourceTree = "<group>"; };
+		9091F8632511ED21000FEF01 /* CreateUserVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserVM.swift; sourceTree = "<group>"; };
+		9091F8652511ED35000FEF01 /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
+		9091F8672511ED5D000FEF01 /* AppDelegate+Resolving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Resolving.swift"; sourceTree = "<group>"; };
+		9091F86C2511EF68000FEF01 /* ContentVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVM.swift; sourceTree = "<group>"; };
 		90D57A5D24536D3C00B600BA /* InventoryTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InventoryTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90D57A6024536D3C00B600BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		90D57A6224536D3C00B600BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +96,7 @@
 			files = (
 				90E77D192456010700A3C7FF /* KeychainAccess in Frameworks */,
 				90908E5D24813FC90066482B /* CoreStore in Frameworks */,
+				9091F86B2511EDE7000FEF01 /* Disk in Frameworks */,
 				9091F85D2511EB7F000FEF01 /* Resolver in Frameworks */,
 				90E77D342456577400A3C7FF /* CryptoSwift in Frameworks */,
 			);
@@ -102,6 +120,9 @@
 		9091F85E2511EBD6000FEF01 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				9091F86C2511EF68000FEF01 /* ContentVM.swift */,
+				9091F8632511ED21000FEF01 /* CreateUserVM.swift */,
+				9091F8652511ED35000FEF01 /* LoginVM.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -109,6 +130,7 @@
 		9091F85F2511EBDD000FEF01 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				90D57A6724536D3C00B600BA /* ContentView.swift */,
 				90E77D212456134800A3C7FF /* CreateUserView.swift */,
 				90E77CE12453866500A3C7FF /* LoginView.swift */,
 			);
@@ -119,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				90E77D152455D0BB00A3C7FF /* DataManager.swift */,
+				9020BE8A251273F200B5D487 /* DataCoordinator.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -148,9 +171,10 @@
 				90E79BCD247C320500261242 /* Utils */,
 				9023F37D2463228800B465EB /* SwiftUICam */,
 				90E77D6B245752ED00A3C7FF /* Entities */,
+				9020BE8E251276C700B5D487 /* Config.swift */,
 				90D57A6024536D3C00B600BA /* AppDelegate.swift */,
+				9091F8672511ED5D000FEF01 /* AppDelegate+Resolving.swift */,
 				90D57A6224536D3C00B600BA /* SceneDelegate.swift */,
-				90D57A6724536D3C00B600BA /* ContentView.swift */,
 				9023F37B2463148900B465EB /* SwiftUICamView.swift */,
 				90908E1E247C57BB0066482B /* PhotosView.swift */,
 				90789D72245B8CD000D124D0 /* ItemView.swift */,
@@ -178,6 +202,8 @@
 			isa = PBXGroup;
 			children = (
 				906D170A248DE54500A85F94 /* Entities.swift */,
+				9020BE8C2512755600B5D487 /* User.swift */,
+				9020BE902512AFD500B5D487 /* UserLogin.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -215,6 +241,7 @@
 				90E77D332456577400A3C7FF /* CryptoSwift */,
 				90908E5C24813FC90066482B /* CoreStore */,
 				9091F85C2511EB7F000FEF01 /* Resolver */,
+				9091F86A2511EDE7000FEF01 /* Disk */,
 			);
 			productName = InventoryTracker;
 			productReference = 90D57A5D24536D3C00B600BA /* InventoryTracker.app */;
@@ -249,6 +276,7 @@
 				90E77D322456577400A3C7FF /* XCRemoteSwiftPackageReference "CryptoSwift" */,
 				90908E5B24813FC90066482B /* XCRemoteSwiftPackageReference "CoreStore" */,
 				9091F85B2511EB7F000FEF01 /* XCRemoteSwiftPackageReference "Resolver" */,
+				9091F8692511EDE7000FEF01 /* XCRemoteSwiftPackageReference "Disk" */,
 			);
 			productRefGroup = 90D57A5E24536D3C00B600BA /* Products */;
 			projectDirPath = "";
@@ -277,28 +305,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9020BE8B251273F200B5D487 /* DataCoordinator.swift in Sources */,
 				90E77D3124561B4B00A3C7FF /* Helper.swift in Sources */,
+				9020BE912512AFD500B5D487 /* UserLogin.swift in Sources */,
 				90E77D5324571B6300A3C7FF /* BinsView.swift in Sources */,
 				90E77CE22453866500A3C7FF /* LoginView.swift in Sources */,
+				9020BE8D2512755600B5D487 /* User.swift in Sources */,
 				90E77D222456134800A3C7FF /* CreateUserView.swift in Sources */,
 				90D57A6624536D3C00B600BA /* InventoryTracker.xcdatamodeld in Sources */,
 				9023F3892463587A00B465EB /* HostingController.swift in Sources */,
 				906D170B248DE54500A85F94 /* Entities.swift in Sources */,
+				9091F8642511ED21000FEF01 /* CreateUserVM.swift in Sources */,
 				9023F37C2463148900B465EB /* SwiftUICamView.swift in Sources */,
 				90D57A6124536D3C00B600BA /* AppDelegate.swift in Sources */,
 				9023F387246322A100B465EB /* CameraView.swift in Sources */,
 				9023F386246322A100B465EB /* CameraActions.swift in Sources */,
 				90E77CE424538B4300A3C7FF /* Palette.swift in Sources */,
 				9066CC46247C285B0054E637 /* FullScreenModal.swift in Sources */,
+				9091F86D2511EF68000FEF01 /* ContentVM.swift in Sources */,
 				90E77CE82453C38900A3C7FF /* KeyboardGuardian.swift in Sources */,
 				9023F385246322A100B465EB /* CameraViewController.swift in Sources */,
 				90D57A6824536D3C00B600BA /* ContentView.swift in Sources */,
 				90908E1F247C57BB0066482B /* PhotosView.swift in Sources */,
+				9091F8682511ED5D000FEF01 /* AppDelegate+Resolving.swift in Sources */,
 				90E77D5524571DA700A3C7FF /* SettingsView.swift in Sources */,
 				90E77D162455D0BB00A3C7FF /* DataManager.swift in Sources */,
 				90D57A6324536D3C00B600BA /* SceneDelegate.swift in Sources */,
 				90789D73245B8CD000D124D0 /* ItemView.swift in Sources */,
+				9091F8662511ED35000FEF01 /* LoginVM.swift in Sources */,
 				90E77D572457386500A3C7FF /* CreateBinView.swift in Sources */,
+				9020BE8F251276C700B5D487 /* Config.swift in Sources */,
 				9023F383246322A100B465EB /* CameraViewControllerDelegate.swift in Sources */,
 				9023F384246322A100B465EB /* UserEvents.swift in Sources */,
 			);
@@ -514,6 +550,14 @@
 				minimumVersion = 1.1.4;
 			};
 		};
+		9091F8692511EDE7000FEF01 /* XCRemoteSwiftPackageReference "Disk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/saoudrizwan/Disk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.6.4;
+			};
+		};
 		90E77D172456010700A3C7FF /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
@@ -542,6 +586,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9091F85B2511EB7F000FEF01 /* XCRemoteSwiftPackageReference "Resolver" */;
 			productName = Resolver;
+		};
+		9091F86A2511EDE7000FEF01 /* Disk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9091F8692511EDE7000FEF01 /* XCRemoteSwiftPackageReference "Disk" */;
+			productName = Disk;
 		};
 		90E77D182456010700A3C7FF /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;

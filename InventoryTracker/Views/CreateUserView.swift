@@ -9,75 +9,45 @@
 import SwiftUI
 
 struct CreateUserView: View {
-	@EnvironmentObject private var dataManager: DataManager
-	
-	@Environment (\.presentationMode) var presentationMode
-	
-	@State var email: String = "testuser@gmail.com"
-	@State var firstName: String = "Test"
-	@State var lastName: String = "User"
-	@State var password: String = "123456"
-	@State var showingEmailInvalid: Bool = false
-	@State var showingEmailExists: Bool = false
-	@State var showingPasswordInvalid: Bool = false
-	@State var showingFirstNameInvalid: Bool = false
-	@State var showingLastNameInvalid: Bool = false
-	
+	@ObservedObject private var createUserVM = CreateUserVM()
+	@Environment(\.presentationMode) var presentationMode
+
 	var body: some View {
-		KeyboardGuardian{
-			ZStack{
+		KeyboardGuardian {
+			ZStack {
 				VStack {
-					Group{
-						TextField("Email Address", text: $email).modifier(ITTextFieldStyle())
-						if showingEmailInvalid {
-							Text("Please enter a valid email address.")
+					Group {
+						TextField("Email Address", text: $createUserVM.email).modifier(ITTextFieldStyle())
+						if !createUserVM.emailMessage.isEmpty {
+							Text(createUserVM.emailMessage)
 								.foregroundColor(.red)
 						}
-						if showingEmailExists {
-							Text("User with email already exists.")
+						TextField("First Name", text: $createUserVM.firstName).modifier(ITTextFieldStyle())
+						if !createUserVM.firstNameMessage.isEmpty {
+							Text(createUserVM.firstNameMessage)
 								.foregroundColor(.red)
 						}
-						TextField("First Name", text: $firstName).modifier(ITTextFieldStyle())
-						if showingFirstNameInvalid {
-							Text("Valid first name required.")
+						TextField("Last Name", text: $createUserVM.lastName).modifier(ITTextFieldStyle())
+						if !createUserVM.lastNameMessage.isEmpty {
+							Text(createUserVM.lastNameMessage)
 								.foregroundColor(.red)
 						}
-						TextField("Last Name", text: $lastName).modifier(ITTextFieldStyle())
-						if showingLastNameInvalid {
-							Text("Valid last name required.")
-								.foregroundColor(.red)
-						}
-						TextField("Password", text: $password).modifier(ITTextFieldStyle())
-						if showingPasswordInvalid {
-							Text("Password longer than 6 characters required.")
+						TextField("Password", text: $createUserVM.password).modifier(ITTextFieldStyle())
+						if !createUserVM.passwordMessage.isEmpty {
+							Text(createUserVM.passwordMessage)
 								.foregroundColor(.red)
 						}
 					}
-					
+
 					Button(action: {
-						self.validateInput()
-						if self.isInputValid()
-						{
-							print("Attempting to create User")
-							let createStatus = self.dataManager.createUser(email: self.email, firstName: self.firstName, lastName: self.lastName, password: self.password)
-							if (createStatus == .saveSuccess){
-								print("User created successfully")
-								self.presentationMode.wrappedValue.dismiss()
-							}
-							else if (createStatus == .saveFailedAlreadyExists){
-								print("User with email \(self.email) already exists")
-								self.showingEmailExists = true
-							}
-						}
-					})
-					{
+						self.createUserVM.createUserAction()
+					}) {
 						ITButton(label: "CREATE USER")
-					}
-					
+					}.disabled(!self.createUserVM.isValid)
+
 					Button(action: {
 						self.presentationMode.wrappedValue.dismiss()
-					})
-					{
+					}) {
 						ITButton(label: "CANCEL")
 					}
 				}
@@ -85,34 +55,17 @@ struct CreateUserView: View {
 			.padding()
 		}
 	}
-	
-	private func validateInput(){
-		if	(!email.isValidEmailAddress()){
-			showingEmailInvalid = true
-		}
-		else{
-			showingEmailInvalid = false
-		}
-		showingFirstNameInvalid = firstName.count == 0
-		showingLastNameInvalid = lastName.count == 0
-		showingPasswordInvalid = password.count < 6
-	}
-	
-	private func isInputValid() -> Bool {
-		return !(showingEmailInvalid || showingFirstNameInvalid || showingLastNameInvalid || showingPasswordInvalid)
-	}
-	
 }
 
 #if DEBUG
-struct CreateUserView_Previews : PreviewProvider {
+struct CreateUserView_Previews: PreviewProvider {
 	static var previews: some View {
-		CreateUserView().modifier(SystemServices())
+		CreateUserView()
 	}
 }
 #endif
 
-struct ITTextFieldStyle: ViewModifier{
+struct ITTextFieldStyle: ViewModifier {
 	func body(content: Content) -> some View {
 		return content
 			.padding()
@@ -121,4 +74,3 @@ struct ITTextFieldStyle: ViewModifier{
 			.padding(.top, 10)
 	}
 }
-

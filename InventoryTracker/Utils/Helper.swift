@@ -10,13 +10,12 @@ import SwiftUI
 
 extension Binding where Value == Bool {
 	public func negate() -> Binding<Bool> {
-		return Binding<Bool>(get:{ !self.wrappedValue },
-												 set: { self.wrappedValue = !$0})
+		return Binding<Bool>(get: { !self.wrappedValue },
+		                     set: { self.wrappedValue = !$0 })
 	}
 }
 
 extension String {
-	
 	/// Checks if the `String` is a valid email address.
 	/// ````
 	/// // Example
@@ -35,12 +34,11 @@ extension String {
 			+ "]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-"
 			+ "9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"
 			+ "-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
-		
-		let emailTest = NSPredicate(format:"SELF MATCHES[c] %@", emailRegEx)
+
+		let emailTest = NSPredicate(format: "SELF MATCHES[c] %@", emailRegEx)
 		return emailTest.evaluate(with: self)
 	}
 }
-
 
 struct ITButton: View {
 	var label: String
@@ -59,12 +57,13 @@ extension UIColor {
 	func toImage() -> UIImage? {
 		return toImageWithSize(size: CGSize(width: 1, height: 1))
 	}
+
 	func toImageWithSize(size: CGSize) -> UIImage? {
 		UIGraphicsBeginImageContext(size)
-		
+
 		if let ctx = UIGraphicsGetCurrentContext() {
 			let rectangle = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-			ctx.setFillColor(self.cgColor)
+			ctx.setFillColor(cgColor)
 			ctx.addRect(rectangle)
 			ctx.drawPath(using: .fill)
 			let colorImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -83,5 +82,45 @@ extension UIImage {
 		let newImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 		return newImage
+	}
+}
+
+struct ModalView<T: View>: UIViewControllerRepresentable {
+	let view: T
+	var isModal: Bool
+	let onDismissalAttempt: (() -> ())?
+
+	func makeUIViewController(context: Context) -> UIHostingController<T> {
+		UIHostingController(rootView: view)
+	}
+
+	func updateUIViewController(_ uiViewController: UIHostingController<T>, context: Context) {
+		uiViewController.parent?.presentationController?.delegate = context.coordinator
+	}
+
+	func makeCoordinator() -> Coordinator {
+		Coordinator(self)
+	}
+
+	class Coordinator: NSObject, UIAdaptivePresentationControllerDelegate {
+		let modalView: ModalView
+
+		init(_ modalView: ModalView) {
+			self.modalView = modalView
+		}
+
+		func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+			!modalView.isModal
+		}
+
+		func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+			modalView.onDismissalAttempt?()
+		}
+	}
+}
+
+extension View {
+	func presentation(isModal: Bool, onDismissalAttempt: (() -> ())? = nil) -> some View {
+		ModalView(view: self, isModal: isModal, onDismissalAttempt: onDismissalAttempt)
 	}
 }

@@ -6,10 +6,10 @@
 //  Copyright © 2020 Zabala. All rights reserved.
 //
 
+import CoreStore
 import CryptoSwift
 import KeychainAccess
 import SwiftUI
-import CoreStore
 
 struct SystemServices: ViewModifier {
 	static var dataManager = DataManager()
@@ -21,48 +21,20 @@ struct SystemServices: ViewModifier {
 	}
 }
 
-let sqliteFilename = "InventoryTracker.sqlite"
-
-class DataManager: ObservableObject{
+class DataManager: ObservableObject {
 	let pwHashSalt = "Jg*<B9@UW6Kde+1OxaSxbf3m#&8W-Kf7"
-	static let dataStack:DataStack = {
-		let dataStack = DataStack(
-		CoreStoreSchema(
-			modelVersion: "V1",
-			entities: [
-				Entity<User>("User"),
-				Entity<UserLogin>("UserLogin"),
-				Entity<Bin>("Bin"),
-				Entity<Item>("Item"),
-				Entity<Photo>("Photo"),
-				Entity<Tag>("Tag")
-			],
-			versionLock: [
-				"Bin": [0x68dce2554d47e072, 0xb00419fa71dab1f0, 0x501dbd126d791d5e, 0xa25710efb0e63280],
-				"Item": [0x18ccd9b8dd849e9f, 0x1c7316acb556f29e, 0x93ac28869e04334c, 0xbe4f93f0dc0b9ef5],
-				"Photo": [0x9a698a1e5913dd2c, 0x54f1e40a0d10b34d, 0x73b9b302bbd1efa6, 0xfafa887dcda81ac2],
-				"Tag": [0xcef8b075864ef668, 0x7bc71a99a46b6445, 0x4f5b19bf73a23309, 0xd32ef54c858d70cb],
-				"User": [0xa702af552c15fce6, 0x359146052ea76b43, 0xbb74668fb3dfce3c, 0x4c53f8277f09204a],
-				"UserLogin": [0x473c916f9cc1b856, 0xab80ebb459e6bcff, 0xa77cda7c8f8bf9a, 0x4f7d9f7828d3a0be]
-			]
-		)
-	)
-		try! dataStack.addStorageAndWait(SQLiteStore(fileName: sqliteFilename))
-		return dataStack
-	}()
 	
 	private let keychain = Keychain(service: Bundle.main.bundleIdentifier ?? "com.zabala.inventory")
 	init() {
-		let sqliteExists = FileManager.default.fileExists(atPath: self.sqliteFilePath())
-		CoreStoreDefaults.dataStack = DataManager.dataStack
-		//Since login state is also stored in keychain, if sqlite store doesn't already exist on startup,
-		//such as if the user deletes the app, set isLoggedIn to false.
-		if (self.isLoggedIn && !sqliteExists){
-			self.isLoggedIn = false;
+		let sqliteExists = FileManager.default.fileExists(atPath: sqliteFilePath())
+		// Since login state is also stored in keychain, if sqlite store doesn't already exist on startup,
+		// such as if the user deletes the app, set isLoggedIn to false.
+		if isLoggedIn, !sqliteExists {
+			self.isLoggedIn = false
 		}
 	}
 	
-	@Published var _isLoggedIn : Bool = false
+	@Published var _isLoggedIn: Bool = false
 	@Published var photosToAdd: [UIImage] = []
 	@Published var photosPending: [UIImage] = []
 	
@@ -72,28 +44,27 @@ class DataManager: ObservableObject{
 		get {
 			let email = keychain["isLoggedIn"]
 			if currentUser == nil {
-				if let email = email{
+				if let email = email {
 					currentUser = findUserWith(email: email)
 				}
 			}
 			return email != nil
 		}
 		set {
-			if newValue{
+			if newValue {
 				keychain["isLoggedIn"] = currentUser?.email
-			}
-			else{
+			} else {
 				keychain["isLoggedIn"] = nil
 				currentUser = nil
 			}
-			self._isLoggedIn = newValue
+			_isLoggedIn = newValue
 		}
 	}
 	
-	func reset () {
+	func reset() {
 		CoreStoreDefaults.dataStack.unsafeRemoveAllPersistentStoresAndWait()
 		deleteSqliteFile()
-		self.isLoggedIn = false
+		isLoggedIn = false
 		print("Reseting CoreData store")
 		exit(0)
 	}
@@ -102,9 +73,9 @@ class DataManager: ObservableObject{
 		FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!.appendingPathComponent(Bundle.main.bundleIdentifier!).appendingPathComponent(sqliteFilename).path
 	}
 	
-	private func deleteSqliteFile(){
+	private func deleteSqliteFile() {
 		let filePath = sqliteFilePath()
-			print("Local path = \(filePath)")
+		print("Local path = \(filePath)")
 		
 		do {
 			let fileManager = FileManager.default
@@ -115,9 +86,7 @@ class DataManager: ObservableObject{
 			} else {
 				print("File does not exist")
 			}
-			
-		}
-		catch let error as NSError {
+		} catch let error as NSError {
 			print("An error took place: \(error)")
 		}
 	}
@@ -131,7 +100,7 @@ class DataManager: ObservableObject{
 				From<User>(),
 				Where<User>(predicate)
 			)
-			if user.count > 0{
+			if user.count > 0 {
 				print("Found user")
 				return user[0]
 			}
@@ -151,28 +120,28 @@ class DataManager: ObservableObject{
 				userLogin.loginDate = Date()
 				userLogin.user = user
 				user.logins.insert(userLogin)
-		},
+			},
 			completion: { result in
 				
 				switch result {
-					
 				case .failure(let error):
 					print(error)
 					
 				case .success:
-					print("Succesfully created corestore loginForUser")}
-		}
+					print("Succesfully created corestore loginForUser")
+				}
+			}
 		)
-		self.currentUser = user
-		self.isLoggedIn = true
+		currentUser = user
+		isLoggedIn = true
 	}
 	
-	func login(email: String, password: String) -> Bool{
-		print ("Logging in with username \(email) and pw: \(password)")
-		if let user = findUserWith(email: email){
-			if user.pwHash == passwordHashFrom(email: email, password: password){
-				if user.logins.count > 0{
-					for thisLogin in user.logins{
+	func login(email: String, password: String) -> Bool {
+		print("Logging in with username \(email) and pw: \(password)")
+		if let user = findUserWith(email: email) {
+			if user.pwHash == passwordHashFrom(email: email, password: password) {
+				if user.logins.count > 0 {
+					for thisLogin in user.logins {
 						print("User \(user.email) previously logged in on \(thisLogin.loginDate)")
 					}
 				}
@@ -189,9 +158,9 @@ class DataManager: ObservableObject{
 		case saveFailedMissingData
 	}
 	
-	func createUser(email: String, firstName: String, lastName: String, password: String) -> SaveStatus{
-		//Check to make sure user with email doesn't already exist
-		if findUserWith(email: email) != nil{
+	func createUser(email: String, firstName: String, lastName: String, password: String) -> SaveStatus {
+		// Check to make sure user with email doesn't already exist
+		if findUserWith(email: email) != nil {
 			return .saveFailedAlreadyExists
 		}
 		CoreStoreDefaults.dataStack.perform(
@@ -203,7 +172,7 @@ class DataManager: ObservableObject{
 				user.id = UUID()
 				user.pwHash = self.passwordHashFrom(email: email, password: password)
 				user.createDate = Date()
-		},
+			},
 			completion: { result in
 				switch result {
 				case .failure(let error):
@@ -215,9 +184,9 @@ class DataManager: ObservableObject{
 					self.loginForUser(user: user)
 					/// =======================
 				}
-		}
+			}
 		)
-		return .saveSuccess;
+		return .saveSuccess
 	}
 	
 	func passwordHashFrom(email: String, password: String) -> String {
@@ -231,7 +200,7 @@ class DataManager: ObservableObject{
 				From<Bin>(),
 				Where<Bin>(predicate)
 			)
-			if bins.count > 0{
+			if bins.count > 0 {
 				print("Found bin")
 				return bins[0]
 			}
@@ -242,8 +211,8 @@ class DataManager: ObservableObject{
 		return nil
 	}
 	
-	func createBin(name: String, level:Int16, notes: String?, parentBin: Bin?) -> SaveStatus{
-		if findBinWith(name: name, level: level) != nil{
+	func createBin(name: String, level: Int16, notes: String?, parentBin: Bin?) -> SaveStatus {
+		if findBinWith(name: name, level: level) != nil {
 			print("Bin with name \(name) and level \(level) already exists")
 			return .saveFailedAlreadyExists
 		}
@@ -266,7 +235,7 @@ class DataManager: ObservableObject{
 						bin.parentBin = parentBin
 						parentBin.subBins.insert(bin)
 					}
-			},
+				},
 				completion: { result in
 					switch result {
 					case .failure(let error):
@@ -274,15 +243,15 @@ class DataManager: ObservableObject{
 					case .success:
 						print("Bin with name \(name) and level \(level) created succesfully")
 					}
-			}
+				}
 			)
 			return .saveSuccess
 		}
 		return .saveFailedMissingData
 	}
 	
-	func displayNameForBin(bin: Bin) -> String{
-		if let parentBin = bin.parentBin{
+	func displayNameForBin(bin: Bin) -> String {
+		if let parentBin = bin.parentBin {
 			return "\(displayNameForBin(bin: parentBin))\u{2b95}\(bin.name)"
 		}
 		return bin.name
@@ -292,9 +261,9 @@ class DataManager: ObservableObject{
 		do {
 			let results = try CoreStoreDefaults.dataStack.fetchAll(
 				From<Item>(),
-				(Where<Item>(NSPredicate(format: "name LIKE[c] %@", name)) && Where<Item>(\.$bin == bin))
+				Where<Item>(NSPredicate(format: "name LIKE[c] %@", name)) && Where<Item>(\.$bin == bin)
 			)
-			if results.count > 0{
+			if results.count > 0 {
 				print("Found Item")
 				return results[0]
 			}
@@ -304,84 +273,83 @@ class DataManager: ObservableObject{
 		return nil
 	}
 	
-	func createOrUpdateItem(item:Item?, name:String, bin:Bin?, quantity:Int32, notes: String?, price: Double, minLevel:Int32, barcode:String?) -> SaveStatus {
-			if let currentUser = currentUser {
-				if item == nil, findItemWith(name: name, bin: bin) != nil{
-					print("Item with name \(name) in bin \(String(describing: bin?.name)) already exists")
-					return .saveFailedAlreadyExists
-				}
+	func createOrUpdateItem(item: Item?, name: String, bin: Bin?, quantity: Int32, notes: String?, price: Double, minLevel: Int32, barcode: String?) -> SaveStatus {
+		if let currentUser = currentUser {
+			if item == nil, findItemWith(name: name, bin: bin) != nil {
+				print("Item with name \(name) in bin \(String(describing: bin?.name)) already exists")
+				return .saveFailedAlreadyExists
+			}
 				
-				CoreStoreDefaults.dataStack.perform(
-					asynchronous: { transaction in
-						var thisItem:Item
-						let currentUser = transaction.edit(currentUser)!
-						if let item = item {
-							thisItem = transaction.edit(item)!
-						}
-						else{
-							thisItem = transaction.create(Into<Item>())
-						}
-						thisItem.id = UUID()
-						thisItem.createUser = currentUser
-						currentUser.items.insert(thisItem)
-						thisItem.createDate = Date()
-						thisItem.name = name
-						thisItem.quantity = quantity
+			CoreStoreDefaults.dataStack.perform(
+				asynchronous: { transaction in
+					var thisItem: Item
+					let currentUser = transaction.edit(currentUser)!
+					if let item = item {
+						thisItem = transaction.edit(item)!
+					} else {
+						thisItem = transaction.create(Into<Item>())
+					}
+					thisItem.id = UUID()
+					thisItem.createUser = currentUser
+					currentUser.items.insert(thisItem)
+					thisItem.createDate = Date()
+					thisItem.name = name
+					thisItem.quantity = quantity
+					thisItem.barcode = barcode
+					thisItem.minLevel = minLevel
+					thisItem.price = price
+						
+					if let bin = bin {
+						let bin = transaction.edit(bin)!
+						thisItem.bin = bin
+						bin.items.insert(thisItem)
+					}
+						
+					if let notes = notes {
+						thisItem.notes = notes
+					}
+						
+					if let barcode = barcode, !barcode.isEmpty {
 						thisItem.barcode = barcode
-						thisItem.minLevel = minLevel
-						thisItem.price = price
+					}
 						
-						if let bin = bin{
-							let bin = transaction.edit(bin)!
-							thisItem.bin = bin
-							bin.items.insert(thisItem)
-						}
-						
-						if let notes = notes{
-							thisItem.notes = notes
-						}
-						
-						if let barcode = barcode, !barcode.isEmpty {
-							thisItem.barcode = barcode
-						}
-						
-						for image in self.photosToAdd {
-							let photo = transaction.create(Into<Photo>())
-							photo.id = UUID()
-							photo.createDate = Date()
-							photo.createUser = currentUser
-							photo.imageData = image.jpegData(compressionQuality: 1)!
-							photo.item = thisItem
-							thisItem.photos.insert(photo)
-						}
+					for image in self.photosToAdd {
+						let photo = transaction.create(Into<Photo>())
+						photo.id = UUID()
+						photo.createDate = Date()
+						photo.createUser = currentUser
+						photo.imageData = image.jpegData(compressionQuality: 1)!
+						photo.item = thisItem
+						thisItem.photos.insert(photo)
+					}
 				},
-					completion: { result in
-						switch result {
-						case .failure(let error):
-							print(error)
-						case .success:
-							print("Item with name \(name) created succesfully")
-						}
-						self.resetAllPhotos()
+				completion: { result in
+					switch result {
+					case .failure(let error):
+						print(error)
+					case .success:
+						print("Item with name \(name) created succesfully")
+					}
+					self.resetAllPhotos()
 				}
-				)
-				return .saveSuccess
+			)
+			return .saveSuccess
 		}
 		print("Item save failed")
 		return .saveFailedMissingData
 	}
 	
 	func resetAllPhotos() {
-		self.photosToAdd.removeAll()
-		self.resetPendingPhotos()
+		photosToAdd.removeAll()
+		resetPendingPhotos()
 	}
 	
 	func resetPendingPhotos() {
-		self.photosPending.removeAll()
+		photosPending.removeAll()
 	}
 	
 	func mergePendingPhotos() {
-		self.photosToAdd += self.photosPending
-		self.resetPendingPhotos()
+		photosToAdd += photosPending
+		resetPendingPhotos()
 	}
 }

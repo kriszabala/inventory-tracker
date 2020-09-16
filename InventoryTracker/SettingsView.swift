@@ -6,21 +6,22 @@
 //  Copyright © 2020 Zabala. All rights reserved.
 //
 
+import Resolver
 import SwiftUI
 
 struct SettingsView: View {
-	@EnvironmentObject private var dataManager: DataManager
-	
+	var dataCoordinator: DataCoordinator = Resolver.resolve()
+
 	var body: some View {
 		NavigationView {
-			VStack{
+			VStack {
 				Text("Settings")
 				Button(action: {
-					self.dataManager.isLoggedIn = false;
-				}){ ITButton(label: "Logout") }
+					self.dataCoordinator.logout()
+				}) { ITButton(label: "Logout") }
 				Button(action: {
-					self.dataManager.reset()
-				}){ ITButton(label: "Reset") }
+					self.dataCoordinator.resetAllData()
+				}) { ITButton(label: "Reset") }
 			}.navigationBarTitle("Settings")
 		}
 		.navigationViewStyle(StackNavigationViewStyle())
@@ -28,7 +29,7 @@ struct SettingsView: View {
 }
 
 struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView().modifier(SystemServices())
-    }
+	static var previews: some View {
+		SettingsView()
+	}
 }
