@@ -19,6 +19,7 @@
 		90789D73245B8CD000D124D0 /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90789D72245B8CD000D124D0 /* ItemView.swift */; };
 		90908E1F247C57BB0066482B /* PhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90908E1E247C57BB0066482B /* PhotosView.swift */; };
 		90908E5D24813FC90066482B /* CoreStore in Frameworks */ = {isa = PBXBuildFile; productRef = 90908E5C24813FC90066482B /* CoreStore */; };
+		9091F85D2511EB7F000FEF01 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 9091F85C2511EB7F000FEF01 /* Resolver */; };
 		90D57A6124536D3C00B600BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D57A6024536D3C00B600BA /* AppDelegate.swift */; };
 		90D57A6324536D3C00B600BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D57A6224536D3C00B600BA /* SceneDelegate.swift */; };
 		90D57A6624536D3C00B600BA /* InventoryTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 90D57A6424536D3C00B600BA /* InventoryTracker.xcdatamodeld */; };
@@ -78,6 +79,7 @@
 			files = (
 				90E77D192456010700A3C7FF /* KeychainAccess in Frameworks */,
 				90908E5D24813FC90066482B /* CoreStore in Frameworks */,
+				9091F85D2511EB7F000FEF01 /* Resolver in Frameworks */,
 				90E77D342456577400A3C7FF /* CryptoSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -188,6 +190,7 @@
 				90E77D182456010700A3C7FF /* KeychainAccess */,
 				90E77D332456577400A3C7FF /* CryptoSwift */,
 				90908E5C24813FC90066482B /* CoreStore */,
+				9091F85C2511EB7F000FEF01 /* Resolver */,
 			);
 			productName = InventoryTracker;
 			productReference = 90D57A5D24536D3C00B600BA /* InventoryTracker.app */;
@@ -221,6 +224,7 @@
 				90E77D172456010700A3C7FF /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				90E77D322456577400A3C7FF /* XCRemoteSwiftPackageReference "CryptoSwift" */,
 				90908E5B24813FC90066482B /* XCRemoteSwiftPackageReference "CoreStore" */,
+				9091F85B2511EB7F000FEF01 /* XCRemoteSwiftPackageReference "Resolver" */,
 			);
 			productRefGroup = 90D57A5E24536D3C00B600BA /* Products */;
 			projectDirPath = "";
@@ -478,6 +482,14 @@
 				kind = branch;
 			};
 		};
+		9091F85B2511EB7F000FEF01 /* XCRemoteSwiftPackageReference "Resolver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Resolver";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.4;
+			};
+		};
 		90E77D172456010700A3C7FF /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
@@ -501,6 +513,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 90908E5B24813FC90066482B /* XCRemoteSwiftPackageReference "CoreStore" */;
 			productName = CoreStore;
+		};
+		9091F85C2511EB7F000FEF01 /* Resolver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9091F85B2511EB7F000FEF01 /* XCRemoteSwiftPackageReference "Resolver" */;
+			productName = Resolver;
 		};
 		90E77D182456010700A3C7FF /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;
