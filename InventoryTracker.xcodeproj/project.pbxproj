@@ -115,6 +115,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		9091F8602511EC73000FEF01 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				90E77D152455D0BB00A3C7FF /* DataManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		90D57A5424536D3C00B600BA = {
 			isa = PBXGroup;
 			children = (
@@ -134,12 +142,12 @@
 		90D57A5F24536D3C00B600BA /* InventoryTracker */ = {
 			isa = PBXGroup;
 			children = (
+				9091F8602511EC73000FEF01 /* Managers */,
 				9091F85F2511EBDD000FEF01 /* Views */,
 				9091F85E2511EBD6000FEF01 /* ViewModels */,
 				90E79BCD247C320500261242 /* Utils */,
 				9023F37D2463228800B465EB /* SwiftUICam */,
 				90E77D6B245752ED00A3C7FF /* Entities */,
-				90E77D152455D0BB00A3C7FF /* DataManager.swift */,
 				90D57A6024536D3C00B600BA /* AppDelegate.swift */,
 				90D57A6224536D3C00B600BA /* SceneDelegate.swift */,
 				90D57A6724536D3C00B600BA /* ContentView.swift */,
