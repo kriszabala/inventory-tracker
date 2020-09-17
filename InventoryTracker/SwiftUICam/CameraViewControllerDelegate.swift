@@ -13,6 +13,7 @@ public protocol CameraViewControllerDelegate {
     func noCameraDetected()
     func cameraSessionStarted()
     
+		func didScanQRCode(_ qrCode:String)
     func didCapturePhoto()
     func didRotateCamera()
     func didChangeFlashMode()

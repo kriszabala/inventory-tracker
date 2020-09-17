@@ -12,17 +12,17 @@ import SwiftUI
 
 class ItemVM: ObservableObject {
 	var dataCoordinator: DataCoordinator = Resolver.resolve()
-	
+
 	var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
 	private var shouldDismissView = false {
 		didSet {
 			viewDismissalModePublisher.send(shouldDismissView)
 		}
 	}
-	
+
 	var item: Item?
 	var bin: Bin?
-	
+
 	// inputs
 	@Published var name: String = "Tools"
 	@Published var notes: String = "Heirloom"
@@ -31,11 +31,12 @@ class ItemVM: ObservableObject {
 	@Published var photos: [UIImage] = []
 	@Published var photosToAdd: [UIImage] = []
 	@Published var editMode: Bool = false
-	
+	@Published var qrCode: String = ""
+
 	private var disposables: Set<AnyCancellable> = []
 
 	func createItem() {
-		let status = dataCoordinator.createOrUpdateItem(item: item, name: name, bin: bin, quantity: quantity, notes: notes, price: 0.0, minLevel: 0)
+		let status = dataCoordinator.createOrUpdateItem(item: item, name: name, bin: bin, quantity: quantity, notes: notes, price: 0.0, minLevel: 0, qrCode: qrCode)
 		if status == .saveSuccess {
 			shouldDismissView = true
 		}
@@ -49,11 +50,16 @@ class ItemVM: ObservableObject {
 			.receive(on: RunLoop.main)
 			.assign(to: \.photosToAdd, on: self)
 			.store(in: &disposables)
-		
+
+		dataCoordinator.$scannedQRCode
+			.receive(on: RunLoop.main)
+			.assign(to: \.qrCode, on: self)
+			.store(in: &disposables)
+
 		if let bin = bin {
 			self.bin = bin
 		}
-		
+
 		guard let item = item else {
 			return
 		}

@@ -31,6 +31,13 @@ class BaseDataCoordinator {
 
 	@Published var photosToAdd: [UIImage] = []
 	@Published var photosPending: [UIImage] = []
+	@Published var scannedQRCode: String = ""
+	var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
+	var shouldDismissView = false {
+		didSet {
+			viewDismissalModePublisher.send(shouldDismissView)
+		}
+	}
 
 	private var disposables: Set<AnyCancellable> = []
 
@@ -48,7 +55,7 @@ class BaseDataCoordinator {
 				],
 				versionLock: [
 					"Bin": [0x68dce2554d47e072, 0xb00419fa71dab1f0, 0x501dbd126d791d5e, 0xa25710efb0e63280],
-					"Item": [0xa3eb140428afbd67, 0x34f4f096dd1a658c, 0xcf175e410095be9b, 0x568e2e659304288e],
+					"Item": [0xe031ada4d2a9192a, 0x2975bd320d48d656, 0xd7a90f9232bdc73, 0xecc950b637e0c63],
 					"Photo": [0x9a698a1e5913dd2c, 0x54f1e40a0d10b34d, 0x73b9b302bbd1efa6, 0xfafa887dcda81ac2],
 					"Tag": [0xcef8b075864ef668, 0x7bc71a99a46b6445, 0x4f5b19bf73a23309, 0xd32ef54c858d70cb],
 					"User": [0xa702af552c15fce6, 0x359146052ea76b43, 0xbb74668fb3dfce3c, 0x4c53f8277f09204a],
@@ -85,11 +92,12 @@ protocol DataCoordinator: BaseDataCoordinator {
 	func findUserWith(email: String) -> User?
 	func createLoginForUser(user: User)
 	func latestUserLogin() -> UserLogin?
-	func createOrUpdateItem(item: Item?, name: String, bin: Bin?, quantity: Int32, notes: String?, price: Double, minLevel: Int32) -> SaveStatus
+	func createOrUpdateItem(item: Item?, name: String, bin: Bin?, quantity: Int32, notes: String?, price: Double, minLevel: Int32, qrCode: String?) -> SaveStatus
 	func createBin(name: String, level: Int16, notes: String?, parentBin: Bin?) -> SaveStatus
 	func resetAllPhotos()
 	func resetPendingPhotos()
 	func mergePendingPhotos()
+	func didScanQRCode(_ qrCode: String)
 }
 
 class CoreDataCoordinator: BaseDataCoordinator, DataCoordinator, ObservableObject {
@@ -98,6 +106,11 @@ class CoreDataCoordinator: BaseDataCoordinator, DataCoordinator, ObservableObjec
 		if let userLogin = latestUserLogin(), let user = userLogin.user {
 			loggedInUser = CoreStoreDefaults.dataStack.fetchExisting(user)!
 		}
+	}
+
+	func didScanQRCode(_ qrCode: String) {
+		scannedQRCode = qrCode
+		shouldDismissView = true
 	}
 
 	func findBinWith(name: String, level: Int16) -> Bin? {
@@ -157,7 +170,7 @@ class CoreDataCoordinator: BaseDataCoordinator, DataCoordinator, ObservableObjec
 		return .saveFailedMissingData
 	}
 
-	func createOrUpdateItem(item: Item?, name: String, bin: Bin?, quantity: Int32, notes: String?, price: Double, minLevel: Int32) -> SaveStatus {
+	func createOrUpdateItem(item: Item?, name: String, bin: Bin?, quantity: Int32, notes: String?, price: Double, minLevel: Int32, qrCode: String?) -> SaveStatus {
 		if let currentUser = loggedInUser {
 			if item == nil, findItemWith(name: name, bin: bin) != nil {
 				print("Item with name \(name) in bin \(String(describing: bin?.name)) already exists")
@@ -181,6 +194,7 @@ class CoreDataCoordinator: BaseDataCoordinator, DataCoordinator, ObservableObjec
 					thisItem.quantity = quantity
 					thisItem.minLevel = minLevel
 					thisItem.price = price
+					thisItem.qrCode = qrCode
 
 					if let bin = bin {
 						let bin = transaction.edit(bin)!

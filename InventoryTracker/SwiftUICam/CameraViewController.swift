@@ -399,6 +399,16 @@ public class CameraViewController: UIViewController {
             session.commitConfiguration()
             return
         }
+			
+			let metadataOutput = AVCaptureMetadataOutput()
+			if (session.canAddOutput(metadataOutput)) {
+				session.addOutput(metadataOutput)
+				metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+				metadataOutput.metadataObjectTypes = [.qr]
+			} else {
+				print("Could not add metadataOutput")
+			}
+				
         
         /*
          Do not create an AVCaptureMovieFileOutput when setting up the session because
@@ -582,6 +592,18 @@ public class CameraViewController: UIViewController {
         }
     }
     
+}
+
+extension CameraViewController: AVCaptureMetadataOutputObjectsDelegate{
+	public func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection){
+		session.stopRunning() // stop scanning after receiving metadata output
+		if let metadataObject = metadataObjects.first {
+			guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
+			guard let codeString = readableObject.stringValue else { return }
+			AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+			self.delegate?.didScanQRCode(codeString)
+		}
+	}
 }
 
 extension CameraViewController: AVCapturePhotoCaptureDelegate {

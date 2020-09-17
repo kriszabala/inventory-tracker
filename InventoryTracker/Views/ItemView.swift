@@ -21,6 +21,7 @@ struct ItemView: View {
 				nameSection
 				quantitySection
 				notesSection
+				qrCodeSection
 				saveButton
 				cancelButton
 			}.navigationBarTitle(itemVM.editMode ? "" : "Add Item")
@@ -95,6 +96,23 @@ struct ItemView: View {
 		}
 	}
 
+	var qrCodeSection: some View {
+		Section(header: Text("QR Code")) {
+			Button("Scan QR Code") {
+				self.viewControllerHolder?.present(style: .fullScreen) {
+					NavigationView {
+						SwiftUICamView()
+					}.navigationViewStyle(StackNavigationViewStyle())
+				}
+			}
+			.foregroundColor(.white)
+			.padding()
+			.background(Color.accentColor)
+			.cornerRadius(8)
+			Text(itemVM.qrCode)
+		}
+	}
+
 	var saveButton: some View {
 		Button(action: {
 			self.itemVM.createItem()
@@ -102,7 +120,7 @@ struct ItemView: View {
 			Text(itemVM.editMode ? "Save" : "Add Item")
 		}
 	}
-	
+
 	var cancelButton: some View {
 		Button(action: {
 			self.cancelButtonAction()
@@ -110,7 +128,7 @@ struct ItemView: View {
 			Text("Cancel")
 		}
 	}
-	
+
 	private func dismiss() {
 		presentationMode.wrappedValue.dismiss()
 	}

@@ -110,6 +110,10 @@ public struct CameraView: UIViewControllerRepresentable {
 		public func didRotateCamera() {
 			parent.events.didAskToRotateCamera = false
 		}
+		
+		public func didScanQRCode(_ qrCode: String) {
+			parent.dataCoordinator.didScanQRCode(qrCode)
+		}
             
 		public func didCapturePhoto() {
 			parent.events.didAskToCapturePhoto = false

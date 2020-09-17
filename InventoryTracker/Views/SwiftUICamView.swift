@@ -29,18 +29,27 @@ struct SwiftUICamView: View {
 		.onAppear {
 			self.dataCoordinator.resetPendingPhotos()
 		}
+		.onReceive(dataCoordinator.viewDismissalModePublisher) { shouldDismiss in
+			if shouldDismiss {
+				self.dismiss()
+			}
+		}
+	}
+
+	func dismiss() {
+		self.viewControllerHolder?.dismiss(animated: true, completion: nil)
 	}
 
 	var camCancelButton: some View {
 		Button("Cancel") {
-			self.viewControllerHolder?.dismiss(animated: true, completion: nil)
+			self.dismiss()
 		}.foregroundColor(.white)
 	}
 
 	var camSkipButton: some View {
 		Button(self.dataCoordinator.photosPending.count == 0 ? "Skip" : "Next") {
 			self.dataCoordinator.mergePendingPhotos()
-			self.viewControllerHolder?.dismiss(animated: true, completion: nil)
+			self.dismiss()
 		}.foregroundColor(.white)
 	}
 }

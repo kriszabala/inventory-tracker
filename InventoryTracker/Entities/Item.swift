@@ -25,6 +25,9 @@ class Item: CoreStoreObject {
 	@Field.Stored("notes")
 	var notes: String?
 	
+	@Field.Stored("qrCode")
+	var qrCode: String?
+	
 	@Field.Stored("price")
 	var price: Double?
 	
