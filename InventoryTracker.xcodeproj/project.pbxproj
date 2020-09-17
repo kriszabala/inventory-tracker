@@ -124,11 +124,11 @@
 		9091F85E2511EBD6000FEF01 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				9007652F2513076500370226 /* CreateBinVM.swift */,
 				9020BE922512C13300B5D487 /* ItemVM.swift */,
-				9091F86C2511EF68000FEF01 /* ContentVM.swift */,
+				9007652F2513076500370226 /* CreateBinVM.swift */,
 				9091F8632511ED21000FEF01 /* CreateUserVM.swift */,
 				9091F8652511ED35000FEF01 /* LoginVM.swift */,
+				9091F86C2511EF68000FEF01 /* ContentVM.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -136,12 +136,15 @@
 		9091F85F2511EBDD000FEF01 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				90E77D562457386500A3C7FF /* CreateBinView.swift */,
 				90E77D5224571B6300A3C7FF /* BinsView.swift */,
 				90789D72245B8CD000D124D0 /* ItemView.swift */,
-				90D57A6724536D3C00B600BA /* ContentView.swift */,
+				90E77D562457386500A3C7FF /* CreateBinView.swift */,
 				90E77D212456134800A3C7FF /* CreateUserView.swift */,
 				90E77CE12453866500A3C7FF /* LoginView.swift */,
+				90908E1E247C57BB0066482B /* PhotosView.swift */,
+				9023F37B2463148900B465EB /* SwiftUICamView.swift */,
+				90E77D5424571DA700A3C7FF /* SettingsView.swift */,
+				90D57A6724536D3C00B600BA /* ContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -183,9 +186,6 @@
 				90D57A6024536D3C00B600BA /* AppDelegate.swift */,
 				9091F8672511ED5D000FEF01 /* AppDelegate+Resolving.swift */,
 				90D57A6224536D3C00B600BA /* SceneDelegate.swift */,
-				9023F37B2463148900B465EB /* SwiftUICamView.swift */,
-				90908E1E247C57BB0066482B /* PhotosView.swift */,
-				90E77D5424571DA700A3C7FF /* SettingsView.swift */,
 				90D57A6924536D3E00B600BA /* Assets.xcassets */,
 				90D57A6E24536D3E00B600BA /* LaunchScreen.storyboard */,
 				90D57A7124536D3E00B600BA /* Info.plist */,
