@@ -7,6 +7,7 @@
 //
 
 import CoreStore
+import CryptoSwift
 import Foundation
 
 class User: CoreStoreObject {

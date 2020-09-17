@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		900765302513076500370226 /* CreateBinVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9007652F2513076500370226 /* CreateBinVM.swift */; };
+		900765322513203D00370226 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900765312513203D00370226 /* Item.swift */; };
 		9020BE8B251273F200B5D487 /* DataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9020BE8A251273F200B5D487 /* DataCoordinator.swift */; };
 		9020BE8D2512755600B5D487 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9020BE8C2512755600B5D487 /* User.swift */; };
 		9020BE8F251276C700B5D487 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9020BE8E251276C700B5D487 /* Config.swift */; };
 		9020BE912512AFD500B5D487 /* UserLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9020BE902512AFD500B5D487 /* UserLogin.swift */; };
+		9020BE932512C13300B5D487 /* ItemVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9020BE922512C13300B5D487 /* ItemVM.swift */; };
 		9023F37C2463148900B465EB /* SwiftUICamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9023F37B2463148900B465EB /* SwiftUICamView.swift */; };
 		9023F383246322A100B465EB /* CameraViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9023F37E246322A100B465EB /* CameraViewControllerDelegate.swift */; };
 		9023F384246322A100B465EB /* UserEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9023F37F246322A100B465EB /* UserEvents.swift */; };
@@ -39,7 +42,6 @@
 		90E77CE22453866500A3C7FF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77CE12453866500A3C7FF /* LoginView.swift */; };
 		90E77CE424538B4300A3C7FF /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77CE324538B4300A3C7FF /* Palette.swift */; };
 		90E77CE82453C38900A3C7FF /* KeyboardGuardian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77CE72453C38900A3C7FF /* KeyboardGuardian.swift */; };
-		90E77D162455D0BB00A3C7FF /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D152455D0BB00A3C7FF /* DataManager.swift */; };
 		90E77D192456010700A3C7FF /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 90E77D182456010700A3C7FF /* KeychainAccess */; };
 		90E77D222456134800A3C7FF /* CreateUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D212456134800A3C7FF /* CreateUserView.swift */; };
 		90E77D3124561B4B00A3C7FF /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E77D3024561B4B00A3C7FF /* Helper.swift */; };
@@ -50,10 +52,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9007652F2513076500370226 /* CreateBinVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBinVM.swift; sourceTree = "<group>"; };
+		900765312513203D00370226 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		9020BE8A251273F200B5D487 /* DataCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCoordinator.swift; sourceTree = "<group>"; };
 		9020BE8C2512755600B5D487 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9020BE8E251276C700B5D487 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		9020BE902512AFD500B5D487 /* UserLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLogin.swift; sourceTree = "<group>"; };
+		9020BE922512C13300B5D487 /* ItemVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemVM.swift; sourceTree = "<group>"; };
 		9023F37B2463148900B465EB /* SwiftUICamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUICamView.swift; sourceTree = "<group>"; };
 		9023F37E246322A100B465EB /* CameraViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewControllerDelegate.swift; sourceTree = "<group>"; };
 		9023F37F246322A100B465EB /* UserEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEvents.swift; sourceTree = "<group>"; };
@@ -81,7 +86,6 @@
 		90E77CE12453866500A3C7FF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		90E77CE324538B4300A3C7FF /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		90E77CE72453C38900A3C7FF /* KeyboardGuardian.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardGuardian.swift; sourceTree = "<group>"; };
-		90E77D152455D0BB00A3C7FF /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		90E77D212456134800A3C7FF /* CreateUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserView.swift; sourceTree = "<group>"; };
 		90E77D3024561B4B00A3C7FF /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		90E77D5224571B6300A3C7FF /* BinsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinsView.swift; sourceTree = "<group>"; };
@@ -120,6 +124,8 @@
 		9091F85E2511EBD6000FEF01 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				9007652F2513076500370226 /* CreateBinVM.swift */,
+				9020BE922512C13300B5D487 /* ItemVM.swift */,
 				9091F86C2511EF68000FEF01 /* ContentVM.swift */,
 				9091F8632511ED21000FEF01 /* CreateUserVM.swift */,
 				9091F8652511ED35000FEF01 /* LoginVM.swift */,
@@ -130,6 +136,9 @@
 		9091F85F2511EBDD000FEF01 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				90E77D562457386500A3C7FF /* CreateBinView.swift */,
+				90E77D5224571B6300A3C7FF /* BinsView.swift */,
+				90789D72245B8CD000D124D0 /* ItemView.swift */,
 				90D57A6724536D3C00B600BA /* ContentView.swift */,
 				90E77D212456134800A3C7FF /* CreateUserView.swift */,
 				90E77CE12453866500A3C7FF /* LoginView.swift */,
@@ -140,7 +149,6 @@
 		9091F8602511EC73000FEF01 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				90E77D152455D0BB00A3C7FF /* DataManager.swift */,
 				9020BE8A251273F200B5D487 /* DataCoordinator.swift */,
 			);
 			path = Managers;
@@ -177,9 +185,6 @@
 				90D57A6224536D3C00B600BA /* SceneDelegate.swift */,
 				9023F37B2463148900B465EB /* SwiftUICamView.swift */,
 				90908E1E247C57BB0066482B /* PhotosView.swift */,
-				90789D72245B8CD000D124D0 /* ItemView.swift */,
-				90E77D562457386500A3C7FF /* CreateBinView.swift */,
-				90E77D5224571B6300A3C7FF /* BinsView.swift */,
 				90E77D5424571DA700A3C7FF /* SettingsView.swift */,
 				90D57A6924536D3E00B600BA /* Assets.xcassets */,
 				90D57A6E24536D3E00B600BA /* LaunchScreen.storyboard */,
@@ -204,6 +209,7 @@
 				906D170A248DE54500A85F94 /* Entities.swift */,
 				9020BE8C2512755600B5D487 /* User.swift */,
 				9020BE902512AFD500B5D487 /* UserLogin.swift */,
+				900765312513203D00370226 /* Item.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -323,13 +329,15 @@
 				90E77CE424538B4300A3C7FF /* Palette.swift in Sources */,
 				9066CC46247C285B0054E637 /* FullScreenModal.swift in Sources */,
 				9091F86D2511EF68000FEF01 /* ContentVM.swift in Sources */,
+				900765302513076500370226 /* CreateBinVM.swift in Sources */,
 				90E77CE82453C38900A3C7FF /* KeyboardGuardian.swift in Sources */,
+				9020BE932512C13300B5D487 /* ItemVM.swift in Sources */,
 				9023F385246322A100B465EB /* CameraViewController.swift in Sources */,
 				90D57A6824536D3C00B600BA /* ContentView.swift in Sources */,
 				90908E1F247C57BB0066482B /* PhotosView.swift in Sources */,
 				9091F8682511ED5D000FEF01 /* AppDelegate+Resolving.swift in Sources */,
+				900765322513203D00370226 /* Item.swift in Sources */,
 				90E77D5524571DA700A3C7FF /* SettingsView.swift in Sources */,
-				90E77D162455D0BB00A3C7FF /* DataManager.swift in Sources */,
 				90D57A6324536D3C00B600BA /* SceneDelegate.swift in Sources */,
 				90789D73245B8CD000D124D0 /* ItemView.swift in Sources */,
 				9091F8662511ED35000FEF01 /* LoginVM.swift in Sources */,

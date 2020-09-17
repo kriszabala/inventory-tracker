@@ -10,7 +10,6 @@ import SwiftUI
 
 struct ContentView: View {
 	@ObservedObject private var contentVM = ContentVM()
-	@EnvironmentObject private var dataManager: DataManager
 
 	var body: some View {
 		TabView {
@@ -28,15 +27,13 @@ struct ContentView: View {
 		}
 		.font(.headline)
 		.sheet(isPresented: $contentVM.isLoginPresented) {
-			LoginView().presentation(isModal: true) {
-				print("Attempted to dismiss")
-			}
+			LoginView().presentation(isModal: true)
 		}
 	}
 }
 
 struct ContentView_Previews: PreviewProvider {
 	static var previews: some View {
-		ContentView().modifier(SystemServices())
+		ContentView()
 	}
 }

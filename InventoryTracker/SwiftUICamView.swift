@@ -6,28 +6,42 @@
 //  Copyright © 2020 Zabala. All rights reserved.
 //
 
+import Resolver
 import SwiftUI
 
 struct SwiftUICamView: View {
-	@EnvironmentObject private var dataManager: DataManager
+	var dataCoordinator: DataCoordinator = Resolver.resolve()
 	@Environment(\.viewController) private var viewControllerHolder: UIViewController?
 	@ObservedObject var events = UserEvents()
-	
+
 	init() {
 		UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
 		UINavigationBar.appearance().setBackgroundImage(UIColor.black.toImage()?.imageWithAlpha(alpha: 0.5), for: .default)
 	}
-	
+
 	var body: some View {
 		ZStack {
 			CameraView(events: self.events, applicationName: "SwiftUICam").edgesIgnoringSafeArea(.all)
 			CameraInterfaceView(events: self.events)
 		}
 		.navigationBarTitle("Snap Pictures", displayMode: .inline)
-		.navigationBarItems(leading: CamCancelButton(), trailing: CamSkipButton())
-		.onAppear(){
-			self.dataManager.resetPendingPhotos()
+		.navigationBarItems(leading: camCancelButton, trailing: camSkipButton)
+		.onAppear {
+			self.dataCoordinator.resetPendingPhotos()
 		}
+	}
+
+	var camCancelButton: some View {
+		Button("Cancel") {
+			self.viewControllerHolder?.dismiss(animated: true, completion: nil)
+		}.foregroundColor(.white)
+	}
+
+	var camSkipButton: some View {
+		Button(self.dataCoordinator.photosPending.count == 0 ? "Skip" : "Next") {
+			self.dataCoordinator.mergePendingPhotos()
+			self.viewControllerHolder?.dismiss(animated: true, completion: nil)
+		}.foregroundColor(.white)
 	}
 }
 
@@ -39,9 +53,9 @@ struct SwiftUICamView_Previews: PreviewProvider {
 
 struct CameraInterfaceView: View, CameraActions {
 	@ObservedObject var events: UserEvents
-	
+
 	var body: some View {
-		ZStack{
+		ZStack {
 			VStack {
 				Spacer()
 				Rectangle().fill(LinearGradient(gradient: Palette.whiteToBlackGradient, startPoint: .top, endPoint: .bottom)).frame(height: 100)
@@ -56,7 +70,7 @@ struct CameraInterfaceView: View, CameraActions {
 						.foregroundColor(.white)
 						.frame(width: 36, height: 36, alignment: .center).onTapGesture {
 							self.rotateCamera(events: self.events)
-					}
+						}
 					Spacer()
 					Image(systemName: "camera.circle")
 						.resizable()
@@ -64,7 +78,7 @@ struct CameraInterfaceView: View, CameraActions {
 						.foregroundColor(.white)
 						.onTapGesture {
 							self.takePhoto(events: self.events)
-					}
+						}
 					Spacer()
 					Image(systemName: "bolt")
 						.resizable()
@@ -73,30 +87,9 @@ struct CameraInterfaceView: View, CameraActions {
 						.foregroundColor(.white)
 						.frame(width: 36, height: 36, alignment: .center).onTapGesture {
 							self.changeFlashMode(events: self.events)
-					}
+						}
 				}.padding(.bottom, 20)
 			}
 		}
-	}
-}
-
-struct CamCancelButton: View {
-	@EnvironmentObject private var dataManager: DataManager
-	@Environment(\.viewController) private var viewControllerHolder: UIViewController?
-	var body: some View {
-		Button("Cancel") {
-			self.viewControllerHolder?.dismiss(animated: true, completion: nil)
-		}.foregroundColor(.white)
-	}
-}
-
-struct CamSkipButton: View {
-	@EnvironmentObject private var dataManager: DataManager
-	@Environment(\.viewController) private var viewControllerHolder: UIViewController?
-	var body: some View {
-		Button(self.dataManager.photosPending.count == 0 ? "Skip" : "Next") {
-			self.dataManager.mergePendingPhotos()
-			self.viewControllerHolder?.dismiss(animated: true, completion: nil)
-		}.foregroundColor(.white)
 	}
 }

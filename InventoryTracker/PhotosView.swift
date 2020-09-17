@@ -9,60 +9,57 @@
 import SwiftUI
 
 struct PhotosView: View {
-	@EnvironmentObject private var dataManager: DataManager
 	@Environment(\.viewController) private var viewControllerHolder: UIViewController?
 	
 	@State var index: Int
 	@State var photos: [UIImage]
-	//var images = ["test0", "test1", "test2"]
+	// var images = ["test0", "test1", "test2"]
 	
-	
-	init(index: Int ,photos: [UIImage]) {
+	init(index: Int, photos: [UIImage]) {
 		UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
 		UINavigationBar.appearance().setBackgroundImage(UIColor.black.toImage()?.imageWithAlpha(alpha: 0.5), for: .default)
 		_photos = State(initialValue: photos)
 		_index = State(initialValue: index)
 	}
 	
-    var body: some View {
-			VStack(spacing: 20) {
-				PagingView(index: $index.animation(), maxIndex: photos.count - 1) {
-					ForEach(self.photos, id: \.self) { image in
-						Image(uiImage: image)
-							.resizable()
-							.scaledToFill()
-					}
+	var body: some View {
+		VStack(spacing: 20) {
+			PagingView(index: $index.animation(), maxIndex: photos.count - 1) {
+				ForEach(self.photos, id: \.self) { image in
+					Image(uiImage: image)
+						.resizable()
+						.scaledToFill()
 				}
-				.aspectRatio(4/3, contentMode: .fit)
-				.clipShape(RoundedRectangle(cornerRadius: 15))
-				
-				//Clickable preview bar for selecting photo to display in the paging view above.
-				HStack{
-					ForEach(0..<photos.count) { index in
-						Image(uiImage: self.photos[index])
-							.resizable()
-							.aspectRatio(contentMode: .fit)
-							.onTapGesture {
-								self.index = index
-						}
-					}
-				}
-				.padding(.leading, 10)
 			}
-			.padding()
-			.navigationBarTitle("Photo Preview", displayMode: .inline)
-			.navigationBarItems(leading: PreviewCancelButton(), trailing: PreviewDoneButton())
-    }
+			.aspectRatio(4 / 3, contentMode: .fit)
+			.clipShape(RoundedRectangle(cornerRadius: 15))
+				
+			// Clickable preview bar for selecting photo to display in the paging view above.
+			HStack {
+				ForEach(0 ..< photos.count) { index in
+					Image(uiImage: self.photos[index])
+						.resizable()
+						.aspectRatio(contentMode: .fit)
+						.onTapGesture {
+							self.index = index
+						}
+				}
+			}
+			.padding(.leading, 10)
+		}
+		.padding()
+		.navigationBarTitle("Photo Preview", displayMode: .inline)
+		.navigationBarItems(leading: PreviewCancelButton(), trailing: PreviewDoneButton())
+	}
 }
 
 struct PhotosView_Previews: PreviewProvider {
-    static var previews: some View {
-			PhotosView(index:0, photos: [UIImage(named: "test0")!, UIImage(named: "test1")!, UIImage(named: "test2")!])
-    }
+	static var previews: some View {
+		PhotosView(index: 0, photos: [UIImage(named: "test0")!, UIImage(named: "test1")!, UIImage(named: "test2")!])
+	}
 }
 
 struct PreviewCancelButton: View {
-	@EnvironmentObject private var dataManager: DataManager
 	@Environment(\.viewController) private var viewControllerHolder: UIViewController?
 	var body: some View {
 		Button("Cancel") {
@@ -72,7 +69,6 @@ struct PreviewCancelButton: View {
 }
 
 struct PreviewDoneButton: View {
-	@EnvironmentObject private var dataManager: DataManager
 	@Environment(\.viewController) private var viewControllerHolder: UIViewController?
 	var body: some View {
 		Button("Done") {
@@ -81,9 +77,7 @@ struct PreviewDoneButton: View {
 	}
 }
 
-
 struct PagingView<Content>: View where Content: View {
-	
 	@Binding var index: Int
 	let maxIndex: Int
 	let content: () -> Content
@@ -125,7 +119,7 @@ struct PagingView<Content>: View where Content: View {
 				)
 			}
 			.clipped()
-			HStack{
+			HStack {
 				Spacer()
 				PageControl(index: $index, maxIndex: maxIndex)
 				Spacer()
@@ -144,7 +138,7 @@ struct PagingView<Content>: View where Content: View {
 	func clampedIndex(from predictedIndex: Int) -> Int {
 		let newIndex = min(max(predictedIndex, self.index - 1), self.index + 1)
 		guard newIndex >= 0 else { return 0 }
-		guard newIndex <= maxIndex else { return maxIndex }
+		guard newIndex <= self.maxIndex else { return self.maxIndex }
 		return newIndex
 	}
 }
@@ -155,7 +149,7 @@ struct PageControl: View {
 	
 	var body: some View {
 		HStack(spacing: 8) {
-			ForEach(0...maxIndex, id: \.self) { index in
+			ForEach(0 ... maxIndex, id: \.self) { index in
 				Circle()
 					.fill(index == self.index ? Color.white : Color.gray)
 					.frame(width: 8, height: 8)
@@ -164,4 +158,3 @@ struct PageControl: View {
 		.padding(15)
 	}
 }
-
